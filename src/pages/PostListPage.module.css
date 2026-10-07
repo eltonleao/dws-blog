@@ -49,27 +49,6 @@
   min-width: 0;
 }
 
-/* The mobile search, at the right of the header. */
-.searchButton {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--color-primary-dark);
-  color: var(--color-neutral-lightest);
-  cursor: pointer;
-}
-
-/* The second state of the design's search button: a grey ring around it. */
-.searchButton:hover {
-  box-shadow: 0 0 0 4px var(--color-neutral-light);
-}
-
 .visuallyHidden {
   position: absolute;
   width: 1px;

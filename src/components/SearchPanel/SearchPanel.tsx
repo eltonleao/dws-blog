@@ -1,27 +1,27 @@
 import { useEffect, useRef } from 'react'
 import type { KeyboardEvent } from 'react'
 import { Link } from 'react-router'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { searchChanged } from '../../features/browse/browseSlice'
+import { useAppSelector } from '../../app/hooks'
+import { useSearch } from '../../features/browse/useSearch'
 import { selectVisiblePosts } from '../../features/posts/selectors'
 import { Icon } from '../Icon/Icon'
 import styles from './SearchPanel.module.css'
 
 interface SearchPanelProps {
-  /** Closes the panel. The page gives the focus back to the button that opened it. */
+  /** Closes the panel. The layout gives the focus back to the button that opened it. */
   onClose: () => void
 }
 
 /**
- * The mobile search, a dialog over the list. It edits the same search as the
- * desktop field, so the list under it follows, and it lists the titles that
- * match, each one a link to its post. With nothing typed it lists nothing:
- * every post would match, and the list under the panel already shows them.
+ * The mobile search, a dialog over the page. It edits the same search as the
+ * desktop field, so the list under it follows (on any other page, the first
+ * key brings the list), and it lists the titles that match, each one a link
+ * to its post. With nothing typed it lists nothing: every post would match,
+ * and the list under the panel already shows them.
  */
 export function SearchPanel({ onClose }: SearchPanelProps) {
-  const search = useAppSelector((state) => state.browse.search)
+  const [search, changeSearch] = useSearch()
   const posts = useAppSelector(selectVisiblePosts)
-  const dispatch = useAppDispatch()
   const field = useRef<HTMLInputElement>(null)
 
   const typed = search.trim() !== ''
@@ -41,7 +41,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
   }
 
   const clear = () => {
-    dispatch(searchChanged(''))
+    changeSearch('')
     field.current?.focus()
   }
 
@@ -68,7 +68,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
           className={styles.input}
           aria-label="Search"
           value={search}
-          onChange={(event) => dispatch(searchChanged(event.target.value))}
+          onChange={(event) => changeSearch(event.target.value)}
         />
         <button
           type="button"

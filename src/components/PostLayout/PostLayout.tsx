@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Button } from '../Button/Button'
-import { Header } from '../Header/Header'
 import { Icon } from '../Icon/Icon'
 import styles from './PostLayout.module.css'
 
@@ -11,9 +10,9 @@ interface PostLayoutProps {
 }
 
 /**
- * The frame of the post page and of the pages that stand in for a post: the
- * header, then Back over the content on mobile; on desktop, Back in the first
- * two columns of the grid and the content in columns 3 to 10.
+ * The frame of the post page and of the pages that stand in for a post, under
+ * the header of the layout: Back over the content on mobile; on desktop, Back
+ * in the first two columns of the grid and the content in columns 3 to 10.
  */
 export function PostLayout({ children }: PostLayoutProps) {
   const location = useLocation()
@@ -30,17 +29,14 @@ export function PostLayout({ children }: PostLayoutProps) {
   }
 
   return (
-    <>
-      <Header />
-      <main className={styles.main}>
-        <div className={styles.back}>
-          <Button variant="secondary" onClick={goBack}>
-            <Icon name="back" />
-            Back
-          </Button>
-        </div>
-        <div className={styles.content}>{children}</div>
-      </main>
-    </>
+    <main className={styles.main}>
+      <div className={styles.back}>
+        <Button variant="secondary" onClick={goBack}>
+          <Icon name="back" />
+          Back
+        </Button>
+      </div>
+      <div className={styles.content}>{children}</div>
+    </main>
   )
 }

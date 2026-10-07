@@ -1,16 +1,11 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect } from 'react'
 import type { ReactNode } from 'react'
-import { flushSync } from 'react-dom'
 import { useGetPostsQuery } from '../api/postsApi'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Button } from '../components/Button/Button'
 import { FilterDropdown } from '../components/FilterDropdown/FilterDropdown'
 import { FilterSidebar } from '../components/FilterSidebar/FilterSidebar'
-import { Header } from '../components/Header/Header'
-import { Icon } from '../components/Icon/Icon'
 import { PostCard } from '../components/PostCard/PostCard'
-import { SearchField } from '../components/SearchField/SearchField'
-import { SearchPanel } from '../components/SearchPanel/SearchPanel'
 import { SortButton } from '../components/SortButton/SortButton'
 import { StatusMessage } from '../components/StatusMessage/StatusMessage'
 import { filtersCleared, listScrollSaved } from '../features/browse/browseSlice'
@@ -28,9 +23,10 @@ const SKELETON_CARDS = 6
 const NO_POSTS: Post[] = []
 
 /**
- * The list of posts, with the search, the filters and the order of the browse
- * state, which the page mirrors to the URL. Mobile and desktop mount different
- * controls, and only the ones of the current breakpoint are in the page.
+ * The list of posts, with the filters and the order of the browse state, and
+ * the search of the header, which the page mirrors to the URL. Mobile and
+ * desktop mount different controls, and only the ones of the current
+ * breakpoint are in the page.
  */
 export function PostListPage() {
   useBrowseUrlSync()
@@ -39,13 +35,15 @@ export function PostListPage() {
   const posts = useAppSelector(selectVisiblePosts)
   const listScrollY = useAppSelector((state) => state.browse.listScrollY)
   const dispatch = useAppDispatch()
-  // The mobile search panel is the page's own state, and nothing the cards
-  // receive depends on it: opening and closing it renders no card again.
-  const [searchOpen, setSearchOpen] = useState(false)
-  const searchButton = useRef<HTMLButtonElement>(null)
-  const panelOpen = searchOpen && !isDesktop
   // From every post, not from the ones the search and the filters leave.
   const options = filterOptions(data ?? NO_POSTS)
+  // How many posts the list shows, for screen readers: the region speaks when
+  // the search or the filters change it, and an order changes nothing. The
+  // design draws no count, and an empty list has its own status.
+  const count =
+    data === undefined || posts.length === 0
+      ? ''
+      : `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`
 
   // The list opens where the reader left it for a post. The cleanup of a
   // layout effect runs before the list leaves the page, while the page still
@@ -59,13 +57,6 @@ export function PostListPage() {
       dispatch(listScrollSaved(window.scrollY))
     }
   }, [dispatch, listScrollY])
-
-  const closeSearch = () => {
-    // The button is inert while the panel is open: the page renders without
-    // the panel first, and only then can the button take the focus back.
-    flushSync(() => setSearchOpen(false))
-    searchButton.current?.focus()
-  }
 
   // A failed first load is an error; a retry after it loads like the first time.
   let content: ReactNode
@@ -104,51 +95,35 @@ export function PostListPage() {
     )
   }
 
+  // The header and the search are the layout's, over every page. In the
+  // page, the filters come before the order, so Tab reaches them first; the
+  // grid areas put the order next to the title.
   return (
-    <>
-      {/* Under the open search panel the page stays mounted, out of reach. */}
-      <div inert={panelOpen}>
-        <Header>
-          {isDesktop ? (
-            <SearchField />
-          ) : (
-            <button
-              ref={searchButton}
-              type="button"
-              className={styles.searchButton}
-              aria-label="Search"
-              aria-expanded={panelOpen}
-              onClick={() => setSearchOpen(true)}
-            >
-              <Icon name="search" size={18} />
-            </button>
-          )}
-        </Header>
-        {/* In the page, the filters come before the order, so Tab reaches
-            them first; the grid areas put the order next to the title. */}
-        <main className={styles.main}>
-          {/* The design shows the title on desktop only; on mobile it stays
-              as the heading of the page for screen readers. */}
-          <h1 className={isDesktop ? styles.title : styles.visuallyHidden}>
-            DWS blog
-          </h1>
-          {isDesktop ? (
-            <div className={styles.sidebar}>
-              <FilterSidebar options={options} />
-            </div>
-          ) : (
-            <div className={styles.dropdowns}>
-              <FilterDropdown filter="categories" options={options.categories} />
-              <FilterDropdown filter="authors" options={options.authors} />
-            </div>
-          )}
-          <div className={styles.sort}>
-            <SortButton />
-          </div>
-          <div className={styles.results}>{content}</div>
-        </main>
+    <main className={styles.main}>
+      {/* The design shows the title on desktop only; on mobile it stays as
+          the heading of the page for screen readers. */}
+      <h1 className={isDesktop ? styles.title : styles.visuallyHidden}>
+        DWS blog
+      </h1>
+      {isDesktop ? (
+        <div className={styles.sidebar}>
+          <FilterSidebar options={options} />
+        </div>
+      ) : (
+        <div className={styles.dropdowns}>
+          <FilterDropdown filter="categories" options={options.categories} />
+          <FilterDropdown filter="authors" options={options.authors} />
+        </div>
+      )}
+      <div className={styles.sort}>
+        <SortButton />
       </div>
-      {panelOpen ? <SearchPanel onClose={closeSearch} /> : null}
-    </>
+      <div className={styles.results}>
+        <div className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+          {count}
+        </div>
+        {content}
+      </div>
+    </main>
   )
 }

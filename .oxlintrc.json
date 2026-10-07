@@ -4,5 +4,20 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["e2e/**"],
+      "rules": {
+        "react/rules-of-hooks": "off",
+        "no-empty-pattern": "off"
+      }
+    },
+    {
+      "files": ["src/test/**"],
+      "rules": {
+        "react/only-export-components": "off"
+      }
+    }
+  ]
 }

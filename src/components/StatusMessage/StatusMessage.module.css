@@ -1,12 +1,16 @@
-/* Structure only: the message centered, with its actions under it. */
+/* The message centered, with its actions under it. */
 .status {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 16px;
+  padding: 48px 0;
   text-align: center;
+  color: var(--color-neutral-extra-dark);
 }
 
 .actions {
   display: flex;
   justify-content: center;
+  gap: 16px;
 }

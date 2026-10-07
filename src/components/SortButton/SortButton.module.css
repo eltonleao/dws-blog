@@ -1,15 +1,39 @@
-/* Structure only: the label, the button and the live region in one row. */
+/* The label, the button and the live region in one row, in the grey of the
+   design. The icon and the finer measures come later. */
 .sort {
   display: flex;
   align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+}
+
+.sort button {
+  padding: 4px 8px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  cursor: pointer;
+}
+
+.sort button:hover {
+  background: var(--color-accent-1-medium);
+  color: var(--color-neutral-extra-light);
 }
 
 /* "Sort by:" is in the desktop design only. */
 .label {
   display: none;
+  font-weight: var(--font-weight-bold);
 }
 
 @media (min-width: 1024px) {
+  .sort {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body-large);
+  }
+
   .label {
     display: inline;
   }

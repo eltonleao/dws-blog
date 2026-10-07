@@ -24,6 +24,9 @@ export function SearchField() {
         value={search}
         onChange={(event) => dispatch(searchChanged(event.target.value))}
       />
+      <span className={styles.icon} aria-hidden="true">
+        ⌕
+      </span>
     </form>
   )
 }

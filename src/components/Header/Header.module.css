@@ -1,10 +1,37 @@
-/* Structure only: the logo at the left and the search at the right. */
+/* The logo at the left and the search at the right, between the page margins,
+   over a hairline. */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--grid-gutter);
+  height: 64px;
+  padding: 0 var(--grid-margin);
+  border-bottom: 1px solid var(--color-neutral-extra-light);
+}
+
+@media (min-width: 1024px) {
+  .header {
+    height: 88px;
+  }
 }
 
 .logo {
   flex-shrink: 0;
+  color: var(--color-neutral-darkest);
+}
+
+.mark {
+  overflow: visible;
+}
+
+.name {
+  fill: currentColor;
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+}
+
+.tagline {
+  fill: currentColor;
+  font-size: var(--font-size-body-small);
 }

@@ -1,10 +1,45 @@
-/* Structure only: the input fills the field. */
+/* The desktop field: a pill of 536 x 56 whose border is the input's own, so
+   the focus ring follows the pill. The round icon sits inside, at the right. */
 .form {
-  display: flex;
-  align-items: center;
+  position: relative;
+  flex: 0 1 536px;
+  min-width: 0;
 }
 
 .input {
-  flex: 1;
-  min-width: 0;
+  display: block;
+  width: 100%;
+  height: 56px;
+  padding: 0 56px 0 16px;
+  border: 1px solid var(--color-neutral-extra-light);
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-lightest);
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-body-large);
+  appearance: none;
+}
+
+.input::placeholder {
+  color: var(--color-neutral-extra-dark);
+}
+
+.input:hover,
+.input:focus {
+  border-color: var(--color-accent-1-medium);
+}
+
+.icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-neutral-lightest);
+  font-size: 1.25rem;
+  pointer-events: none;
 }

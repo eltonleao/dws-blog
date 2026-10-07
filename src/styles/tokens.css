@@ -1,0 +1,78 @@
+/* The design tokens, from §1 of the design inventory. This is the only file
+   with color values: every component reads them through these variables. */
+:root {
+  /* Neutral */
+  --color-neutral-lightest: #f0f0f2;
+  --color-neutral-extra-light: #e0e2e6;
+  --color-neutral-light: #c0c2c8;
+  --color-neutral-medium: #9ea0a5;
+  --color-neutral-dark: #7f8185;
+  --color-neutral-extra-dark: #5e5f63;
+  --color-neutral-darkest: #202122;
+
+  /* Primary */
+  --color-primary-light: #0b0e3a;
+  --color-primary-medium: #060725;
+  --color-primary-dark: #020318;
+
+  /* Secondary */
+  --color-secondary-light: #ef4c84;
+  --color-secondary-medium: #d31450;
+  --color-secondary-dark: #8c1038;
+
+  /* Accent 1 (the design has no Accent 2) */
+  --color-accent-1-light: #00bfc1;
+  --color-accent-1-medium: #009598;
+  --color-accent-1-dark: #006c6e;
+
+  /* The two tints at 5% the components declare: the hover and selected
+     dropdown, and the selected filter item. */
+  --color-secondary-medium-5: color-mix(in srgb, var(--color-secondary-medium) 5%, transparent);
+  --color-accent-1-light-5: color-mix(in srgb, var(--color-accent-1-light) 5%, transparent);
+
+  /* The card shadow has no declared value: a faint one in the darkest primary. */
+  --shadow-card: 0 2px 8px color-mix(in srgb, var(--color-primary-light) 6%, transparent);
+
+  /* Type: Open Sans, with the scale of §1.2 (size and line height). */
+  --font-family: 'Open Sans', system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-h1: 3.5rem;
+  --line-height-h1: 1.3;
+  --font-size-h2: 2.25rem;
+  --line-height-h2: 1.3;
+  --font-size-h3: 1.25rem;
+  --line-height-h3: 1.3;
+  --font-size-body-large: 1rem;
+  --line-height-body-large: 1.5;
+  --font-size-body-small: 0.875rem;
+  --line-height-body-small: 1.5;
+  --font-size-caption: 0.75rem;
+  --line-height-caption: 1.3;
+  /* Measured on the screens, out of the scale (§5, item 2). */
+  --font-size-filters-heading: 1.5rem;
+
+  /* Grid, §1.3: 4 columns on mobile, 12 from the desktop breakpoint. */
+  --grid-columns: 4;
+  --grid-margin: 16px;
+  --grid-gutter: 16px;
+
+  /* Shapes */
+  --radius-card: 16px;
+  --radius-pill: 42px;
+  --radius-item: 8px;
+
+  /* Keyboard focus: 2 px of Accent 1 Medium, 2 px away (§5, item 13). */
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --color-focus: var(--color-accent-1-medium);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: 12;
+    --grid-margin: 56px;
+    --grid-gutter: 24px;
+  }
+}

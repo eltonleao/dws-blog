@@ -1,19 +1,36 @@
-/* Structure only: the colors and the measures come with the design tokens. */
+/* Body/Large/600 in a pill, 48 high with the border. */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: var(--radius-pill);
   font: inherit;
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-large);
   cursor: pointer;
 }
 
 /* Filled: the main action of a screen. */
 .primary {
   border: 1px solid transparent;
+  background: var(--color-secondary-medium);
+  color: var(--color-neutral-lightest);
+}
+
+.primary:hover {
+  background: var(--color-secondary-dark);
 }
 
 /* Outlined: the way back. */
 .secondary {
   border: 1px solid currentColor;
   background: none;
+  color: var(--color-secondary-medium);
+}
+
+.secondary:hover {
+  color: var(--color-secondary-dark);
 }

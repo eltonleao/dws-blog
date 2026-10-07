@@ -109,25 +109,28 @@ export function PostListPage() {
             </button>
           )}
         </Header>
-        <main>
-          <div className={styles.toolbar}>
-            {/* The design shows the title on desktop only; on mobile it stays
-                as the heading of the page for screen readers. */}
-            <h1 className={isDesktop ? styles.title : styles.visuallyHidden}>
-              DWS blog
-            </h1>
-            {isDesktop ? null : (
-              <div className={styles.filters}>
-                <FilterDropdown filter="categories" options={options.categories} />
-                <FilterDropdown filter="authors" options={options.authors} />
-              </div>
-            )}
+        {/* In the page, the filters come before the order, so Tab reaches
+            them first; the grid areas put the order next to the title. */}
+        <main className={styles.main}>
+          {/* The design shows the title on desktop only; on mobile it stays
+              as the heading of the page for screen readers. */}
+          <h1 className={isDesktop ? styles.title : styles.visuallyHidden}>
+            DWS blog
+          </h1>
+          {isDesktop ? (
+            <div className={styles.sidebar}>
+              <FilterSidebar options={options} />
+            </div>
+          ) : (
+            <div className={styles.dropdowns}>
+              <FilterDropdown filter="categories" options={options.categories} />
+              <FilterDropdown filter="authors" options={options.authors} />
+            </div>
+          )}
+          <div className={styles.sort}>
             <SortButton />
           </div>
-          <div className={styles.columns}>
-            {isDesktop ? <FilterSidebar options={options} /> : null}
-            <div className={styles.results}>{content}</div>
-          </div>
+          <div className={styles.results}>{content}</div>
         </main>
       </div>
       {panelOpen ? <SearchPanel onClose={closeSearch} /> : null}

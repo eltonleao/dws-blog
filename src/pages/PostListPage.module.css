@@ -1,23 +1,48 @@
-/* Structure only: which part sits where at each breakpoint. The measures, the
-   colors and the type come with the design tokens. */
-
-/* The row above the posts: the title (desktop) or the filters (mobile) at the
-   left, the order at the right. */
-.toolbar {
-  display: flex;
+/* Which part sits where at each breakpoint. The page follows the order of
+   the keyboard (title, filters, order, posts), and the grid areas draw it as
+   the design does: on mobile, the dropdowns and the order in one row over
+   the posts; on desktop, the title and the order in one row, the sidebar and
+   the posts under them. */
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'filters sort'
+    'results results';
+  gap: 16px var(--grid-gutter);
   align-items: center;
-  justify-content: flex-end;
+  padding: 16px var(--grid-margin) 48px;
 }
 
 .title {
-  margin-right: auto;
+  grid-area: title;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h2);
+  color: var(--color-primary-light);
 }
 
-/* The mobile dropdowns, at the left of the toolbar. */
-.filters {
+.dropdowns {
   display: flex;
+  grid-area: filters;
   align-items: center;
-  margin-right: auto;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sidebar {
+  grid-area: filters;
+}
+
+.sort {
+  grid-area: sort;
+  justify-self: end;
+}
+
+.results {
+  grid-area: results;
+  align-self: start;
+  min-width: 0;
 }
 
 /* The mobile search, at the right of the header. */
@@ -26,7 +51,15 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-neutral-lightest);
   font: inherit;
+  font-size: var(--font-size-body-large);
   cursor: pointer;
 }
 
@@ -45,6 +78,7 @@
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gutter);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -53,18 +87,27 @@
 /* An empty card holds the place of a real one, at the card's height. */
 .skeleton {
   min-height: 369px;
+  border-radius: var(--radius-card);
+  background: var(--color-neutral-extra-light);
 }
 
 @media (min-width: 1024px) {
-  /* The filters column at the left, the posts in the rest. */
-  .columns {
-    display: flex;
-    align-items: flex-start;
+  /* The sidebar takes 3 of the 12 columns, the posts the other 9, in 3
+     cards of 3 columns each. */
+  .main {
+    grid-template-columns:
+      calc((100% - 11 * var(--grid-gutter)) / 4 + 2 * var(--grid-gutter))
+      minmax(0, 1fr);
+    grid-template-areas:
+      'title sort'
+      'sidebar results';
+    row-gap: 32px;
+    padding-top: 32px;
   }
 
-  .results {
-    flex: 1;
-    min-width: 0;
+  .sidebar {
+    grid-area: sidebar;
+    align-self: start;
   }
 
   .grid {

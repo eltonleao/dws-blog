@@ -1,21 +1,135 @@
-/* Structure only: the image on top, then the body with the meta, the text and
-   the tags. The colors, the type and the spacing come with the design tokens. */
+/* The image on top, then the body with the meta, the text and the tags. The
+   card fills its grid cell, so the cards of a row are equally tall, and the
+   tags stay at the bottom. */
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--color-neutral-extra-light);
+  border-radius: var(--radius-card);
+  background: var(--color-neutral-lightest);
+  box-shadow: var(--shadow-card);
 }
 
 /* The image and the block that replaces a broken one share the same box, so
-   the card keeps its size. */
+   the card keeps its size. Inside the border, the top corners follow the
+   card's. */
 .image,
 .placeholder {
   display: block;
   width: 100%;
   height: 150px;
+  border-radius: calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px) 0 0;
 }
 
 .image {
   object-fit: cover;
+}
+
+.placeholder {
+  background: var(--color-neutral-extra-light);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* The date and the author, with a dot between them. */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-secondary-medium);
+}
+
+/* One clamp of four lines across the title and the summary: Chromium counts
+   the lines through both blocks and cuts the summary at the last whole line. */
+.text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.title {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+  color: var(--color-primary-light);
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The link covers the card. Its box is the card's, out of the clamp's
+   overflow, so the image and the meta take the click too. */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--radius-card) - 1px);
+}
+
+/* The focus ring goes round the card the link covers. The link keeps its
+   outline, transparent, so the ring is not drawn twice (and forced colors
+   still paint it); the clamp would cut it at the title's edges. */
+.link:focus-visible {
+  outline-color: transparent;
+}
+
+.link:focus-visible::after {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: calc(var(--focus-offset) + 1px);
+}
+
+.card:hover .link {
+  text-decoration: underline;
+}
+
+.summary {
+  margin-top: 8px;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-darkest);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-extra-light);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-neutral-darkest);
 }
 
 @media (min-width: 1024px) {
@@ -23,22 +137,9 @@
   .placeholder {
     height: 196px;
   }
-}
 
-.body,
-.text {
-  display: flex;
-  flex-direction: column;
-}
-
-.meta {
-  display: flex;
-  align-items: center;
-}
-
-.categories {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  list-style: none;
+  .meta {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
 }

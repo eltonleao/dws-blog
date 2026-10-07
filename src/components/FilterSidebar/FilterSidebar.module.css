@@ -1,10 +1,32 @@
-/* Structure only: the groups one under the other, the items full width and
-   Apply filters at the end. The measures and the colors come with the design
-   tokens. */
+/* The groups one under the other inside a bordered panel, the items full
+   width and Apply filters at the end. */
 .sidebar {
   display: flex;
   flex: none;
   flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-neutral-extra-light);
+  border-radius: var(--radius-card);
+}
+
+.heading {
+  font-size: var(--font-size-filters-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-h3);
+  color: var(--color-primary-light);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupHeading {
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-large);
 }
 
 .items {
@@ -13,14 +35,36 @@
   list-style: none;
 }
 
+/* Default: only the divider under it. Selected: the whole border, in the
+   Accent 1 Dark of the design. The border is always there, transparent where
+   it is not drawn, so selecting moves nothing. */
 .item {
   display: block;
   width: 100%;
+  padding: 12px 8px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--color-neutral-extra-light);
+  background: none;
+  color: var(--color-neutral-darkest);
   font: inherit;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
   text-align: start;
   cursor: pointer;
 }
 
+.item:hover {
+  color: var(--color-accent-1-dark);
+}
+
+.item[aria-pressed='true'] {
+  border-color: var(--color-accent-1-dark);
+  border-radius: var(--radius-item);
+  background: var(--color-accent-1-light-5);
+  color: var(--color-accent-1-dark);
+}
+
 .apply {
   width: 100%;
+  margin-top: 16px;
 }

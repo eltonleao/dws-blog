@@ -1,0 +1,495 @@
+/* The bug hunt has no frame in the design, so it speaks the blog's language in
+   a new shape: the margins and the type of the list, the cards of the list,
+   and the list's split from 1024, the areas in the three columns of its
+   sidebar and the cards in the other nine. */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px var(--grid-margin) 48px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eyebrow {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary-dark);
+}
+
+/* The title takes the focus when the page opens, for screen readers, but it
+   is not a control: it draws no ring. */
+.title {
+  font-size: var(--font-size-post-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-post-heading);
+  color: var(--color-primary-dark);
+  text-wrap: balance;
+}
+
+.title:focus-visible {
+  outline: none;
+}
+
+.text {
+  max-width: 640px;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-post-body-small);
+  color: var(--color-neutral-darkest);
+}
+
+/* The commit with its date, and the runs. On a phone each part takes a line
+   of its own, so no dot is left hanging at the end of a line; from 1024 they
+   share one, with the dot of the card's meta between them. The links are
+   Secondary Dark, as on the not-found page. */
+.meta,
+.caught {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+}
+
+.dot {
+  display: none;
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-secondary-medium);
+}
+
+.link {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-secondary-dark);
+}
+
+.link:hover {
+  color: var(--color-primary-dark);
+}
+
+.hash,
+.code,
+.failure,
+.file,
+.testFile {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+.areas {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* The name of the area and its counter on one row, over a track that fills
+   as its cards are opened. */
+.areaHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 16px;
+}
+
+.areaTitle {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+  color: var(--color-primary-dark);
+}
+
+.counter {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+}
+
+.track {
+  flex-basis: 100%;
+  height: 4px;
+  margin-top: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-extra-light);
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-accent-1-medium);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The card of the list: Neutral Lightest with its blue shadow on mobile, the
+   inside stroke from 1024. */
+.card {
+  min-width: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-neutral-lightest);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease;
+}
+
+.card[data-open] {
+  box-shadow: var(--shadow-card), var(--shadow-popover);
+}
+
+/* The level over the title. The button covers the whole head, as the link
+   covers a post's card, so the level takes the click too. */
+.head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-caption);
+  color: var(--color-neutral-extra-dark);
+}
+
+/* A suit per level, like the suits of a deck. */
+.suit {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.suit[data-level='unit'] {
+  background: var(--color-accent-1-medium);
+}
+
+.suit[data-level='component'] {
+  background: var(--color-secondary-medium);
+}
+
+.suit[data-level='browser'] {
+  border-radius: 2px;
+  background: var(--color-primary-light);
+}
+
+.suit[data-level='design'] {
+  border-radius: 1px;
+  background: var(--color-secondary-dark);
+  transform: rotate(45deg) scale(0.9);
+}
+
+.toggle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-small);
+  color: var(--color-primary-dark);
+  cursor: pointer;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+/* The ring goes round the head the button covers. The button keeps its
+   outline, transparent, so the ring is not drawn twice. */
+.toggle:focus-visible {
+  outline-color: transparent;
+}
+
+.toggle:focus-visible::after {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+.name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The id of the line, in the tag of a post's category. */
+.id {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 0 8px;
+  border-radius: var(--radius-chip);
+  background: var(--color-neutral-extra-light);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  line-height: 20px;
+  color: var(--color-neutral-darkest);
+  vertical-align: 1px;
+}
+
+/* The round button of the design's search, as the handle of the card: grey
+   while closed, dark and turned over when open. */
+.chevron {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--color-neutral-extra-light);
+  color: var(--color-primary-dark);
+  transition:
+    transform 0.25s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.head:hover .chevron {
+  background: var(--color-neutral-light);
+}
+
+.card[data-open] .chevron {
+  background: var(--color-primary-dark);
+  color: var(--color-neutral-lightest);
+  transform: rotate(180deg);
+}
+
+/* Open, the card turns over on its back: the change, then the failure. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-neutral-extra-light);
+  transform-origin: top;
+  animation: turn-over 0.3s ease-out;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+/* Only the turn, never the opacity: the text of a card that has just opened
+   keeps its full contrast from the first frame. */
+@keyframes turn-over {
+  from {
+    transform: perspective(800px) rotateX(-12deg);
+  }
+}
+
+.change {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.change + .change {
+  margin-top: 8px;
+}
+
+.file {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+  overflow-wrap: anywhere;
+}
+
+.label {
+  margin-top: 4px;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-extra-dark);
+}
+
+.labelAfter {
+  color: var(--color-secondary-dark);
+}
+
+/* Long code wraps in its box, so no card is wider than the page. The edge
+   tells the two apart: teal for the code as it is, pink for the planted bug. */
+.code,
+.failure {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-item);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-body-small);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  border-left: 3px solid var(--color-accent-1-medium);
+  background: var(--color-neutral-extra-light);
+  color: var(--color-neutral-darkest);
+}
+
+.after {
+  border-left-color: var(--color-secondary-medium);
+}
+
+.removed {
+  font-family: var(--font-family);
+  font-style: italic;
+  color: var(--color-neutral-extra-dark);
+}
+
+/* The failure as the terminal printed it. */
+.failure {
+  background: var(--color-primary-dark);
+  color: var(--color-neutral-lightest);
+}
+
+.caught {
+  margin-top: 4px;
+  font-size: var(--font-size-caption);
+}
+
+.testFile {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 1024px) {
+  .main {
+    gap: 48px;
+    padding: 32px var(--grid-margin) 96px;
+  }
+
+  .title {
+    font-size: var(--font-size-h2);
+    line-height: 49px;
+  }
+
+  .meta,
+  .caught {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+  }
+
+  .dot {
+    display: block;
+  }
+
+  .text {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-post-body-large);
+  }
+
+  .areas {
+    gap: 56px;
+  }
+
+  /* The list's split: the area in the width of the sidebar, held in view
+     while its cards go by, and the cards in the other nine columns. */
+  .area {
+    display: grid;
+    grid-template-columns:
+      calc((100% - 11 * var(--grid-gutter)) / 4 + 2 * var(--grid-gutter))
+      minmax(0, 1fr);
+    align-items: start;
+    gap: 0 var(--grid-gutter);
+  }
+
+  .areaHead {
+    position: sticky;
+    top: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  .areaTitle {
+    font-size: var(--font-size-filters-heading);
+  }
+
+  .track {
+    flex-basis: auto;
+  }
+
+  .cards {
+    gap: 16px;
+  }
+
+  .card {
+    box-shadow: inset 0 0 0 1px var(--color-neutral-extra-light);
+  }
+
+  .card[data-open] {
+    box-shadow:
+      inset 0 0 0 1px var(--color-neutral-extra-light),
+      var(--shadow-popover);
+  }
+
+  .head {
+    padding: 20px 24px;
+  }
+
+  .toggle {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body-large);
+  }
+
+  .chevron {
+    margin-top: -2px;
+  }
+
+  .panel {
+    margin: 0 24px;
+    padding: 20px 0 24px;
+  }
+
+  .code,
+  .failure {
+    font-size: var(--font-size-body-small);
+  }
+}
+
+/* Nothing on the page moves when the reader asks for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .main,
+  .main * {
+    transition-duration: 0s;
+    animation-duration: 0s;
+  }
+}

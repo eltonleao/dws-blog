@@ -23,6 +23,15 @@ const PATHS: Record<IconName, ReactNode> = {
   sort: (
     <path d="M9.5 15V5M6.75 7.75 9.5 5l2.75 2.75M14.5 9v10m-2.75-2.75L14.5 19l2.75-2.75" />
   ),
+  // A beetle seen from above: the head and its feelers, the shell split down
+  // the middle, three legs a side.
+  bug: (
+    <>
+      <path d="M9.5 8.5a2.5 2.5 0 0 1 5 0M10.5 6.4 9 4.5m4.5 1.9L15 4.5" />
+      <rect x="8" y="8.5" width="8" height="11.5" rx="4" />
+      <path d="M12 12v8M8 11.5 5 10m3 4H4.5M8 17l-3 2m11-7.5 3-1.5m-3 4h3.5M16 17l3 2" />
+    </>
+  ),
 }
 
 export type IconName =
@@ -33,6 +42,7 @@ export type IconName =
   | 'check'
   | 'filters'
   | 'sort'
+  | 'bug'
 
 interface IconProps {
   name: IconName

@@ -1,0 +1,91 @@
+/* Under the page, over a hairline: the header's line, mirrored. The bar has
+   no fill, so the glows of the background run on under it. */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 24px var(--grid-margin) 32px;
+  border-top: 1px solid var(--color-neutral-extra-light);
+}
+
+/* An outlined pill, like Back, in Secondary Dark: Secondary Medium falls under
+   4.5:1 on the pink glow, Secondary Dark stays over 6.9:1. The fill is the
+   card's, so the grey of the lead keeps 5.6:1 over the blue glow too. At
+   least 44 high, the touch target. */
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 9px 20px 9px 16px;
+  border: 1px solid var(--color-secondary-dark);
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-lightest);
+  color: var(--color-secondary-dark);
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.icon {
+  flex: none;
+}
+
+/* On a phone the text takes two lines, the lead over the call, and the pill
+   wraps them tight; from 1024 they share one line. */
+.label {
+  width: min-content;
+  min-width: 0;
+}
+
+/* Each half holds as one line, or min-content would break the label word by
+   word. */
+.lead,
+.call {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.lead {
+  color: var(--color-neutral-extra-dark);
+}
+
+.call {
+  font-weight: var(--font-weight-semibold);
+}
+
+.action:hover {
+  background: var(--color-secondary-dark);
+  color: var(--color-neutral-lightest);
+}
+
+.action:hover .lead {
+  color: var(--color-neutral-lightest);
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding: 32px var(--grid-margin) 40px;
+  }
+
+  .label {
+    width: auto;
+  }
+
+  .action {
+    min-height: 48px;
+    padding: 11px 24px 11px 20px;
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body-large);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action {
+    transition: none;
+  }
+}

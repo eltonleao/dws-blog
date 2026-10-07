@@ -8,6 +8,8 @@ This implementation builds both views from 320 to 1920 px wide, with the categor
 
 Live: https://dentsu.eltonleao.dev
 
+Bug hunt: https://dentsu.eltonleao.dev/proof
+
 Quick map: [Run it](#run-it) · [Design decisions](#design-decisions) · [Accessibility](#accessibility) · [Tests](#tests)
 
 ## Run it
@@ -42,7 +44,7 @@ CI (`.github/workflows/ci.yml`) runs lint, typecheck, the unit and component tes
 | Piece | Why |
 |---|---|
 | React 19, TypeScript, Vite 8 | Pure React with hooks, as the brief asks. Vite builds and serves; there is no framework. React 19 hoists the post's `<title>` into `<head>`. |
-| React Router 8, declarative mode | Three routes (`/`, `/posts/:id`, `*`) inside one layout route, which keeps the header and its search mounted from page to page. `<BrowserRouter>`, `<Routes>` and `<Outlet />` are all it takes. |
+| React Router 8, declarative mode | Four routes (`/`, `/posts/:id`, `/proof`, `*`) inside one layout route, which keeps the header and its search mounted from page to page. `/proof` loads in a chunk of its own, through `React.lazy`. `<BrowserRouter>`, `<Routes>` and `<Outlet />` are all it takes. |
 | Redux Toolkit 2, React Redux 9 | One slice for the UI state the pages share. Why Redux at all is answered below. |
 | RTK Query, inside Redux Toolkit | The server cache: one request feeds the list and the post page, with loading, error and retry, and no fetch in `useEffect`. |
 | React Compiler 1.0 | Memoization at build time, through `@rolldown/plugin-babel` and `babel-plugin-react-compiler`. No hand-written `useMemo`, `useCallback` or `memo`. |
@@ -64,7 +66,8 @@ src/
     posts/      sort, filter, search, filter options, latest posts, selectors
     browse/     browseSlice, the URL codec, useBrowseUrlSync, useSearch
   components/   one folder per component: the .tsx, and a .module.css when it has styles
-  pages/        PostListPage, PostPage, NotFoundPage
+  pages/        PostListPage, PostPage, NotFoundPage, ProofPage
+  proof/        the data of the bug hunt (proof.json), its types and its parsers
   lib/          formatDate, paragraphs, normalize, useMediaQuery
   styles/       tokens.css and global.css
   test/         setup, MSW server, renderApp, the API snapshot
@@ -144,6 +147,8 @@ The design is a vector PDF, with no Figma link. Its screens are drawn at 1 pt pe
 | Logo and favicon | The logo is one SVG path, merged from the 20 paths of the logo group on page 5 of the PDF and drawn in `currentColor` in the design's 203.69 x 21.6 box; against the PDF it differs by 0 px at 2x. The favicon, `public/favicon.svg`, is the logo's "d", white on a dark tab through `prefers-color-scheme`. |
 | Icons | The control icons in `src/components/Icon/` are drawn for the app, not taken from the vector. SVG, with no icon font and no icon library. |
 
+The footer is the one element the design does not draw. Every page ends with it, under a hairline like the header's, and its one control is an outlined pill that leads to `/proof`, the bug hunt: "How this blog was tested: hunt the 56 planted bugs". It uses only the colors of `tokens.css` and the type of the blog, is at least 44 px high on a phone, and adds nothing above the end of the page, so the screens of the design stay as they were. On `/proof` the same pill reads "Back to the blog" and returns to the list as it was left.
+
 Three deliberate deviations, for contrast (WCAG 1.4.3):
 
 | Where | Design | Code |
@@ -192,6 +197,8 @@ Every test of the matrix starts with its id, so one line runs alone: `npm test -
 **The frozen fixture.** Both suites run offline on the snapshot of the API in `src/test/fixtures/posts.json`. In the component tests, MSW serves it and fails the test on any request without a handler. In the browser, `page.route` serves it, with a local PNG for every image, and aborts any other outside request; a page or console error fails the test. The component tests pin the time zone to `America/Sao_Paulo`, where a local date would be a day off, and switch a simulated `matchMedia` between 375 and 1440. The e2e suite runs on the production build, one worker at a time, because it measures layout and scroll.
 
 **The proof.** The tests came first, in two rounds, and `git log` shows it: the data and list tests land in two `test:` commits before the first `feat` commit, and the post's tests (`test(post): ...`) before `feat(post)`. Each round was run red before the code existed, with the result recorded per test. The test files were then frozen by SHA-256 hash, and the hash is checked again before each green run, so no test was bent to fit the code. Last, every line of the matrix has one mutant: a deliberate break of the code that line guards, such as dropping the tie-break by API position for D1. A line counts only if its test fails on the mutant by its assertion, not by a crash. On the current code all 56 die, 45 for the list and 11 for the post. Two mutants had turned equivalent when the code gained a second guard, and were rewritten to break both: C20, above, and M5, whose post column is also capped at 875 px. The records of these runs, like the pixel measurements, are kept outside this repository.
+
+**The bug hunt.** `/proof` shows every bug planted in the mutation runs, one closed card per line of the matrix, grouped by area, and the test that caught it: open a card for the change, before and after, and for how the test failed. `src/proof/proof.json` is built by `scripts/build-proof.ts` from the records of the run, which stay outside this repository with the notes of the project; `src/proof/proof-count.json` holds only the total, so the footer can show it without pulling the data into the main chunk.
 
 ## What comes next
 

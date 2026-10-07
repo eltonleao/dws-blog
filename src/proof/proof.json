@@ -1,6 +1,6 @@
 {
-  "commit": "6afa3e34bd7937b6f6b5c3937463671c11dda8d6",
-  "ranAt": "2026-10-07T13:43:56.882Z",
+  "commit": "ccb677bf3e62deaa4fff276a891882b121c8d82f",
+  "ranAt": "2026-10-07T20:32:06.421Z",
   "lines": [
     {
       "id": "D11",
@@ -19,7 +19,7 @@
       "failure": [
         "AssertionError: expected error to be instance of ApiShapeError"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "D12",
@@ -38,7 +38,7 @@
       "failure": [
         "AssertionError: expected [ …(6) ] to deeply equal [ …(4) ]"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "D13",
@@ -57,7 +57,7 @@
       "failure": [
         "AssertionError: expected 'Sep 18, 2026' to be 'Sep 19, 2026' // Object.is equality"
       ],
-      "seconds": 2
+      "seconds": 5
     },
     {
       "id": "D14",
@@ -76,7 +76,7 @@
       "failure": [
         "AssertionError: expected [ 'first\\r\\n\\r\\nsecond' ] to deeply equal [ 'first', 'second' ]"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "C1",
@@ -100,7 +100,7 @@
         "<header",
         "class=\"_header_a5b977\""
       ],
-      "seconds": 3
+      "seconds": 10
     },
     {
       "id": "C2",
@@ -124,7 +124,7 @@
         "<body>",
         "<div>"
       ],
-      "seconds": 4
+      "seconds": 15
     },
     {
       "id": "C3",
@@ -148,7 +148,7 @@
         "\"An unhandled error occurred processing a request for the endpoint \"getPosts\".",
         "In the…"
       ],
-      "seconds": 3
+      "seconds": 12
     },
     {
       "id": "C4",
@@ -177,7 +177,7 @@
         "<div",
         "class=\"_page_d72aeb\""
       ],
-      "seconds": 3
+      "seconds": 13
     },
     {
       "id": "C12",
@@ -201,7 +201,7 @@
         "<div>",
         "<div"
       ],
-      "seconds": 5
+      "seconds": 18
     },
     {
       "id": "C13",
@@ -220,7 +220,7 @@
       "failure": [
         "AssertionError: expected <div class=\"_body_915a1c\">…(3)</div> to have a length of 2 but got 1"
       ],
-      "seconds": 3
+      "seconds": 12
     },
     {
       "id": "D1",
@@ -239,7 +239,7 @@
       "failure": [
         "AssertionError: expected [ …(26) ] to deeply equal [ …(26) ]"
       ],
-      "seconds": 2
+      "seconds": 5
     },
     {
       "id": "D2",
@@ -258,7 +258,7 @@
       "failure": [
         "AssertionError: expected [ 'january', 'march', 'may' ] to deeply equal [ 'march', 'may', 'january' ]"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "D3",
@@ -277,7 +277,7 @@
       "failure": [
         "AssertionError: expected [ 'invalid', 'missing', 'may-first' ] to deeply equal [ 'may-first', 'may-second', 'm…"
       ],
-      "seconds": 2
+      "seconds": 5
     },
     {
       "id": "C8",
@@ -296,7 +296,7 @@
       "failure": [
         "AssertionError: expected null not to be null"
       ],
-      "seconds": 4
+      "seconds": 12
     },
     {
       "id": "D4",
@@ -315,7 +315,7 @@
       "failure": [
         "AssertionError: expected [] to have a length of 2 but got +0"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "D5",
@@ -334,7 +334,7 @@
       "failure": [
         "AssertionError: expected [ …(6) ] to deeply equal [ 'Tech Innovations in Healthcare' ]"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "D6",
@@ -353,7 +353,7 @@
       "failure": [
         "AssertionError: expected [] to have a length of 26 but got +0"
       ],
-      "seconds": 1
+      "seconds": 6
     },
     {
       "id": "D7",
@@ -372,7 +372,7 @@
       "failure": [
         "AssertionError: expected null to deeply equal []"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "D15",
@@ -391,7 +391,7 @@
       "failure": [
         "AssertionError: expected [ { value: 'Technology', …(1) }, …(1) ] to deeply equal [ { value: 'Technology', …(1)…"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "C5",
@@ -415,7 +415,7 @@
         "aria-haspopup=\"listbox\"",
         "class=\"_button_f68a85\""
       ],
-      "seconds": 3
+      "seconds": 10
     },
     {
       "id": "C6",
@@ -434,7 +434,7 @@
       "failure": [
         "AssertionError: expected [ <a class=\"_link_915a1c\" …(2)></a> ] to have a length of 26 but got 1"
       ],
-      "seconds": 3
+      "seconds": 14
     },
     {
       "id": "C7",
@@ -456,7 +456,7 @@
         "Received:",
         "a"
       ],
-      "seconds": 5
+      "seconds": 19
     },
     {
       "id": "D8",
@@ -475,7 +475,7 @@
       "failure": [
         "AssertionError: expected [] to include 'Tech Innovations in Healthcare'"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "D9",
@@ -494,7 +494,7 @@
       "failure": [
         "AssertionError: expected [ { …(8) }, { …(8) }, { …(8) }, …(23) ] to deeply equal []"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "D10",
@@ -513,7 +513,7 @@
       "failure": [
         "AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "C9",
@@ -532,7 +532,7 @@
       "failure": [
         "AssertionError: expected [ …(26) ] to deeply equal [ …(6) ]"
       ],
-      "seconds": 3
+      "seconds": 11
     },
     {
       "id": "C20",
@@ -566,7 +566,7 @@
       "failure": [
         "AssertionError: expected 78 to be 26 // Object.is equality"
       ],
-      "seconds": 3
+      "seconds": 9
     },
     {
       "id": "D16",
@@ -590,7 +590,7 @@
       "failure": [
         "AssertionError: expected [ …(2) ] to deeply equal [ …(3) ]"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "C14",
@@ -609,7 +609,7 @@
       "failure": [
         "AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]"
       ],
-      "seconds": 3
+      "seconds": 10
     },
     {
       "id": "C15",
@@ -628,7 +628,7 @@
       "failure": [
         "AssertionError: expected [ '/posts/nao-existe' ] to deeply equal []"
       ],
-      "seconds": 2
+      "seconds": 10
     },
     {
       "id": "C16",
@@ -652,7 +652,7 @@
         "<div",
         "class=\"_page_d72aeb\""
       ],
-      "seconds": 4
+      "seconds": 15
     },
     {
       "id": "E4",
@@ -685,7 +685,7 @@
         "Expected: visible",
         "Timeout: 5000m…"
       ],
-      "seconds": 10
+      "seconds": 28
     },
     {
       "id": "E5",
@@ -705,11 +705,11 @@
         "Error: requests to the API in the whole walk",
         "expect(received).toEqual(expected) // deep equality",
         "- Expected  - 0",
-        "+ Received  + 1",
+        "+ Received  + 2",
         "Array [",
         "\"GET /posts/\","
       ],
-      "seconds": 5
+      "seconds": 28
     },
     {
       "id": "D17",
@@ -729,7 +729,7 @@
         "AssertionError: expected { search: 'emily', …(4) } to match object { search: 'emily', …(3) }",
         "(1 matching property omitted from actual)"
       ],
-      "seconds": 1
+      "seconds": 4
     },
     {
       "id": "D18",
@@ -748,7 +748,7 @@
       "failure": [
         "AssertionError: expected '?order=newest' to be '' // Object.is equality"
       ],
-      "seconds": 1
+      "seconds": 5
     },
     {
       "id": "C11",
@@ -771,7 +771,7 @@
         "Received:",
         "alt=\"Tech Innovations in Healthcare\""
       ],
-      "seconds": 3
+      "seconds": 13
     },
     {
       "id": "C17",
@@ -799,7 +799,7 @@
         "<div />",
         "</body>"
       ],
-      "seconds": 4
+      "seconds": 15
     },
     {
       "id": "C19",
@@ -823,7 +823,7 @@
         "<body>",
         "<div>"
       ],
-      "seconds": 4
+      "seconds": 15
     },
     {
       "id": "E1",
@@ -847,7 +847,7 @@
         "Received:    1500",
         "Call Log:"
       ],
-      "seconds": 13
+      "seconds": 28
     },
     {
       "id": "E2",
@@ -868,10 +868,10 @@
         "mobile: scrollY on the post page",
         "expect(received).toBe(expected) // Object.is equality",
         "Expected: 0",
-        "Received: 2296",
+        "Received: 2415",
         "Call Log:"
       ],
-      "seconds": 11
+      "seconds": 29
     },
     {
       "id": "E3",
@@ -905,7 +905,7 @@
         "Received: 0",
         "T…"
       ],
-      "seconds": 11
+      "seconds": 25
     },
     {
       "id": "E6",
@@ -929,7 +929,7 @@
         "Timeout: 5000ms",
         "Call log…"
       ],
-      "seconds": 14
+      "seconds": 38
     },
     {
       "id": "E11",
@@ -952,7 +952,7 @@
         "Expected: 1",
         "Received: 26 …"
       ],
-      "seconds": 14
+      "seconds": 28
     },
     {
       "id": "E12",
@@ -974,7 +974,7 @@
         "Expected: 2",
         "Received: 5"
       ],
-      "seconds": 9
+      "seconds": 23
     },
     {
       "id": "C10",
@@ -998,7 +998,7 @@
         "aria-label=\"Search\"",
         "class=\"_searchButton_d72aeb\""
       ],
-      "seconds": 4
+      "seconds": 11
     },
     {
       "id": "C18",
@@ -1022,7 +1022,7 @@
         "tabindex=\"-1\"",
         ">"
       ],
-      "seconds": 4
+      "seconds": 17
     },
     {
       "id": "E9",
@@ -1043,7 +1043,7 @@
         "expect(received).not.toBe(expected) // Object.is equality",
         "Expected: not \"none\""
       ],
-      "seconds": 10
+      "seconds": 24
     },
     {
       "id": "E10",
@@ -1067,7 +1067,7 @@
         "- Object {}",
         "+ Object {"
       ],
-      "seconds": 14
+      "seconds": 37
     },
     {
       "id": "E7",
@@ -1091,7 +1091,7 @@
         "- Array []",
         "+ Array ["
       ],
-      "seconds": 10
+      "seconds": 40
     },
     {
       "id": "E8",
@@ -1115,7 +1115,7 @@
         "Timeout: 5000ms",
         "Error: element(s) not found"
       ],
-      "seconds": 15
+      "seconds": 32
     },
     {
       "id": "M1",
@@ -1137,7 +1137,7 @@
         "Expected: >= 63",
         "Received:    60"
       ],
-      "seconds": 11
+      "seconds": 22
     },
     {
       "id": "M2",
@@ -1159,7 +1159,7 @@
         "Expected: <= 17",
         "Received:    24"
       ],
-      "seconds": 10
+      "seconds": 21
     },
     {
       "id": "M3",
@@ -1182,7 +1182,7 @@
         "Expected: \"16px\"",
         "Received: \"12…"
       ],
-      "seconds": 12
+      "seconds": 25
     },
     {
       "id": "M4",
@@ -1204,7 +1204,7 @@
         "Expected: 3",
         "Received: 23"
       ],
-      "seconds": 6
+      "seconds": 24
     },
     {
       "id": "M5",
@@ -1226,7 +1226,7 @@
         "Expected: <= 879",
         "Received:    990"
       ],
-      "seconds": 6
+      "seconds": 25
     },
     {
       "id": "M6",
@@ -1248,7 +1248,7 @@
         "Expected: > 0",
         "Received:   0"
       ],
-      "seconds": 7
+      "seconds": 21
     }
   ]
 }

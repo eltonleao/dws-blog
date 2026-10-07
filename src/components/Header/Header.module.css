@@ -1,0 +1,10 @@
+/* Structure only: the logo at the left and the search at the right. */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  flex-shrink: 0;
+}

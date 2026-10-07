@@ -1,0 +1,12 @@
+/* Structure only: the message centered, with its actions under it. */
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}

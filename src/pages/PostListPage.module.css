@@ -1,0 +1,60 @@
+/* Structure only: which part sits where at each breakpoint. The measures, the
+   colors and the type come with the design tokens. */
+
+/* The row above the posts: the title (desktop) or the filters (mobile) at the
+   left, the order at the right. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.title {
+  margin-right: auto;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* An empty card holds the place of a real one, at the card's height. */
+.skeleton {
+  min-height: 369px;
+}
+
+@media (min-width: 1024px) {
+  /* The filters column at the left, the posts in the rest. */
+  .columns {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .results {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .skeleton {
+    min-height: 425px;
+  }
+}

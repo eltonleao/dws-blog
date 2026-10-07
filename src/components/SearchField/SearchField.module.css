@@ -1,0 +1,10 @@
+/* Structure only: the input fills the field. */
+.form {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}

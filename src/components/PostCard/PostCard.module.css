@@ -11,11 +11,8 @@
   min-height: 369px;
   border-radius: var(--radius-card);
   background: var(--color-neutral-lightest);
-  /* The design's stroke is inside the card: the line takes no room, and the
-     picture covers it at the top. */
-  box-shadow:
-    inset 0 0 0 1px var(--color-neutral-extra-light),
-    var(--shadow-card);
+  /* On mobile the design's card has no stroke, only its shadow. */
+  box-shadow: var(--shadow-card);
 }
 
 /* The image and the block that replaces a broken one share the same box, so
@@ -147,8 +144,11 @@
 }
 
 @media (min-width: 1024px) {
+  /* On desktop the card has no shadow, and the design's stroke is inside it:
+     the line takes no room, and the picture covers it at the top. */
   .card {
     min-height: 425px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-extra-light);
   }
 
   .image,

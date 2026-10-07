@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { Outlet, useLocation } from 'react-router'
+import { Backdrop } from '../components/Backdrop/Backdrop'
 import { Header } from '../components/Header/Header'
 import { Icon } from '../components/Icon/Icon'
 import { SearchField } from '../components/SearchField/SearchField'
@@ -39,8 +40,10 @@ export function AppLayout() {
 
   return (
     <>
-      {/* Under the open search panel the page stays mounted, out of reach. */}
-      <div inert={panelOpen}>
+      {/* Under the open search panel the page stays mounted, out of reach. The
+          glows of the background sit under it and move with it. */}
+      <div inert={panelOpen} className={styles.page}>
+        <Backdrop />
         <Header>
           {isDesktop ? (
             <SearchField />

@@ -1,3 +1,10 @@
+/* The box of the page holds the background's glows, and is at least as tall
+   as the window, so a short page shows them down to its bottom edge. */
+.page {
+  position: relative;
+  min-height: 100svh;
+}
+
 /* The mobile search, at the right of the header. */
 .searchButton {
   display: inline-flex;

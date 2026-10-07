@@ -30,8 +30,121 @@
   --color-secondary-medium-5: color-mix(in srgb, var(--color-secondary-medium) 5%, transparent);
   --color-accent-1-light-5: color-mix(in srgb, var(--color-accent-1-light) 5%, transparent);
 
-  /* The card shadow has no declared value: a faint one in the darkest primary. */
-  --shadow-card: 0 2px 8px color-mix(in srgb, var(--color-primary-light) 6%, transparent);
+  /* The page under everything: white on mobile, the lightest neutral from the
+     desktop breakpoint on, as each frame of the design paints it. */
+  --color-page-mobile: #ffffff;
+  --color-page-desktop: var(--color-neutral-lightest);
+
+  /* The mobile card's shadow, fitted to the raster the design lays under it
+     (402x428 for a 343x369 card): a blue that fades out about 25 px from the
+     card, a little longer below than above. */
+  --shadow-card: 0 3px 23px 2px rgb(91 124 195 / 21%);
+
+  /* The glows of the page background: the design's radial images (a colour
+     fading to white, under a soft mask), read ring by ring every 5% of the
+     radius, with the opacity the design draws them at already in the alpha.
+     The mobile pink and teal fade out at 75% of the radius, the desktop ones
+     and the blue near the edge. Each is the stop list of a radial-gradient. */
+  --glow-pink:
+    rgb(239 90 140 / 36.6%) 0%,
+    rgb(239 94 147 / 35.4%) 5%,
+    rgb(239 102 153 / 33.2%) 10%,
+    rgb(239 113 160 / 30.5%) 15%,
+    rgb(240 125 168 / 27.6%) 20%,
+    rgb(239 138 176 / 24.7%) 25%,
+    rgb(239 149 184 / 21.7%) 30%,
+    rgb(240 161 192 / 18.8%) 35%,
+    rgb(240 172 199 / 15.9%) 40%,
+    rgb(240 184 207 / 12.9%) 45%,
+    rgb(239 196 215 / 9.9%) 50%,
+    rgb(240 206 222 / 6.9%) 55%,
+    rgb(240 216 228 / 4.0%) 60%,
+    rgb(239 224 232 / 1.7%) 65%,
+    rgb(233 228 231 / 0.5%) 70%,
+    transparent 75%;
+  --glow-teal:
+    rgb(19 194 199 / 27.7%) 0%,
+    rgb(24 196 198 / 26.9%) 5%,
+    rgb(38 198 201 / 25.1%) 10%,
+    rgb(55 202 204 / 23.1%) 15%,
+    rgb(71 205 209 / 20.9%) 20%,
+    rgb(89 209 212 / 18.8%) 25%,
+    rgb(106 213 215 / 16.6%) 30%,
+    rgb(123 216 220 / 14.4%) 35%,
+    rgb(140 219 222 / 12.3%) 40%,
+    rgb(157 223 224 / 10.1%) 45%,
+    rgb(174 226 229 / 7.9%) 50%,
+    rgb(190 229 233 / 5.7%) 55%,
+    rgb(205 233 234 / 3.5%) 60%,
+    rgb(217 235 238 / 1.5%) 65%,
+    rgb(223 232 233 / 0.4%) 70%,
+    transparent 75%;
+  --glow-blue:
+    rgb(53 88 170 / 40.0%) 0%,
+    rgb(53 88 170 / 40.0%) 5%,
+    rgb(53 88 170 / 39.9%) 10%,
+    rgb(56 91 173 / 39.3%) 15%,
+    rgb(65 98 176 / 37.5%) 20%,
+    rgb(76 108 179 / 35.0%) 25%,
+    rgb(89 117 184 / 32.4%) 30%,
+    rgb(102 127 189 / 29.8%) 35%,
+    rgb(115 137 194 / 27.1%) 40%,
+    rgb(125 148 199 / 24.5%) 45%,
+    rgb(139 157 203 / 21.8%) 50%,
+    rgb(150 167 209 / 19.2%) 55%,
+    rgb(162 176 212 / 16.6%) 60%,
+    rgb(173 186 218 / 14.0%) 65%,
+    rgb(185 196 222 / 11.3%) 70%,
+    rgb(199 205 226 / 8.6%) 75%,
+    rgb(210 214 231 / 6.0%) 80%,
+    rgb(219 223 233 / 3.4%) 85%,
+    rgb(226 229 235 / 1.3%) 90%,
+    rgb(224 225 226 / 0.2%) 95%,
+    transparent 100%;
+  --glow-pink-wide:
+    rgb(241 83 139 / 38.0%) 0%,
+    rgb(240 88 140 / 37.1%) 5%,
+    rgb(239 95 148 / 35.3%) 10%,
+    rgb(240 103 154 / 33.2%) 15%,
+    rgb(240 111 159 / 31.1%) 20%,
+    rgb(240 121 166 / 29.0%) 25%,
+    rgb(240 129 171 / 26.8%) 30%,
+    rgb(240 139 177 / 24.7%) 35%,
+    rgb(240 147 183 / 22.5%) 40%,
+    rgb(240 156 189 / 20.4%) 45%,
+    rgb(239 165 194 / 18.2%) 50%,
+    rgb(240 173 200 / 16.1%) 55%,
+    rgb(240 182 206 / 13.9%) 60%,
+    rgb(241 191 212 / 11.7%) 65%,
+    rgb(240 200 218 / 9.5%) 70%,
+    rgb(240 208 223 / 7.4%) 75%,
+    rgb(240 216 229 / 5.2%) 80%,
+    rgb(240 225 233 / 3.0%) 85%,
+    rgb(237 229 234 / 1.2%) 90%,
+    rgb(228 226 228 / 0.2%) 95%,
+    transparent 100%;
+  --glow-teal-wide:
+    rgb(9 193 195 / 28.8%) 0%,
+    rgb(17 193 198 / 28.0%) 5%,
+    rgb(27 197 199 / 26.6%) 10%,
+    rgb(39 198 201 / 25.0%) 15%,
+    rgb(53 201 203 / 23.5%) 20%,
+    rgb(65 204 209 / 21.9%) 25%,
+    rgb(77 207 210 / 20.3%) 30%,
+    rgb(92 209 212 / 18.7%) 35%,
+    rgb(103 213 215 / 17.1%) 40%,
+    rgb(116 215 218 / 15.5%) 45%,
+    rgb(129 217 221 / 14.0%) 50%,
+    rgb(142 220 223 / 12.4%) 55%,
+    rgb(154 222 223 / 10.8%) 60%,
+    rgb(167 225 227 / 9.2%) 65%,
+    rgb(179 227 230 / 7.5%) 70%,
+    rgb(192 229 233 / 5.9%) 75%,
+    rgb(204 233 234 / 4.3%) 80%,
+    rgb(216 235 238 / 2.7%) 85%,
+    rgb(225 236 238 / 1.2%) 90%,
+    rgb(226 231 232 / 0.3%) 95%,
+    transparent 100%;
   /* The open dropdown floats higher than a card, in a wider and softer shadow. */
   --shadow-popover: 0 8px 24px color-mix(in srgb, var(--color-primary-light) 12%, transparent);
   /* What the open search panel lays over the header it leaves in view. */

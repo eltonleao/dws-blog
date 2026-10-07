@@ -1,0 +1,68 @@
+/* The glows of the design under the whole page. Each one is a radial gradient
+   on a square, at the x, y and side the frame gives it, in px of the page. A
+   cycle is one box with the glows of one turn of the pattern, from the top of
+   its highest glow to the bottom of its lowest, so no glow is cut inside it;
+   the layer clips what passes the page, in both directions. The glows lower in
+   the design's order come later in the list, under the ones above them. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+
+/* Below the desktop breakpoint the glows hang from the left edge, as in the
+   375 frame: its teal is centered on that edge, and the column of a wider
+   phone or tablet starts there as well. The list's cycle is the post's
+   without the blue its frame leaves out (the one at 586.9): the two glows of
+   the list frame, and past it the rest of the post's pattern, whose second
+   blue keeps the edges of a long list from going white. */
+.cycle {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3958px;
+  margin-top: -296px;
+  background:
+    radial-gradient(closest-side, var(--glow-teal)) 97.16px 2063.67px / 1088.84px 1088.84px no-repeat,
+    radial-gradient(closest-side, var(--glow-pink)) -224.39px 1657px / 927.68px 927.68px no-repeat,
+    radial-gradient(closest-side, var(--glow-blue)) -561.54px 2539.9px / 1418.2px 1418.2px no-repeat,
+    radial-gradient(closest-side, var(--glow-teal)) -543.43px 406.67px / 1088.84px 1088.84px no-repeat,
+    radial-gradient(closest-side, var(--glow-pink)) -60.72px 0 / 927.68px 927.68px no-repeat;
+}
+
+.backdrop[data-set='post'] .cycle {
+  background:
+    radial-gradient(closest-side, var(--glow-teal)) 97.16px 2063.67px / 1088.84px 1088.84px no-repeat,
+    radial-gradient(closest-side, var(--glow-pink)) -224.39px 1657px / 927.68px 927.68px no-repeat,
+    radial-gradient(closest-side, var(--glow-blue)) -561.54px 2539.9px / 1418.2px 1418.2px no-repeat,
+    radial-gradient(closest-side, var(--glow-teal)) -543.43px 406.67px / 1088.84px 1088.84px no-repeat,
+    radial-gradient(closest-side, var(--glow-pink)) -60.72px 0 / 927.68px 927.68px no-repeat,
+    radial-gradient(closest-side, var(--glow-blue)) -214.1px 882.9px / 1418.2px 1418.2px no-repeat;
+}
+
+/* From the desktop breakpoint on, the glows keep their place around the
+   center of a 1440 frame, where the column of the page is centered: each x is
+   the offset of the glow's center from the frame's center. A narrower window
+   cuts both sides alike, and a wider one shows more of each glow. */
+@media (min-width: 1024px) {
+  .cycle {
+    height: 1711px;
+    margin-top: -215px;
+    background:
+      radial-gradient(closest-side, var(--glow-teal-wide)) calc(50% - 485.5px) 390px / 1321px 1321px no-repeat,
+      radial-gradient(closest-side, var(--glow-pink-wide)) calc(50% + 542px) 0 / 1122px 1122px no-repeat;
+  }
+
+  .backdrop[data-set='post'] .cycle {
+    height: 5343px;
+    background:
+      radial-gradient(closest-side, var(--glow-teal-wide)) calc(50% + 578px) 2770px / 1850px 1850px no-repeat,
+      radial-gradient(closest-side, var(--glow-blue)) calc(50% - 389.5px) 3580.9px / 1761.2px 1761.2px no-repeat,
+      radial-gradient(closest-side, var(--glow-pink-wide)) calc(50% - 406px) 2259px / 1394px 1394px no-repeat,
+      radial-gradient(closest-side, var(--glow-teal-wide)) calc(50% - 578px) 511px / 1850px 1850px no-repeat,
+      radial-gradient(closest-side, var(--glow-blue)) calc(50% + 389.5px) 1321.9px / 1761.2px 1761.2px no-repeat,
+      radial-gradient(closest-side, var(--glow-pink-wide)) calc(50% + 406px) 0 / 1394px 1394px no-repeat;
+  }
+}

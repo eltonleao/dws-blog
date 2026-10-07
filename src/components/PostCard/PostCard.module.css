@@ -133,7 +133,10 @@
 
 /* The text of the tag is Neutral Extra Dark on mobile and Neutral Darkest on
    desktop, as the design's vector paints it. On the tag's Neutral Extra Light
-   the first is 4.92:1, over the 4.5 the 12 px text needs. */
+   the first is 4.92:1, over the 4.5 the 12 px text needs. The weight changes
+   with it: the vector's advances for "Category 1" are those of Open Sans
+   SemiBold 12 on mobile (a 6.96, t 4.74, r 5.18) and of Regular 12 on desktop
+   (a 6.67, t 4.27, r 4.91). */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -142,6 +145,7 @@
   border-radius: var(--radius-pill);
   background: var(--color-neutral-extra-light);
   font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-caption);
   color: var(--color-neutral-extra-dark);
 }
@@ -169,6 +173,7 @@
   }
 
   .tag {
+    font-weight: var(--font-weight-regular);
     color: var(--color-neutral-darkest);
   }
 }

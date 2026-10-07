@@ -1,5 +1,7 @@
-/* The title and the text of the post, with the link to the list underlined
-   in the color of Back. */
+/* The title and the text of the post, with the link to the list underlined.
+   The link is Secondary Dark, not the Secondary Medium of Back: over the pink
+   glow of this page, Secondary Medium falls to 3.94:1, under the 4.5 the text
+   needs, and Secondary Dark gives 6.99:1. On hover it goes on to Primary Dark. */
 .title {
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-bold);
@@ -20,11 +22,11 @@
 
 .link {
   font-weight: var(--font-weight-semibold);
-  color: var(--color-secondary-medium);
+  color: var(--color-secondary-dark);
 }
 
 .link:hover {
-  color: var(--color-secondary-dark);
+  color: var(--color-primary-dark);
 }
 
 @media (min-width: 1024px) {

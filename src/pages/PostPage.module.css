@@ -70,13 +70,15 @@
   object-fit: cover;
 }
 
+/* The vector paints the lines of the body in Primary Dark, as it does the
+   title, and not in Neutral Darkest: 23 lines at 1440 and 50 at 375. */
 .body {
   display: flex;
   flex-direction: column;
   gap: 16px;
   font-size: var(--font-size-body-small);
   line-height: var(--line-height-post-body-small);
-  color: var(--color-neutral-darkest);
+  color: var(--color-primary-dark);
 }
 
 /* A hairline 32 under the text, Latest articles 24 under it, and the cards

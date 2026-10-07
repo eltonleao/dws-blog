@@ -105,10 +105,12 @@
     padding-top: 32px;
   }
 
-  /* The order sits on the baseline of the title, as the design draws it. */
-  .title,
+  /* The pill of the order is 36 high and ends where the box of the title
+     ends, as the design draws it: its text is 1 above the base of the title.
+     The row stays the 49 of the title, which a baseline alignment of the 36
+     would grow to 50. */
   .sort {
-    align-self: baseline;
+    align-self: end;
   }
 
   .sidebar {

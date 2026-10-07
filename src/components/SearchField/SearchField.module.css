@@ -39,7 +39,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
   color: var(--color-neutral-lightest);
   pointer-events: none;
 }

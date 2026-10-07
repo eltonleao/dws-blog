@@ -90,10 +90,13 @@
   border-top: 1px solid var(--color-neutral-light);
 }
 
+/* The box of the heading is the design's, 32 (49 on desktop): written here,
+   not read from the h2 step or from --line-height-post-heading, which the
+   title of the post and the not-found page also read. */
 .latestTitle {
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-post-heading);
+  line-height: 32px;
   color: var(--color-primary-dark);
 }
 
@@ -146,7 +149,7 @@
 
   .latestTitle {
     font-size: var(--font-size-h2);
-    line-height: var(--line-height-h2);
+    line-height: 49px;
   }
 
   .grid {

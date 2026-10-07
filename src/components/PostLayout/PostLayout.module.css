@@ -1,6 +1,8 @@
 /* On mobile, Back 16 under the header and the content 24 under Back. On
    desktop, the 12 columns of the grid: Back 40 under the header in the first
-   two, and the content in columns 3 to 10, its top on the top of Back. */
+   two, and the content from column 3, its top on the top of Back. The content
+   is the design's column of 875: it follows the 8 columns (3 to 10) while they
+   are narrower, and stops at 875 from there, at the start of column 3. */
 .main {
   display: flex;
   flex-direction: column;
@@ -31,5 +33,6 @@
 
   .content {
     grid-column: 3 / span 8;
+    max-width: 875px;
   }
 }

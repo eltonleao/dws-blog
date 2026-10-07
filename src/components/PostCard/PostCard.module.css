@@ -64,7 +64,9 @@
 
 /* One clamp of four lines across the title and the summary: Chromium counts
    the lines through both blocks and cuts the summary at the last whole line.
-   The slot is 104 high: a title of two lines and a summary of two. */
+   The slot is 104 high: a title of two lines and a summary of two. The slot
+   only keeps the room, so the card is as tall under a short text as under a
+   long one: what is cut is cut by the summary, below. */
 .text {
   display: -webkit-box;
   flex: none;
@@ -111,8 +113,12 @@
   text-decoration: underline;
 }
 
+/* The clamp cuts the summary box at the "…" line, but the rest would paint in
+   the room the slot keeps. overflow: clip cuts it; hidden would turn the
+   clamp's cut off (the box goes to 483 px) and the next line shows. */
 .summary {
   margin-top: 8px;
+  overflow: clip;
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-body-small);

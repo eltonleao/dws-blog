@@ -131,6 +131,9 @@
   list-style: none;
 }
 
+/* The text of the tag is Neutral Extra Dark on mobile and Neutral Darkest on
+   desktop, as the design's vector paints it. On the tag's Neutral Extra Light
+   the first is 4.92:1, over the 4.5 the 12 px text needs. */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -140,7 +143,7 @@
   background: var(--color-neutral-extra-light);
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
-  color: var(--color-neutral-darkest);
+  color: var(--color-neutral-extra-dark);
 }
 
 @media (min-width: 1024px) {
@@ -163,5 +166,9 @@
 
   .text {
     height: 117px;
+  }
+
+  .tag {
+    color: var(--color-neutral-darkest);
   }
 }

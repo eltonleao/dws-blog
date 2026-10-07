@@ -190,8 +190,9 @@
   --radius-pill: 42px;
   --radius-item: 8px;
   --radius-chip: 4px;
-  /* The picture of a post: ≈12 on the desktop screen, unreadable on mobile. */
-  --radius-image: 12px;
+  /* The picture of a post: 8 on mobile and 15 from the desktop breakpoint, the
+     circle fitted at each corner of the design's vector. */
+  --radius-image: 8px;
 
   /* The header: 64 on mobile, 88 on desktop. The search panel opens under it. */
   --header-height: 64px;
@@ -208,5 +209,6 @@
     --grid-margin: 56px;
     --grid-gutter: 24px;
     --header-height: 88px;
+    --radius-image: 15px;
   }
 }

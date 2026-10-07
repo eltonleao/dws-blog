@@ -8,8 +8,11 @@
 
 /* The pill: 110 x 32 for Category, with the button and, once something is
    chosen, the X that clears it. Hovered or holding a choice, it takes the
-   5% tint of the design, and the text goes to Secondary Dark: Secondary
-   Medium on the tint gives 4.28:1, under the 4.5 the 12 px text needs. */
+   5% tint of the design. The tint is see-through, so the page shows behind
+   the text. In Secondary Medium, the text of a pill with a chosen author
+   falls to 4.30:1 from 768 to 1023 px (4.45:1 at 414), under the 4.5 the
+   12 px text needs. So the hover and the choice use Secondary Dark, which
+   gives 7.63:1 on the same worst pixel. */
 .control {
   display: inline-flex;
   align-items: center;

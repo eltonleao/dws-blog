@@ -2,9 +2,9 @@ import { defineConfig, devices } from '@playwright/test'
 
 const PORT = 4173
 
-// With E2E_BASE_URL set (a deployed URL, or a preview someone else started),
-// the specs run against that host and no server is started. The API fixture
-// is served by page.route, so any host works.
+// With E2E_BASE_URL set (a preview someone else started), the specs run
+// against that server and none is started. It has to be a local address:
+// the fixture in e2e/fixtures/index.ts refuses every request outside localhost.
 const EXTERNAL_BASE_URL = process.env.E2E_BASE_URL || undefined
 
 export default defineConfig({

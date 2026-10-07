@@ -6,6 +6,8 @@ The Dentsu World Services (DWS) front-end test. The brief asks for the two views
 
 This implementation builds both views from 320 to 1920 px wide, with the category and author filters, the search and the sort order the design draws, all of them mirrored in the URL. It is tested at four levels, the tests were written before the code, and every line of the test matrix has a mutant its test kills.
 
+Live: https://dws-blog-xi.vercel.app
+
 Quick map: [Run it](#run-it) · [Design decisions](#design-decisions) · [Accessibility](#accessibility) · [Tests](#tests)
 
 ## Run it
@@ -29,7 +31,7 @@ React Router 8 declares Node 22.22 or later. On an older Node 22, `npm install` 
 | `npm run lint` | oxlint |
 | `npm run typecheck` | the app, the tests and the configs |
 
-Before the first `npm run e2e`, install the browser with `npx playwright install chromium`. With `E2E_BASE_URL` set, the specs run against that host and start no server; the API is mocked inside the browser, so any host works.
+Before the first `npm run e2e`, install the browser with `npx playwright install chromium`. With `E2E_BASE_URL` set, the specs run against that server and start none. It has to be a local address, such as a preview someone else started: the fixture refuses every request that leaves localhost, the deployed site included.
 
 The app calls the live API at `https://tech-test-backend.dwsbrazil.io`. The tests never do. `npm test` prints one `MaxListenersExceededWarning` (11 `secureConnect` listeners on a `TLSSocket`), and it is not a network call: it comes from `@mswjs/interceptors` 0.45.7, the interceptor under MSW, which adds a listener on every request to a socket that keep-alive reuses. Only `PostListPage.test.tsx` makes enough requests to cross the limit of 10. It is not silenced, so a real leak would still show.
 

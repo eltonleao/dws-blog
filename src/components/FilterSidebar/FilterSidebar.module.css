@@ -1,0 +1,26 @@
+/* Structure only: the groups one under the other, the items full width and
+   Apply filters at the end. The measures and the colors come with the design
+   tokens. */
+.sidebar {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.apply {
+  width: 100%;
+}

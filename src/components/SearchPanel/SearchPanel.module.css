@@ -1,0 +1,54 @@
+/* Structure only: the panel covers the screen, over the page it leaves
+   mounted. The colors, the measures and the icons come with the design
+   tokens. */
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* Opaque until the tokens give it the design background. */
+  background: Canvas;
+}
+
+/* The back arrow, the field and the X in one row. */
+.bar {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  cursor: pointer;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* The panel has its own X: the browser's one would be a second. */
+.input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.results a {
+  display: block;
+}
+
+/* Always in the page, so a screen reader hears it when the text comes. */
+.empty {
+  margin: 0;
+}

@@ -1,25 +1,25 @@
 /* "Sort by:" and the button in one row, in the grey of the design, with the
-   live region out of sight. */
+   live region out of sight. On mobile the text is on a step of 19. */
 .sort {
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: var(--font-size-body-small);
-  line-height: var(--line-height-body-small);
+  line-height: 19px;
   color: var(--color-neutral-extra-dark);
 }
 
-/* The text and the teal arrows. On hover, a teal pill with padding 8 at the
-   sides; the pill hangs 8 past the button's place, so the text and the icon
-   line up with the grid as the design draws them. The weight stays, so the
-   row of filters next to it does not move. The pill is Accent 1 Dark, not
-   the Medium of the design: light text on Medium gives 2.8:1, on Dark 4.7. */
+/* The text and the teal arrows, in a button with padding 8 at the sides, so
+   that on hover the teal pill is the design's and the arrows end 8 from the
+   edge of the grid. 6 above and under the icon make the button 32, the height
+   of the pills next to it. The weight stays, so the row of filters next to it
+   does not move. The pill is Accent 1 Dark, not the Medium of the design:
+   light text on Medium gives 2.8:1, on Dark 4.7. */
 .button {
   display: inline-flex;
   flex: none;
   align-items: center;
   gap: 4px;
-  margin: 0 -8px;
   padding: 6px 8px;
   border: 0;
   border-radius: var(--radius-pill);
@@ -29,8 +29,10 @@
   cursor: pointer;
 }
 
+/* The arrows are drawn in a box of 24 and take 20 of room. */
 .icon {
   flex: none;
+  margin: -2px;
   color: var(--color-accent-1-medium);
 }
 
@@ -55,8 +57,11 @@
     line-height: var(--line-height-body-large);
   }
 
+  /* 4 above and under the line of 24 keep the button at 32, so the row of
+     the title is the 49 of the design. */
   .button {
     gap: 8px;
+    padding-block: 4px;
   }
 
   .label {

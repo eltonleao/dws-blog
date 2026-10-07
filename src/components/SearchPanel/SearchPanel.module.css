@@ -15,7 +15,7 @@
 
 /* The field of 343 x 40, 24 from the top, with the back arrow, the text and
    the X in one pill. It opens selected, so its border is Accent 1 Medium
-   while the focus is in it, and the ring goes round the pill. */
+   while the focus is in it. */
 .bar {
   display: flex;
   flex: none;
@@ -32,8 +32,10 @@
   border-color: var(--color-accent-1-medium);
 }
 
+/* The field takes no ring, only the teal of its border. The outline stays,
+   transparent, for forced colors, which paint it. */
 .bar:has(.input:focus-visible) {
-  outline: var(--focus-width) solid var(--color-focus);
+  outline: var(--focus-width) solid transparent;
   outline-offset: var(--focus-offset);
 }
 

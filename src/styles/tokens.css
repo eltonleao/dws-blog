@@ -63,6 +63,9 @@
   --line-height-post-heading: 1.35;
   --line-height-post-body-small: 1.5715;
   --line-height-post-body-large: 1.625;
+  /* The title of a card in the list: 20 on a step of 27, as the design's own
+     line height gives. */
+  --line-height-card-title: 1.35;
 
   /* Grid, §1.3: 4 columns on mobile, 12 from the desktop breakpoint. */
   --grid-columns: 4;

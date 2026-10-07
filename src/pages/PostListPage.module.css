@@ -18,8 +18,8 @@
   grid-area: title;
   font-size: var(--font-size-h2);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h2);
-  color: var(--color-primary-light);
+  line-height: 49px;
+  color: var(--color-primary-dark);
 }
 
 /* The two pills, 8 apart, wrapping on the narrowest screens. The row places
@@ -60,7 +60,7 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
   color: var(--color-neutral-lightest);
   cursor: pointer;
 }
@@ -124,6 +124,12 @@
       'sidebar results';
     gap: 32px var(--grid-gutter);
     padding-top: 32px;
+  }
+
+  /* The order sits on the baseline of the title, as the design draws it. */
+  .title,
+  .sort {
+    align-self: baseline;
   }
 
   .sidebar {

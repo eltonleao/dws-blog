@@ -5,7 +5,7 @@
   flex: none;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
+  padding: 12px 16px 16px;
   border: 1px solid var(--color-neutral-extra-light);
   border-radius: var(--radius-card);
 }
@@ -14,22 +14,24 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 4px;
   font-size: var(--font-size-filters-heading);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-h3);
-  color: var(--color-primary-light);
+  color: var(--color-primary-dark);
 }
 
+/* The name of the group sits on its items, which are on a step of 48. */
 .group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .groupHeading {
   font-size: var(--font-size-body-large);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-body-large);
+  color: var(--color-primary-dark);
 }
 
 .items {
@@ -51,7 +53,7 @@
   color: var(--color-neutral-darkest);
   font: inherit;
   font-size: var(--font-size-body-small);
-  line-height: var(--line-height-body-small);
+  line-height: var(--line-height-post-body-small);
   text-align: start;
   cursor: pointer;
 }

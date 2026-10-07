@@ -1,26 +1,31 @@
 /* The image on top, then the body with the meta, the text and the tags. The
    card fills its grid cell, so the cards of a row are equally tall, and the
-   tags stay at the bottom. */
+   tags stay at the bottom. The height is the design's, 369 on mobile and 425
+   on desktop: the text has a slot of its own, so a title of one line or of
+   two moves nothing, and the minimum is only a guard. */
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid var(--color-neutral-extra-light);
+  min-height: 369px;
   border-radius: var(--radius-card);
   background: var(--color-neutral-lightest);
-  box-shadow: var(--shadow-card);
+  /* The design's stroke is inside the card: the line takes no room, and the
+     picture covers it at the top. */
+  box-shadow:
+    inset 0 0 0 1px var(--color-neutral-extra-light),
+    var(--shadow-card);
 }
 
 /* The image and the block that replaces a broken one share the same box, so
-   the card keeps its size. Inside the border, the top corners follow the
-   card's. */
+   the card keeps its size. The top corners are the card's. */
 .image,
 .placeholder {
   display: block;
   width: 100%;
   height: 150px;
-  border-radius: calc(var(--radius-card) - 1px) calc(var(--radius-card) - 1px) 0 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 
 .image {
@@ -39,14 +44,14 @@
   padding: 16px;
 }
 
-/* The date and the author, with a dot between them. */
+/* The date and the author, with a dot between them, on a step of 19. */
 .meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   font-size: var(--font-size-body-small);
-  line-height: var(--line-height-body-small);
+  line-height: 19px;
   color: var(--color-neutral-extra-dark);
 }
 
@@ -58,9 +63,12 @@
 }
 
 /* One clamp of four lines across the title and the summary: Chromium counts
-   the lines through both blocks and cuts the summary at the last whole line. */
+   the lines through both blocks and cuts the summary at the last whole line.
+   The slot is 104 high: a title of two lines and a summary of two. */
 .text {
   display: -webkit-box;
+  flex: none;
+  height: 104px;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -69,8 +77,8 @@
 .title {
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-h3);
-  color: var(--color-primary-light);
+  line-height: var(--line-height-card-title);
+  color: var(--color-primary-dark);
 }
 
 .link {
@@ -84,7 +92,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: calc(var(--radius-card) - 1px);
+  border-radius: var(--radius-card);
 }
 
 /* The focus ring goes round the card the link covers. The link keeps its
@@ -96,7 +104,7 @@
 
 .link:focus-visible::after {
   outline: var(--focus-width) solid var(--color-focus);
-  outline-offset: calc(var(--focus-offset) + 1px);
+  outline-offset: var(--focus-offset);
 }
 
 .card:hover .link {
@@ -133,6 +141,10 @@
 }
 
 @media (min-width: 1024px) {
+  .card {
+    min-height: 425px;
+  }
+
   .image,
   .placeholder {
     height: 196px;
@@ -140,6 +152,10 @@
 
   .meta {
     font-size: var(--font-size-caption);
-    line-height: var(--line-height-caption);
+    line-height: 16px;
+  }
+
+  .text {
+    height: 117px;
   }
 }

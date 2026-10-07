@@ -18,8 +18,11 @@ const PATHS: Record<IconName, ReactNode> = {
   filters: (
     <path d="M4 6h8m6 0h2M15 3v6M4 12h2m6 0h8M9 9v6M4 18h8m6 0h2M15 15v6" />
   ),
-  // An arrow up and an arrow down, side by side and out of step.
-  sort: <path d="M9 16V4M5.5 7.5 9 4l3.5 3.5M15 8v12m-3.5-3.5L15 20l3.5-3.5" />,
+  // An arrow up and an arrow down, side by side and out of step: 12.5 x 16 of
+  // ink, in the middle of the box.
+  sort: (
+    <path d="M9.5 15V5M6.75 7.75 9.5 5l2.75 2.75M14.5 9v10m-2.75-2.75L14.5 19l2.75-2.75" />
+  ),
 }
 
 export type IconName =

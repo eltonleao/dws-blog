@@ -17,7 +17,7 @@
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-post-heading);
-  color: var(--color-primary-light);
+  color: var(--color-primary-dark);
 }
 
 /* The title takes the focus when the post opens, for screen readers, but it
@@ -94,7 +94,7 @@
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-post-heading);
-  color: var(--color-primary-light);
+  color: var(--color-primary-dark);
 }
 
 .grid {

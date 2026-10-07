@@ -4,7 +4,7 @@
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-post-heading);
-  color: var(--color-primary-light);
+  color: var(--color-primary-dark);
 }
 
 .title:focus-visible {

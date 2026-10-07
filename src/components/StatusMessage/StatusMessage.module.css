@@ -1,5 +1,8 @@
-/* The message centered, with its actions under it: the semibold grey of the
-   sort and the buttons of the design, with the room of a card around them. */
+/* The message centered, with its actions under it: semibold like the sort
+   and the buttons of the design, with the room of a card around them. The
+   design does not draw these states, so the text takes the dark of the
+   titles and the post body: the grey of the sort falls to 4.19:1 on the pink
+   glow at 768. */
 .status {
   display: flex;
   flex-direction: column;
@@ -10,7 +13,7 @@
   font-size: var(--font-size-body-large);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-body-large);
-  color: var(--color-neutral-extra-dark);
+  color: var(--color-primary-dark);
 }
 
 .actions {

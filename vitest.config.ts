@@ -7,7 +7,10 @@ export default mergeConfig(
   defineConfig({
     test: {
       environment: 'jsdom',
-      setupFiles: ['./src/test/setup.ts'],
+      setupFiles: ['./src/test/setup.ts', './src/test/asyncTimeout.ts'],
+      // Three times the five-second wait of findBy* queries, so a test that does
+      // not find what it waits for fails on that query and not on the clock.
+      testTimeout: 15000,
       // The Playwright specs in e2e/ are not Vitest tests.
       include: ['src/**/*.test.{ts,tsx}'],
     },

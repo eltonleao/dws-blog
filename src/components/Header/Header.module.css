@@ -18,14 +18,3 @@
 .mark {
   overflow: visible;
 }
-
-.name {
-  fill: currentColor;
-  font-size: 28px;
-  font-weight: var(--font-weight-bold);
-}
-
-.tagline {
-  fill: currentColor;
-  font-size: var(--font-size-body-small);
-}

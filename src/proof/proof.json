@@ -1,0 +1,1254 @@
+{
+  "commit": "6afa3e34bd7937b6f6b5c3937463671c11dda8d6",
+  "ranAt": "2026-10-07T13:43:56.882Z",
+  "lines": [
+    {
+      "id": "D11",
+      "area": "Data",
+      "level": "unit",
+      "test": "D11 throws ApiShapeError when the response is an object, an HTML string or null",
+      "testFile": "src/api/parsePosts.test.ts",
+      "changes": [
+        {
+          "file": "src/api/parsePosts.ts",
+          "before": "if (!Array.isArray(raw)) {",
+          "after": "if (false) {"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected error to be instance of ApiShapeError"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D12",
+      "area": "Data",
+      "level": "unit",
+      "test": "D12 drops an item without id, without title and with a null author, and passes the valid ones with their apiIndex",
+      "testFile": "src/api/parsePosts.test.ts",
+      "changes": [
+        {
+          "file": "src/api/parsePosts.ts",
+          "before": "if (!isFilled(id) || !isFilled(title)) return null",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(6) ] to deeply equal [ …(4) ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D13",
+      "area": "Data",
+      "level": "unit",
+      "test": "D13 formats the date in UTC, so it reads \"Sep 19, 2026\" with TZ America/Sao_Paulo",
+      "testFile": "src/lib/formatDate.test.ts",
+      "changes": [
+        {
+          "file": "src/lib/formatDate.ts",
+          "before": "timeZone: 'UTC',",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected 'Sep 18, 2026' to be 'Sep 19, 2026' // Object.is equality"
+      ],
+      "seconds": 2
+    },
+    {
+      "id": "D14",
+      "area": "Data",
+      "level": "unit",
+      "test": "D14 splits the API content in 3 paragraphs, splits on CRLF too, and never returns an empty paragraph",
+      "testFile": "src/lib/paragraphs.test.ts",
+      "changes": [
+        {
+          "file": "src/lib/paragraphs.ts",
+          "before": ".split(/\\r?\\n\\s*\\r?\\n/)",
+          "after": ".split(/\\n\\n/)"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ 'first\\r\\n\\r\\nsecond' ] to deeply equal [ 'first', 'second' ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "C1",
+      "area": "Data",
+      "level": "component",
+      "test": "C1 shows a loading status and no card link before the API answers",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostListPage.tsx",
+          "before": "<StatusMessage message=\"Loading posts\" />",
+          "after": "{null}"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "TestingLibraryElementError: Unable to find an accessible element with the role \"status\"",
+        "Here are the accessible roles:",
+        "banner:",
+        "Name \"\":",
+        "<header",
+        "class=\"_header_a5b977\""
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C2",
+      "area": "Data",
+      "level": "component",
+      "test": "C2 shows Something went wrong with Try again when the API answers 500, and Try again loads the 26 posts once it recovers",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostListPage.tsx",
+          "before": "<Button onClick={() => refetch()}>Try again</Button>",
+          "after": "<Button onClick={() => {}}>Try again</Button>"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [] to have a length of 26 but got +0",
+        "Ignored nodes: comments, script, style",
+        "<html>",
+        "<head />",
+        "<body>",
+        "<div>"
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "C3",
+      "area": "Data",
+      "level": "component",
+      "test": "C3 shows the same error when the 200 answer is HTML, or JSON that is not a list, without an unhandled error",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/api/postsApi.ts",
+          "before": "try {\n          return { data: parsePosts(result.data) }\n        } catch (error) {\n          return {\n            error: {\n              status: 'CUSTOM_ERROR',\n              error: error instanceof Error ? error.message : String(error),\n            },\n          }\n        }",
+          "after": "return { data: parsePosts(result.data) }"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected \"error\" to not be called at all, but actually been called 1 times",
+        "Received:",
+        "1st error call:",
+        "Array [",
+        "\"An unhandled error occurred processing a request for the endpoint \"getPosts\".",
+        "In the…"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C4",
+      "area": "Data",
+      "level": "component",
+      "test": "C4 shows Something went wrong with Try again when the API does not answer within the timeout",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/api/postsApi.ts",
+          "before": "fetchBaseQuery({ baseUrl: API_URL, timeout: API_TIMEOUT_MS })",
+          "after": "fetchBaseQuery({ baseUrl: API_URL })"
+        },
+        {
+          "file": "src/api/postsApi.ts",
+          "before": "baseQuery({ url: '/posts/', timeout: apiTimeoutMs })",
+          "after": "baseQuery({ url: '/posts/' })"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: Unable to find an element with the text: Something went wrong. This could be because the text is broken…",
+        "Ignored nodes: comments, script, style",
+        "<body>",
+        "<div>",
+        "<div",
+        "class=\"_page_d72aeb\""
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C12",
+      "area": "Data",
+      "level": "component",
+      "test": "C12 renders a title that looks like HTML as text, and adds no image to the page",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/PostCard/PostCard.tsx",
+          "before": "<Link className={styles.link} to={`/posts/${encodeURIComponent(post.id)}`}>\n              {post.title}\n            </Link>",
+          "after": "<Link\n              className={styles.link}\n              to={`/posts/${encodeURIComponent(post.id)}`}\n              dangerouslySetInnerHTML={{ __html: post.title }}\n            />"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: Unable to find role=\"link\" and name \"<img src=x onerror=alert(1)>\"",
+        "Ignored nodes: comments, script, style",
+        "<body>",
+        "<div />",
+        "<div>",
+        "<div"
+      ],
+      "seconds": 5
+    },
+    {
+      "id": "C13",
+      "area": "Data",
+      "level": "component",
+      "test": "C13 swaps a card image that fails to load for a block in the same place",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/PostCard/PostCard.tsx",
+          "before": "<div className={styles.placeholder} />",
+          "after": "null"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected <div class=\"_body_915a1c\">…(3)</div> to have a length of 2 but got 1"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "D1",
+      "area": "Sort",
+      "level": "unit",
+      "test": "D1 keeps the API order for newest and inverts it for oldest when every date is equal",
+      "testFile": "src/features/posts/sortPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/sortPosts.ts",
+          "before": "return direction * (a.apiIndex - b.apiIndex)",
+          "after": "return 0"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(26) ] to deeply equal [ …(26) ]"
+      ],
+      "seconds": 2
+    },
+    {
+      "id": "D2",
+      "area": "Sort",
+      "level": "unit",
+      "test": "D2 sorts three distinct dates newest-first or oldest-first and leaves the input untouched",
+      "testFile": "src/features/posts/sortPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/sortPosts.ts",
+          "before": "return [...posts].sort(",
+          "after": "return posts.sort("
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ 'january', 'march', 'may' ] to deeply equal [ 'march', 'may', 'january' ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D3",
+      "area": "Sort",
+      "level": "unit",
+      "test": "D3 sends an invalid and a missing date to the end in both orders without throwing",
+      "testFile": "src/features/posts/sortPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/sortPosts.ts",
+          "before": "if (hasDateA !== hasDateB) return hasDateA ? -1 : 1",
+          "after": "if (hasDateA !== hasDateB) return hasDateA ? 1 : -1"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ 'invalid', 'missing', 'may-first' ] to deeply equal [ 'may-first', 'may-second', 'm…"
+      ],
+      "seconds": 2
+    },
+    {
+      "id": "C8",
+      "area": "Sort",
+      "level": "component",
+      "test": "C8 sorts with one button that names the current order, and announces the change in a live region",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/SortButton/SortButton.tsx",
+          "before": " aria-live=\"polite\"",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected null not to be null"
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "D4",
+      "area": "Filters",
+      "level": "unit",
+      "test": "D4 returns the posts of any selected category when two categories are selected",
+      "testFile": "src/features/posts/filterPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/filterPosts.ts",
+          "before": "selected.some((value) => values.includes(value))",
+          "after": "selected.every((value) => values.includes(value))"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [] to have a length of 2 but got +0"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D5",
+      "area": "Filters",
+      "level": "unit",
+      "test": "D5 requires the category and the author together",
+      "testFile": "src/features/posts/filterPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/filterPosts.ts",
+          "before": ".map((category) => category.name)) &&",
+          "after": ".map((category) => category.name)) ||"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(6) ] to deeply equal [ 'Tech Innovations in Healthcare' ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D6",
+      "area": "Filters",
+      "level": "unit",
+      "test": "D6 does not filter without a selection, and an author alone also returns the posts without category",
+      "testFile": "src/features/posts/filterPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/filterPosts.ts",
+          "before": "selected.length === 0 || ",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [] to have a length of 26 but got +0"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D7",
+      "area": "Filters",
+      "level": "unit",
+      "test": "D7 drops the 20 posts without category once any category is selected, and a null categories does not throw",
+      "testFile": "src/features/posts/filterPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/api/parsePosts.ts",
+          "before": "if (!Array.isArray(value)) return []",
+          "after": "if (!Array.isArray(value)) return value as Post['categories']"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected null to deeply equal []"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D15",
+      "area": "Filters",
+      "level": "unit",
+      "test": "D15 derives 6 categories and 4 authors from the posts, alphabetical and without repetition",
+      "testFile": "src/features/posts/filterOptions.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/filterOptions.ts",
+          "before": "categories.set(category.name,",
+          "after": "categories.set(category.id,"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ { value: 'Technology', …(1) }, …(1) ] to deeply equal [ { value: 'Technology', …(1)…"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "C5",
+      "area": "Filters",
+      "level": "component",
+      "test": "C5 filters on the spot with the mobile Category dropdown, which follows the listbox pattern",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/FilterDropdown/FilterDropdown.tsx",
+          "before": "setOpen(false)\n    button.current?.focus()",
+          "after": "setOpen(false)"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: expect(element).toHaveFocus()",
+        "Expected element with focus:",
+        "<button",
+        "aria-expanded=\"false\"",
+        "aria-haspopup=\"listbox\"",
+        "class=\"_button_f68a85\""
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C6",
+      "area": "Filters",
+      "level": "component",
+      "test": "C6 only marks a sidebar item until Apply filters, and then filters",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/FilterSidebar/FilterSidebar.tsx",
+          "before": "setDraft({\n      from: { categories, authors },\n      selection: {\n        ...selection,\n        [filter]: values.includes(value)\n          ? values.filter((current) => current !== value)\n          : [...values, value],\n      },\n    })",
+          "after": "dispatch(\n      filtersApplied({\n        ...selection,\n        [filter]: values.includes(value)\n          ? values.filter((current) => current !== value)\n          : [...values, value],\n      }),\n    )"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ <a class=\"_link_915a1c\" …(2)></a> ] to have a length of 26 but got 1"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C7",
+      "area": "Filters",
+      "level": "component",
+      "test": "C7 shows No posts found when the filters match nothing, and Clear filters clears the search and the filters",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/features/browse/browseSlice.ts",
+          "before": "      state.search = initialBrowseState.search\n",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: expect(element).toHaveValue()",
+        "Expected the element to have value:",
+        "Received:",
+        "a"
+      ],
+      "seconds": 5
+    },
+    {
+      "id": "D8",
+      "area": "Search",
+      "level": "unit",
+      "test": "D8 searches title, author and category without case and without accents",
+      "testFile": "src/features/posts/searchPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/lib/normalize.ts",
+          "before": ".replace(/\\p{Mn}/gu, '')",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [] to include 'Tech Innovations in Healthcare'"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D9",
+      "area": "Search",
+      "level": "unit",
+      "test": "D9 does not search the content, and a query of only spaces returns every post",
+      "testFile": "src/features/posts/searchPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/searchPosts.ts",
+          "before": "[post.title, post.author.name,",
+          "after": "[post.title, post.content, post.author.name,"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ { …(8) }, { …(8) }, { …(8) }, …(23) ] to deeply equal []"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D10",
+      "area": "Search",
+      "level": "unit",
+      "test": "D10 applies the search, the filter and the order together, in that order, through selectVisiblePosts",
+      "testFile": "src/features/posts/selectors.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/selectors.ts",
+          "before": "return sortPosts(filtered, order)",
+          "after": "return filtered"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "C9",
+      "area": "Search",
+      "level": "component",
+      "test": "C9 filters the list on every key typed in the desktop search field, and Enter does not navigate",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/features/posts/selectors.ts",
+          "before": "const found = searchPosts(posts, search)",
+          "after": "const found = posts"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(26) ] to deeply equal [ …(6) ]"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C20",
+      "area": "Search",
+      "level": "component",
+      "test": "C20 does not render the cards again when the mobile search panel opens and closes, and keeps the grid mounted under it",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "vite.config.ts",
+          "before": "plugins: [react(), babel({ presets: [reactCompilerPreset()] })],",
+          "after": "plugins: [react()],"
+        },
+        {
+          "file": "src/app/AppLayout.tsx",
+          "before": "<Outlet />",
+          "after": "<Outlet context={searchOpen} />"
+        },
+        {
+          "file": "src/pages/PostListPage.tsx",
+          "before": "import { useLayoutEffect } from 'react'\n",
+          "after": "import { useLayoutEffect } from 'react'\nimport { useOutletContext } from 'react-router'\n"
+        },
+        {
+          "file": "src/pages/PostListPage.tsx",
+          "before": "export function PostListPage() {\n",
+          "after": "export function PostListPage() {\n  useOutletContext()\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected 78 to be 26 // Object.is equality"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "D16",
+      "area": "Post",
+      "level": "unit",
+      "test": "D16 returns the 3 newest posts without the current one, and 1 when there are 2 posts in total",
+      "testFile": "src/features/posts/latestPosts.test.ts",
+      "changes": [
+        {
+          "file": "src/features/posts/latestPosts.ts",
+          "before": "const others = posts.filter((post) => post.id !== currentId)",
+          "after": "const others = posts"
+        },
+        {
+          "file": "src/features/posts/latestPosts.ts",
+          "before": ".slice(0, n)",
+          "after": ".slice(0, n).filter((post) => post.id !== currentId)"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(2) ] to deeply equal [ …(3) ]"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "C14",
+      "area": "Post",
+      "level": "component",
+      "test": "C14 shows the post with its title as h1, the author, Sep 19, 2026, three paragraphs, and Latest articles with three cards that leave the current post out",
+      "testFile": "src/pages/PostPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "const latest = latestPosts(posts, post.id)",
+          "after": "const latest = latestPosts(posts, '')"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]"
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C15",
+      "area": "Post",
+      "level": "component",
+      "test": "C15 shows Post not found with Back and without Try again for an id the list does not have, and never requests that id",
+      "testFile": "src/pages/PostPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "  }, [id, found])\n",
+          "after": "  }, [id, found])\n\n  useEffect(() => {\n    fetch(`https://tech-test-backend.dwsbrazil.io/posts/${id}`).catch(() => {})\n  }, [id])\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ '/posts/nao-existe' ] to deeply equal []"
+      ],
+      "seconds": 2
+    },
+    {
+      "id": "C16",
+      "area": "Post",
+      "level": "component",
+      "test": "C16 shows Something went wrong with Try again and Back when the API answers 500 on the post route, and Try again brings the post back once it recovers",
+      "testFile": "src/pages/PostPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "<Button onClick={() => refetch()}>Try again</Button>",
+          "after": "<Button onClick={() => refetch}>Try again</Button>"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: Unable to find role=\"heading\" and name \"Climate Change and Its Effects\"",
+        "Ignored nodes: comments, script, style",
+        "<body>",
+        "<div>",
+        "<div",
+        "class=\"_page_d72aeb\""
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "E4",
+      "area": "Post",
+      "level": "browser",
+      "test": "E4 reloading a post page shows the post",
+      "testFile": "e2e/post.spec.ts",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "import { useParams } from 'react-router'",
+          "after": "import { useLocation, useParams } from 'react-router'"
+        },
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "  const { id = '' } = useParams()\n",
+          "after": "  const { id = '' } = useParams()\n  const location = useLocation()\n"
+        },
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "  const { posts, post, isError, refetch } = useGetPostsQuery(undefined, {\n",
+          "after": "  const { posts, post, isError, refetch } = useGetPostsQuery(undefined, {\n    skip: location.key === 'default',\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: the post \"Climate Change and Its Effects\" at 1440px",
+        "expect(locator).toBeVisible() failed",
+        "Locator: getByRole('heading', { name: 'Climate Change and Its Effects', level: 1 })",
+        "Expected: visible",
+        "Timeout: 5000m…"
+      ],
+      "seconds": 10
+    },
+    {
+      "id": "E5",
+      "area": "Post",
+      "level": "browser",
+      "test": "E5 the list, a post, Back and another post make one request to /posts/ in total",
+      "testFile": "e2e/post.spec.ts",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "  const { posts, post, isError, refetch } = useGetPostsQuery(undefined, {\n",
+          "after": "  const { posts, post, isError, refetch } = useGetPostsQuery(undefined, {\n    refetchOnMountOrArgChange: true,\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: requests to the API in the whole walk",
+        "expect(received).toEqual(expected) // deep equality",
+        "- Expected  - 0",
+        "+ Received  + 1",
+        "Array [",
+        "\"GET /posts/\","
+      ],
+      "seconds": 5
+    },
+    {
+      "id": "D17",
+      "area": "Navigation",
+      "level": "unit",
+      "test": "D17 reads search, categories, author and order from the query string, and anything else gives the initial state",
+      "testFile": "src/features/browse/browseUrl.test.ts",
+      "changes": [
+        {
+          "file": "src/features/browse/browseUrl.ts",
+          "before": "categories: params.getAll('category'),",
+          "after": "categories: params.getAll('category').slice(0, 1),"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected { search: 'emily', …(4) } to match object { search: 'emily', …(3) }",
+        "(1 matching property omitted from actual)"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "D18",
+      "area": "Navigation",
+      "level": "unit",
+      "test": "D18 writes an empty string for the initial state, and a state with a search, categories, an author and oldest survives the round trip without listScrollY",
+      "testFile": "src/features/browse/browseUrl.test.ts",
+      "changes": [
+        {
+          "file": "src/features/browse/browseUrl.ts",
+          "before": "if (order !== initialBrowseState.order) params.set('order', order)",
+          "after": "params.set('order', order)"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected '?order=newest' to be '' // Object.is equality"
+      ],
+      "seconds": 1
+    },
+    {
+      "id": "C11",
+      "area": "Navigation",
+      "level": "component",
+      "test": "C11 renders one link per card, named by the post title, with a decorative image",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/components/PostCard/PostCard.tsx",
+          "before": "alt=\"\"",
+          "after": "alt={post.title}"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: expect(element).toHaveAttribute(\"alt\", \"\") // element.getAttribute(\"alt\") === \"\"",
+        "Expected the element to have attribute:",
+        "alt=\"\"",
+        "Received:",
+        "alt=\"Tech Innovations in Healthcare\""
+      ],
+      "seconds": 3
+    },
+    {
+      "id": "C17",
+      "area": "Navigation",
+      "level": "component",
+      "test": "C17 shows the same not-found screen on an unknown route, with a link to the list",
+      "testFile": "src/pages/PostPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/app/AppRoutes.tsx",
+          "before": "import { NotFoundPage } from '../pages/NotFoundPage'\n",
+          "after": ""
+        },
+        {
+          "file": "src/app/AppRoutes.tsx",
+          "before": "      <Route path=\"*\" element={<NotFoundPage />} />\n",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: Unable to find an element with the text: Post not found. This could be because the text is broken up by…",
+        "Ignored nodes: comments, script, style",
+        "<body>",
+        "<div />",
+        "</body>"
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "C19",
+      "area": "Navigation",
+      "level": "component",
+      "test": "C19 reads the query string on load and writes what is typed back to it",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/app/store.ts",
+          "before": "browseFromSearch(search)",
+          "after": "browseFromSearch('')"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "AssertionError: expected [ …(26) ] to have a length of 6 but got 26",
+        "Ignored nodes: comments, script, style",
+        "<html>",
+        "<head />",
+        "<body>",
+        "<div>"
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "E1",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E1 Back keeps the search, the filter, the order and the scroll of the list, at 375 and 1440",
+      "testFile": "e2e/post.spec.ts",
+      "changes": [
+        {
+          "file": "src/pages/PostListPage.tsx",
+          "before": "    if (window.scrollY !== listScrollY) {\n      window.scrollTo({ top: listScrollY, behavior: 'instant' })\n    }\n",
+          "after": "    window.history.scrollRestoration = 'manual'\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: scrollY after Back, expected 1500 (+-2)",
+        "mobile: scrollY after Back, expected 1500 (+-2)",
+        "expect(received).toBeLessThanOrEqual(expected)",
+        "Expected: <= 2",
+        "Received:    1500",
+        "Call Log:"
+      ],
+      "seconds": 13
+    },
+    {
+      "id": "E2",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E2 a post opens at the top of the page, from the end of the list",
+      "testFile": "e2e/post.spec.ts",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "    if (window.scrollY !== 0) window.scrollTo({ top: 0, behavior: 'instant' })\n",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: scrollY on the post page",
+        "mobile: scrollY on the post page",
+        "expect(received).toBe(expected) // Object.is equality",
+        "Expected: 0",
+        "Received: 2296",
+        "Call Log:"
+      ],
+      "seconds": 11
+    },
+    {
+      "id": "E3",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E3 Back on a post opened in a fresh page goes to the list",
+      "testFile": "e2e/post.spec.ts",
+      "changes": [
+        {
+          "file": "src/components/PostLayout/PostLayout.tsx",
+          "before": "import { useLocation, useNavigate } from 'react-router'",
+          "after": "import { useNavigate } from 'react-router'"
+        },
+        {
+          "file": "src/components/PostLayout/PostLayout.tsx",
+          "before": "  const location = useLocation()\n",
+          "after": ""
+        },
+        {
+          "file": "src/components/PostLayout/PostLayout.tsx",
+          "before": "    // A page opened directly has nothing of the app behind it, so Back goes\n    // to the list instead of leaving the site.\n    if (location.key === 'default') {\n      navigate('/')\n    } else {\n      navigate(-1)\n    }\n",
+          "after": "    navigate(-1)\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: the list after Back",
+        "expect(locator).toHaveCount(expected) failed",
+        "Locator:  getByRole('link', { name: /^(?:Tech Innovations in Healthcare/Climate Change and Its Effects/Fitness…",
+        "Expected: 26",
+        "Received: 0",
+        "T…"
+      ],
+      "seconds": 11
+    },
+    {
+      "id": "E6",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E6 the whole card goes to its post, and Tab stops once per card",
+      "testFile": "e2e/card.spec.ts",
+      "changes": [
+        {
+          "file": "src/components/PostCard/PostCard.module.css",
+          "before": "position: absolute;",
+          "after": "position: static;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: a click on the image",
+        "expect(page).toHaveURL(expected) failed",
+        "Expected pattern: /\\/posts\\/cc8a8c63-2f82-4745-8b6e-28f88ff73fdd$/",
+        "Received string:  \"http://localhost:4173/\"",
+        "Timeout: 5000ms",
+        "Call log…"
+      ],
+      "seconds": 14
+    },
+    {
+      "id": "E11",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E11 a reload keeps the search, the filter and the order, and the URL carries them",
+      "testFile": "e2e/url-state.spec.ts",
+      "changes": [
+        {
+          "file": "src/main.tsx",
+          "before": "makeStore({ search: window.location.search })",
+          "after": "makeStore()"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: cards after the reload",
+        "expect(locator).toHaveCount(expected) failed",
+        "Locator:  getByRole('link', { name: /^(?:Tech Innovations in Healthcare/Climate Change and Its Effects/Fitness…",
+        "Expected: 1",
+        "Received: 26 …"
+      ],
+      "seconds": 14
+    },
+    {
+      "id": "E12",
+      "area": "Navigation",
+      "level": "browser",
+      "test": "E12 a shared link opens already filtered, and typing in the search does not stack history",
+      "testFile": "e2e/url-state.spec.ts",
+      "changes": [
+        {
+          "file": "src/features/browse/useBrowseUrlSync.ts",
+          "before": "navigate({ search }, { replace: true })",
+          "after": "navigate({ search })"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: history.length after three letters",
+        "expect(received).toBe(expected) // Object.is equality",
+        "Expected: 2",
+        "Received: 5"
+      ],
+      "seconds": 9
+    },
+    {
+      "id": "C10",
+      "area": "Accessibility",
+      "level": "component",
+      "test": "C10 opens the mobile search panel with the focus in the field, lists the matching titles, and closes giving the focus back",
+      "testFile": "src/pages/PostListPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/app/AppLayout.tsx",
+          "before": "    searchButton.current?.focus()\n",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: expect(element).toHaveFocus()",
+        "Expected element with focus:",
+        "<button",
+        "aria-expanded=\"false\"",
+        "aria-label=\"Search\"",
+        "class=\"_searchButton_d72aeb\""
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "C18",
+      "area": "Accessibility",
+      "level": "component",
+      "test": "C18 sets the document title to \"{title} | DWS Blog\" and moves the focus to the h1 when a post opens, loaded directly and reached from the list",
+      "testFile": "src/pages/PostPage.test.tsx",
+      "changes": [
+        {
+          "file": "src/pages/PostPage.tsx",
+          "before": "  }, [id, found])",
+          "after": "  }, [id])"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: expect(element).toHaveFocus()",
+        "Expected element with focus:",
+        "<h1",
+        "class=\"_title_16c00d\"",
+        "tabindex=\"-1\"",
+        ">"
+      ],
+      "seconds": 4
+    },
+    {
+      "id": "E9",
+      "area": "Accessibility",
+      "level": "browser",
+      "test": "E9 Tab walks the header, search, filters, sort and cards, with an outline on every stop",
+      "testFile": "e2e/accessibility.spec.ts",
+      "changes": [
+        {
+          "file": "src/styles/global.css",
+          "before": "outline: var(--focus-width) solid var(--color-focus);",
+          "after": "outline: none;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: outline-style of \"dentsu world services\"",
+        "expect(received).not.toBe(expected) // Object.is equality",
+        "Expected: not \"none\""
+      ],
+      "seconds": 10
+    },
+    {
+      "id": "E10",
+      "area": "Accessibility",
+      "level": "browser",
+      "test": "E10 axe finds no serious or critical violation on the list, the post, the open dropdown and the search panel",
+      "testFile": "e2e/accessibility.spec.ts",
+      "changes": [
+        {
+          "file": "src/components/FilterDropdown/FilterDropdown.tsx",
+          "before": "          role=\"listbox\"\n          aria-label={label}\n",
+          "after": "          role=\"listbox\"\n"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: serious or critical axe violations, by scenario",
+        "expect(received).toEqual(expected) // deep equality",
+        "- Expected  - 1",
+        "+ Received  + 9",
+        "- Object {}",
+        "+ Object {"
+      ],
+      "seconds": 14
+    },
+    {
+      "id": "E7",
+      "area": "Layout",
+      "level": "browser",
+      "test": "E7 there is no horizontal scroll from 320 to 1920, on the list, on the post and with the search panel open",
+      "testFile": "e2e/layout.spec.ts",
+      "changes": [
+        {
+          "file": "src/pages/PostListPage.module.css",
+          "before": "    grid-template-columns: repeat(3, minmax(0, 1fr));",
+          "after": "    grid-template-columns: repeat(3, 314px);"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: pages wider than the viewport",
+        "expect(received).toEqual(expected) // deep equality",
+        "- Expected  - 1",
+        "+ Received  + 4",
+        "- Array []",
+        "+ Array ["
+      ],
+      "seconds": 10
+    },
+    {
+      "id": "E8",
+      "area": "Layout",
+      "level": "browser",
+      "test": "E8 the layout switches at 1024: dropdowns and search button below, sidebar and search field from there",
+      "testFile": "e2e/layout.spec.ts",
+      "changes": [
+        {
+          "file": "src/lib/useMediaQuery.ts",
+          "before": "'(min-width: 1024px)'",
+          "after": "'(min-width: 1025px)'"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: loaded at 1024: search field",
+        "expect(locator).toBeVisible() failed",
+        "Locator: getByRole('searchbox', { name: 'Search' })",
+        "Expected: visible",
+        "Timeout: 5000ms",
+        "Error: element(s) not found"
+      ],
+      "seconds": 15
+    },
+    {
+      "id": "M1",
+      "area": "Layout",
+      "level": "design",
+      "test": "M1 the header has the design height, border, logo, search button and search field",
+      "testFile": "e2e/layout.spec.ts",
+      "changes": [
+        {
+          "file": "src/styles/tokens.css",
+          "before": "--header-height: 64px;",
+          "after": "--header-height: 60px;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: header height: expected 64 (+-1), got 60",
+        "expect(received).toBeGreaterThanOrEqual(expected)",
+        "Expected: >= 63",
+        "Received:    60"
+      ],
+      "seconds": 11
+    },
+    {
+      "id": "M2",
+      "area": "Layout",
+      "level": "design",
+      "test": "M2 the grid has the design margins, column widths and gutters",
+      "testFile": "e2e/layout.spec.ts",
+      "changes": [
+        {
+          "file": "src/styles/tokens.css",
+          "before": "--grid-margin: 16px;",
+          "after": "--grid-margin: 24px;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: left margin: expected 16 (+-1), got 24",
+        "expect(received).toBeLessThanOrEqual(expected)",
+        "Expected: <= 17",
+        "Received:    24"
+      ],
+      "seconds": 10
+    },
+    {
+      "id": "M3",
+      "area": "Layout",
+      "level": "design",
+      "test": "M3 the card has the design radius, image, padding, gap, tag, type sizes and date size",
+      "testFile": "e2e/card.spec.ts",
+      "changes": [
+        {
+          "file": "src/styles/tokens.css",
+          "before": "--radius-card: 16px;",
+          "after": "--radius-card: 12px;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: card radius",
+        "expect(locator).toHaveCSS(expected) failed",
+        "Locator:  getByRole('link', { name: /^(?:Tech Innovations in Healthcare/Climate Change and Its Effects/Fitness…",
+        "Expected: \"16px\"",
+        "Received: \"12…"
+      ],
+      "seconds": 12
+    },
+    {
+      "id": "M4",
+      "area": "Layout",
+      "level": "design",
+      "test": "M4 the summary is a whole number of lines, 3 under a one-line title and 2 under a longer one, and cards in a row are equally tall",
+      "testFile": "e2e/card.spec.ts",
+      "changes": [
+        {
+          "file": "src/components/PostCard/PostCard.module.css",
+          "before": "-webkit-line-clamp: 4;",
+          "after": "-webkit-line-clamp: none;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: mobile: \"Tech Innovations in Healthcare\" summary lines under a title of 1 line(s)",
+        "expect(received).toBe(expected) // Object.is equality",
+        "Expected: 3",
+        "Received: 23"
+      ],
+      "seconds": 6
+    },
+    {
+      "id": "M5",
+      "area": "Layout",
+      "level": "design",
+      "test": "M5 the post has a 877 content column at 1440, a Back 48 high at 1440 and 32 at 375, and three cards under Latest articles",
+      "testFile": "e2e/post-layout.spec.ts",
+      "changes": [
+        {
+          "file": "src/components/PostLayout/PostLayout.module.css",
+          "before": "grid-column: 3 / span 8;\n    max-width: 875px;",
+          "after": "grid-column: 3 / span 9;"
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: desktop: content column expected 877 (+-2), got 990",
+        "expect(received).toBeLessThanOrEqual(expected)",
+        "Expected: <= 879",
+        "Received:    990"
+      ],
+      "seconds": 6
+    },
+    {
+      "id": "M6",
+      "area": "Layout",
+      "level": "design",
+      "test": "M6 the page uses Open Sans, the primary button is #D31450 with #8C1038 on hover, and the selected sidebar item has a #006C6E border",
+      "testFile": "e2e/tokens.spec.ts",
+      "changes": [
+        {
+          "file": "src/main.tsx",
+          "before": "import '@fontsource/open-sans/400.css'\nimport '@fontsource/open-sans/600.css'\nimport '@fontsource/open-sans/700.css'\n",
+          "after": ""
+        }
+      ],
+      "caught": true,
+      "failure": [
+        "Error: loaded Open Sans font faces",
+        "expect(received).toBeGreaterThan(expected)",
+        "Expected: > 0",
+        "Received:   0"
+      ],
+      "seconds": 7
+    }
+  ]
+}

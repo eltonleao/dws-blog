@@ -1,0 +1,155 @@
+/* The post from the top: the title with the byline 12 under it (24 on
+   desktop), the picture 24 under them and the text 24 under the picture. */
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-wrap: break-word;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: var(--font-size-post-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-post-heading);
+  color: var(--color-primary-light);
+}
+
+/* The title takes the focus when the post opens, for screen readers, but it
+   is not a control: it draws no ring. */
+.title:focus-visible {
+  outline: none;
+}
+
+/* The round picture of the author, then "Written by" over the date. */
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-neutral-extra-light);
+  object-fit: cover;
+}
+
+.bylineText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-body-large);
+  color: var(--color-neutral-darkest);
+}
+
+.author {
+  font-weight: var(--font-weight-semibold);
+}
+
+.date {
+  color: var(--color-neutral-extra-dark);
+}
+
+/* The picture keeps the proportion of the design, 343 x 150 on mobile, and
+   a picture that fails leaves a block of the same size. */
+.image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 343 / 150;
+  border-radius: var(--radius-image);
+  background: var(--color-neutral-extra-light);
+  object-fit: cover;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-post-body-small);
+  color: var(--color-neutral-darkest);
+}
+
+/* A hairline 32 under the text, Latest articles 24 under it, and the cards
+   24 under the heading (48, 48 and 24 on desktop). */
+.latest {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-neutral-light);
+}
+
+.latestTitle {
+  font-size: var(--font-size-post-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-post-heading);
+  color: var(--color-primary-light);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .head {
+    gap: 24px;
+  }
+
+  .title {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+  }
+
+  .byline {
+    gap: 16px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bylineText {
+    gap: 6px;
+    font-size: var(--font-size-body-large);
+  }
+
+  .image {
+    aspect-ratio: 875 / 383;
+  }
+
+  .body {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-post-body-large);
+  }
+
+  .latest {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+
+  .latestTitle {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

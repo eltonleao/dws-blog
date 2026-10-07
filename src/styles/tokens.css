@@ -56,6 +56,13 @@
   --line-height-caption: 1.3;
   /* Measured on the screens, out of the scale (§5, item 2). */
   --font-size-filters-heading: 1.5rem;
+  /* The mobile post: the title and Latest articles at 26 on a step of 35.2,
+     and the body at 14 on a step of 22; on desktop, the body at 16 on 26
+     (§5, items 2 and 3). */
+  --font-size-post-heading: 1.625rem;
+  --line-height-post-heading: 1.35;
+  --line-height-post-body-small: 1.5715;
+  --line-height-post-body-large: 1.625;
 
   /* Grid, §1.3: 4 columns on mobile, 12 from the desktop breakpoint. */
   --grid-columns: 4;
@@ -67,6 +74,8 @@
   --radius-pill: 42px;
   --radius-item: 8px;
   --radius-chip: 4px;
+  /* The picture of a post: ≈12 on the desktop screen, unreadable on mobile. */
+  --radius-image: 12px;
 
   /* The header: 64 on mobile, 88 on desktop. The search panel opens under it. */
   --header-height: 64px;

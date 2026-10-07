@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { useGetPostsQuery } from '../api/postsApi'
@@ -13,7 +13,7 @@ import { SearchField } from '../components/SearchField/SearchField'
 import { SearchPanel } from '../components/SearchPanel/SearchPanel'
 import { SortButton } from '../components/SortButton/SortButton'
 import { StatusMessage } from '../components/StatusMessage/StatusMessage'
-import { filtersCleared } from '../features/browse/browseSlice'
+import { filtersCleared, listScrollSaved } from '../features/browse/browseSlice'
 import { useBrowseUrlSync } from '../features/browse/useBrowseUrlSync'
 import { filterOptions } from '../features/posts/filterOptions'
 import { selectVisiblePosts } from '../features/posts/selectors'
@@ -37,6 +37,7 @@ export function PostListPage() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const { data, isError, refetch } = useGetPostsQuery()
   const posts = useAppSelector(selectVisiblePosts)
+  const listScrollY = useAppSelector((state) => state.browse.listScrollY)
   const dispatch = useAppDispatch()
   // The mobile search panel is the page's own state, and nothing the cards
   // receive depends on it: opening and closing it renders no card again.
@@ -45,6 +46,19 @@ export function PostListPage() {
   const panelOpen = searchOpen && !isDesktop
   // From every post, not from the ones the search and the filters leave.
   const options = filterOptions(data ?? NO_POSTS)
+
+  // The list opens where the reader left it for a post. The cleanup of a
+  // layout effect runs before the list leaves the page, while the page still
+  // has the height of the list, so the position it saves is the one the
+  // reader saw; the browser restores nothing the list has not drawn yet.
+  useLayoutEffect(() => {
+    if (window.scrollY !== listScrollY) {
+      window.scrollTo({ top: listScrollY, behavior: 'instant' })
+    }
+    return () => {
+      dispatch(listScrollSaved(window.scrollY))
+    }
+  }, [dispatch, listScrollY])
 
   const closeSearch = () => {
     // The button is inert while the panel is open: the page renders without

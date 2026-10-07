@@ -1,0 +1,35 @@
+/* On mobile, Back 16 under the header and the content 24 under Back. On
+   desktop, the 12 columns of the grid: Back 40 under the header in the first
+   two, and the content in columns 3 to 10, its top on the top of Back. */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px var(--grid-margin) 48px;
+}
+
+.back {
+  align-self: start;
+}
+
+.content {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .main {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    align-items: start;
+    gap: 0 var(--grid-gutter);
+    padding: 40px var(--grid-margin) 210px;
+  }
+
+  .back {
+    grid-column: 1 / span 2;
+  }
+
+  .content {
+    grid-column: 3 / span 8;
+  }
+}

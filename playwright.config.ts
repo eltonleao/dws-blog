@@ -17,7 +17,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     // The specs run against the production build, never against a stale one.
-    command: `npm run build && vite preview --port ${PORT} --strictPort`,
+    command: `npm run build && npm run preview -- --port ${PORT} --strictPort`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: false,
     timeout: 180_000,

@@ -1,5 +1,6 @@
 /* The desktop field: a pill of 536 x 56 whose border is the input's own, so
-   the focus ring follows the pill. The round icon sits inside, at the right. */
+   the focus ring follows the pill. The round icon of 40 sits inside, 8 from
+   the right and from the top, with the magnifier of 24. */
 .form {
   position: relative;
   flex: 0 1 536px;
@@ -40,6 +41,5 @@
   border-radius: 50%;
   background: var(--color-primary-light);
   color: var(--color-neutral-lightest);
-  font-size: 1.25rem;
   pointer-events: none;
 }

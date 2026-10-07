@@ -24,13 +24,42 @@
   background: var(--color-secondary-dark);
 }
 
-/* Outlined: the way back. */
+/* Outlined: the way back, an arrow and its text. On mobile it is the pill of
+   77 x 32 of the design, in the bold 12 of the dropdowns; from 1024, the
+   105 x 48 of Body/Large/600, with the right padding of 16 the design
+   declares and the left one and the gap measured on the screen. */
 .secondary {
+  gap: 5px;
+  padding: 7px 15px 7px 11px;
   border: 1px solid currentColor;
   background: none;
   color: var(--color-secondary-medium);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  line-height: 16px;
 }
 
 .secondary:hover {
   color: var(--color-secondary-dark);
+}
+
+.secondary > svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 1024px) {
+  .secondary {
+    gap: 12px;
+    padding: 11px 16px 11px 14px;
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body-large);
+  }
+
+  .secondary > svg {
+    width: 24px;
+    height: 24px;
+  }
 }

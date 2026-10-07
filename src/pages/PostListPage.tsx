@@ -7,6 +7,7 @@ import { Button } from '../components/Button/Button'
 import { FilterDropdown } from '../components/FilterDropdown/FilterDropdown'
 import { FilterSidebar } from '../components/FilterSidebar/FilterSidebar'
 import { Header } from '../components/Header/Header'
+import { Icon } from '../components/Icon/Icon'
 import { PostCard } from '../components/PostCard/PostCard'
 import { SearchField } from '../components/SearchField/SearchField'
 import { SearchPanel } from '../components/SearchPanel/SearchPanel'
@@ -105,7 +106,7 @@ export function PostListPage() {
               aria-expanded={panelOpen}
               onClick={() => setSearchOpen(true)}
             >
-              <span aria-hidden="true">⌕</span>
+              <Icon name="search" size={18} />
             </button>
           )}
         </Header>

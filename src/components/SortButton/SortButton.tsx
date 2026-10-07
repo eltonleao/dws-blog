@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { orderToggled } from '../../features/browse/browseSlice'
 import type { SortOrder } from '../../features/posts/types'
+import { Icon } from '../Icon/Icon'
 import styles from './SortButton.module.css'
 
 const LABELS: Record<SortOrder, string> = {
@@ -29,8 +30,9 @@ export function SortButton() {
   return (
     <div className={styles.sort}>
       <span className={styles.label}>Sort by:</span>
-      <button type="button" onClick={toggle}>
+      <button type="button" className={styles.button} onClick={toggle}>
         {LABELS[order]}
+        <Icon name="sort" className={styles.icon} />
       </button>
       <span className={styles.announcement} aria-live="polite">
         {announcement}

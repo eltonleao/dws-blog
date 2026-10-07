@@ -9,7 +9,7 @@
   grid-template-areas:
     'filters sort'
     'results results';
-  gap: 16px var(--grid-gutter);
+  gap: 16px 8px;
   align-items: center;
   padding: 16px var(--grid-margin) 48px;
 }
@@ -22,8 +22,12 @@
   color: var(--color-primary-light);
 }
 
+/* The two pills, 8 apart, wrapping on the narrowest screens. The row places
+   the lists the pills open: both start at its left edge, on the margin. */
 .dropdowns {
+  position: relative;
   display: flex;
+  flex-wrap: wrap;
   grid-area: filters;
   align-items: center;
   gap: 8px;
@@ -58,9 +62,12 @@
   border-radius: 50%;
   background: var(--color-primary-light);
   color: var(--color-neutral-lightest);
-  font: inherit;
-  font-size: var(--font-size-body-large);
   cursor: pointer;
+}
+
+/* The second state of the design's search button: a grey ring around it. */
+.searchButton:hover {
+  box-shadow: 0 0 0 4px var(--color-neutral-light);
 }
 
 .visuallyHidden {
@@ -84,11 +91,25 @@
   list-style: none;
 }
 
-/* An empty card holds the place of a real one, at the card's height. */
+/* An empty card holds the place of a real one, at the card's height, and
+   breathes while the posts load, unless the reader asks for less motion. */
 .skeleton {
   min-height: 369px;
   border-radius: var(--radius-card);
   background: var(--color-neutral-extra-light);
+  animation: breathe 1.6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -101,7 +122,7 @@
     grid-template-areas:
       'title sort'
       'sidebar results';
-    row-gap: 32px;
+    gap: 32px var(--grid-gutter);
     padding-top: 32px;
   }
 

@@ -7,6 +7,7 @@ import {
   filtersApplied,
 } from '../../features/browse/browseSlice'
 import type { FilterOption, FilterSelection } from '../../features/posts/types'
+import { Icon } from '../Icon/Icon'
 import styles from './FilterDropdown.module.css'
 
 type Filter = keyof FilterSelection
@@ -30,6 +31,10 @@ interface FilterDropdownProps {
  * list where several options can be chosen. Each choice filters the posts at
  * once, and the list stays open for the next one. The button says what is
  * chosen, and the X next to it clears this filter.
+ *
+ * The list is placed by the row that holds the dropdowns, which has to be
+ * positioned: it opens at the start of the row, so the list of the second
+ * dropdown fits the screen as the first one does.
  */
 export function FilterDropdown({ filter, options }: FilterDropdownProps) {
   const categories = useAppSelector((state) => state.browse.categories)
@@ -135,7 +140,11 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
 
   return (
     <div className={styles.dropdown} onKeyDown={onKeyDown} onBlur={onBlur}>
-      <div className={styles.control}>
+      <div
+        className={
+          selected.length > 0 ? `${styles.control} ${styles.selected}` : styles.control
+        }
+      >
         <button
           ref={button}
           type="button"
@@ -150,16 +159,12 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
             <>
               {/* The name keeps the filter: "Category: Technology, Science". */}
               <span className={styles.visuallyHidden}>{label}: </span>
-              {chosen.join(', ')}
+              <span className={styles.label}>{chosen.join(', ')}</span>
             </>
           ) : (
-            label
+            <span className={styles.label}>{label}</span>
           )}
-          {selected.length === 0 ? (
-            <span className={styles.icon} aria-hidden="true">
-              ▾
-            </span>
-          ) : null}
+          {selected.length === 0 ? <Icon name="chevron" className={styles.icon} /> : null}
         </button>
         {selected.length > 0 ? (
           <button
@@ -168,9 +173,7 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
             aria-label={`Clear ${label.toLowerCase()}`}
             onClick={clear}
           >
-            <span className={styles.icon} aria-hidden="true">
-              ×
-            </span>
+            <Icon name="close" className={styles.icon} />
           </button>
         ) : null}
       </div>
@@ -198,6 +201,9 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
               onClick={() => toggle(index)}
             >
               {option.label}
+              {selected.includes(option.value) ? (
+                <Icon name="check" size={20} className={styles.check} />
+              ) : null}
             </li>
           ))}
         </ul>

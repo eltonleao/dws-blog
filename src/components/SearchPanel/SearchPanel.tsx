@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { searchChanged } from '../../features/browse/browseSlice'
 import { selectVisiblePosts } from '../../features/posts/selectors'
+import { Icon } from '../Icon/Icon'
 import styles from './SearchPanel.module.css'
 
 interface SearchPanelProps {
@@ -55,11 +56,11 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
       <div className={styles.bar}>
         <button
           type="button"
-          className={styles.icon}
+          className={`${styles.icon} ${styles.back}`}
           aria-label="Close search"
           onClick={onClose}
         >
-          <span aria-hidden="true">←</span>
+          <Icon name="back" size={16} />
         </button>
         <input
           ref={field}
@@ -71,11 +72,11 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
         />
         <button
           type="button"
-          className={styles.icon}
+          className={`${styles.icon} ${styles.clear}`}
           aria-label="Clear search"
           onClick={clear}
         >
-          <span aria-hidden="true">×</span>
+          <Icon name="close" size={16} />
         </button>
       </div>
       <ul className={styles.results}>

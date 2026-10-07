@@ -1,34 +1,85 @@
-/* Structure only: the panel covers the screen, over the page it leaves
-   mounted. The colors, the measures and the icons come with the design
-   tokens. */
+/* A sheet under the header, the height of the screen less the header's, with
+   the top corners rounded. The header stays in view under a scrim, and the
+   page under the sheet stays mounted. */
 .panel {
   position: fixed;
-  inset: 0;
+  inset: var(--header-height) 0 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
   background: var(--color-neutral-lightest);
+  box-shadow: 0 0 0 100vmax var(--color-scrim);
 }
 
-/* The back arrow, the field and the X in one row. */
+/* The field of 343 x 40, 24 from the top, with the back arrow, the text and
+   the X in one pill. It opens selected, so its border is Accent 1 Medium
+   while the focus is in it, and the ring goes round the pill. */
 .bar {
   display: flex;
+  flex: none;
   align-items: center;
+  height: 40px;
+  margin: 24px var(--grid-margin) 15px;
+  padding: 0 7px;
+  border: 1px solid var(--color-neutral-extra-light);
+  border-radius: var(--radius-pill);
 }
 
+.bar:hover,
+.bar:focus-within {
+  border-color: var(--color-accent-1-medium);
+}
+
+.bar:has(.input:focus-visible) {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* The arrow and the X: glyphs of about 10 in round targets of 32. */
 .icon {
   display: inline-flex;
-  flex-shrink: 0;
+  flex: none;
   align-items: center;
   justify-content: center;
-  font: inherit;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
   cursor: pointer;
 }
 
+.icon:hover {
+  background: var(--color-neutral-extra-light);
+}
+
+.back {
+  color: var(--color-neutral-darkest);
+}
+
+.clear {
+  color: var(--color-neutral-extra-dark);
+}
+
+/* The text starts 40 into the field, where the design puts the cursor. */
 .input {
   flex: 1;
   min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-body-large);
+  line-height: var(--line-height-body-large);
+  appearance: none;
+}
+
+.input:focus-visible {
+  outline: none;
 }
 
 /* The panel has its own X: the browser's one would be a second. */
@@ -37,17 +88,39 @@
   appearance: none;
 }
 
+/* Under a divider, the titles that match, on a step of 40. */
 .results {
-  margin: 0;
-  padding: 0;
+  padding: 10px 0;
   list-style: none;
+  border-top: 1px solid var(--color-neutral-extra-light);
 }
 
 .results a {
   display: block;
+  padding: 10px var(--grid-margin);
+  color: var(--color-neutral-darkest);
+  font-size: var(--font-size-body-small);
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.results a:hover {
+  color: var(--color-accent-1-dark);
+}
+
+/* Inside the sheet, which would cut a ring drawn outside. */
+.results a:focus-visible {
+  outline-offset: calc(-1 * var(--focus-width));
 }
 
 /* Always in the page, so a screen reader hears it when the text comes. */
 .empty {
   margin: 0;
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-body-small);
+  line-height: 20px;
+}
+
+.empty:not(:empty) {
+  padding: 0 var(--grid-margin) 10px;
 }

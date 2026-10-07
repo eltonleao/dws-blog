@@ -1,16 +1,21 @@
-/* The message centered, with its actions under it. */
+/* The message centered, with its actions under it: the semibold grey of the
+   sort and the buttons of the design, with the room of a card around them. */
 .status {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  padding: 48px 0;
+  padding: 32px var(--grid-margin);
   text-align: center;
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-large);
   color: var(--color-neutral-extra-dark);
 }
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
 }

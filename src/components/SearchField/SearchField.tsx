@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { searchChanged } from '../../features/browse/browseSlice'
+import { Icon } from '../Icon/Icon'
 import styles from './SearchField.module.css'
 
 /**
@@ -25,7 +26,7 @@ export function SearchField() {
         onChange={(event) => dispatch(searchChanged(event.target.value))}
       />
       <span className={styles.icon} aria-hidden="true">
-        ⌕
+        <Icon name="search" />
       </span>
     </form>
   )

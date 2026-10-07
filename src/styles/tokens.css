@@ -32,6 +32,10 @@
 
   /* The card shadow has no declared value: a faint one in the darkest primary. */
   --shadow-card: 0 2px 8px color-mix(in srgb, var(--color-primary-light) 6%, transparent);
+  /* The open dropdown floats higher than a card, in a wider and softer shadow. */
+  --shadow-popover: 0 8px 24px color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+  /* What the open search panel lays over the header it leaves in view. */
+  --color-scrim: color-mix(in srgb, var(--color-primary-light) 40%, transparent);
 
   /* Type: Open Sans, with the scale of §1.2 (size and line height). */
   --font-family: 'Open Sans', system-ui, sans-serif;
@@ -62,6 +66,10 @@
   --radius-card: 16px;
   --radius-pill: 42px;
   --radius-item: 8px;
+  --radius-chip: 4px;
+
+  /* The header: 64 on mobile, 88 on desktop. The search panel opens under it. */
+  --header-height: 64px;
 
   /* Keyboard focus: 2 px of Accent 1 Medium, 2 px away (§5, item 13). */
   --focus-width: 2px;
@@ -74,5 +82,6 @@
     --grid-columns: 12;
     --grid-margin: 56px;
     --grid-gutter: 24px;
+    --header-height: 88px;
   }
 }

@@ -1,13 +1,19 @@
 /* The pill of the design, and the list that opens under it, over the posts.
-   The finer measures of the list come later. */
+   The dropdown itself is not positioned: the list takes its place from the
+   row of dropdowns, and opens at the start of that row. */
 .dropdown {
-  position: relative;
+  min-width: 0;
+  max-width: 100%;
 }
 
-/* The pill: the button and, once something is chosen, the X that clears it. */
+/* The pill: 110 x 32 for Category, with the button and, once something is
+   chosen, the X that clears it. Hovered or holding a choice, it takes the
+   5% tint of the design, and the text goes to Secondary Dark: Secondary
+   Medium on the tint gives 4.28:1, under the 4.5 the 12 px text needs. */
 .control {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   height: 32px;
   border: 1px solid var(--color-secondary-medium);
   border-radius: var(--radius-pill);
@@ -15,17 +21,21 @@
   color: var(--color-secondary-medium);
 }
 
-.control:hover {
+.control:hover,
+.selected {
   background: var(--color-secondary-medium-5);
+  color: var(--color-secondary-dark);
 }
 
+/* Padding 12 12 12 16 and gap 4 of the design, the border taken out of the
+   padding so the pill keeps its 110. */
 .button,
 .clear {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   height: 100%;
-  padding: 0 12px 0 16px;
+  padding: 0 11px 0 15px;
   border: 0;
   border-radius: var(--radius-pill);
   background: none;
@@ -33,50 +43,95 @@
   font: inherit;
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-caption);
   white-space: nowrap;
   cursor: pointer;
 }
 
+.button {
+  min-width: 0;
+}
+
+/* With a choice, the X follows the text at the gap of 4. */
+.selected .button {
+  padding-right: 0;
+}
+
 .clear {
-  padding: 0 12px 0 4px;
+  flex: none;
+  padding: 0 11px 0 4px;
+}
+
+/* A long choice is cut where the screen ends, and the name keeps it whole. */
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .icon {
-  flex-shrink: 0;
+  flex: none;
 }
 
+/* The open list: 314 wide, padding 16, items of 28 at a gap of 8, radius 16.
+   Narrower than 314 + the margins, it takes the width between the margins. */
 .listbox {
   position: absolute;
   top: 100%;
   left: 0;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(314px, calc(100vw - 2 * var(--grid-margin)));
   margin: 8px 0 0;
-  padding: 8px 0;
+  padding: 16px;
   overflow-y: auto;
   list-style: none;
-  border: 1px solid var(--color-neutral-extra-light);
   border-radius: var(--radius-card);
   background: var(--color-neutral-lightest);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-popover);
 }
 
+/* The option the keyboard is on wears the ring; the list does not need its own. */
+.listbox:focus-visible:has(.active) {
+  outline: none;
+}
+
+/* The filter chip: 28 high, text 14 on 20. The tint of a hover reaches 8
+   past the text on each side, so the text stays in the column of 282. */
 .option {
-  padding: 4px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -8px;
+  padding: 4px 8px;
+  border-radius: var(--radius-chip);
+  color: var(--color-neutral-darkest);
   font-size: var(--font-size-body-small);
   line-height: 20px;
-  white-space: nowrap;
   cursor: pointer;
 }
 
+.option:hover {
+  background: var(--color-secondary-medium-5);
+}
+
+/* A chosen option says so three ways: the color of a chosen pill, the weight
+   and the check. */
 .option[aria-selected='true'] {
-  color: var(--color-secondary-medium);
+  color: var(--color-secondary-dark);
   font-weight: var(--font-weight-semibold);
+}
+
+.check {
+  flex: none;
+  margin-left: auto;
 }
 
 /* The option the keyboard is on, while the list has the keyboard focus. */
 .listbox:focus-visible .active {
-  outline: 2px solid;
-  outline-offset: -2px;
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: calc(-1 * var(--focus-width));
 }
 
 /* Read by screen readers, never shown. */

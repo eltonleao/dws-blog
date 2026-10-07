@@ -11,6 +11,9 @@
 }
 
 .heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: var(--font-size-filters-heading);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-h3);
@@ -55,6 +58,13 @@
 
 .item:hover {
   color: var(--color-accent-1-dark);
+}
+
+/* Hovered and selected, the design draws the text in semibold. The item is
+   as wide as the sidebar, so the heavier text moves nothing. */
+.item:hover,
+.item[aria-pressed='true'] {
+  font-weight: var(--font-weight-semibold);
 }
 
 .item[aria-pressed='true'] {

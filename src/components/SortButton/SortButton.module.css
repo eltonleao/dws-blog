@@ -1,25 +1,46 @@
-/* The label, the button and the live region in one row, in the grey of the
-   design. The icon and the finer measures come later. */
+/* "Sort by:" and the button in one row, in the grey of the design, with the
+   live region out of sight. */
 .sort {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   font-size: var(--font-size-body-small);
   line-height: var(--line-height-body-small);
   color: var(--color-neutral-extra-dark);
 }
 
-.sort button {
-  padding: 4px 8px;
+/* The text and the teal arrows. On hover, a teal pill with padding 8 at the
+   sides; the pill hangs 8 past the button's place, so the text and the icon
+   line up with the grid as the design draws them. The weight stays, so the
+   row of filters next to it does not move. The pill is Accent 1 Dark, not
+   the Medium of the design: light text on Medium gives 2.8:1, on Dark 4.7. */
+.button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  margin: 0 -8px;
+  padding: 6px 8px;
   border: 0;
   border-radius: var(--radius-pill);
   background: none;
+  color: inherit;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.sort button:hover {
-  background: var(--color-accent-1-medium);
+.icon {
+  flex: none;
+  color: var(--color-accent-1-medium);
+}
+
+.button:hover {
+  background: var(--color-accent-1-dark);
   color: var(--color-neutral-extra-light);
+}
+
+.button:hover .icon {
+  color: inherit;
 }
 
 /* "Sort by:" is in the desktop design only. */
@@ -32,6 +53,10 @@
   .sort {
     font-size: var(--font-size-body-large);
     line-height: var(--line-height-body-large);
+  }
+
+  .button {
+    gap: 8px;
   }
 
   .label {

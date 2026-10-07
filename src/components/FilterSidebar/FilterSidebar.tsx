@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { filtersApplied } from '../../features/browse/browseSlice'
 import type { FilterOption, FilterSelection } from '../../features/posts/types'
 import { Button } from '../Button/Button'
+import { Icon } from '../Icon/Icon'
 import styles from './FilterSidebar.module.css'
 
 type Filter = keyof FilterSelection
@@ -66,6 +67,7 @@ export function FilterSidebar({ options }: FilterSidebarProps) {
   return (
     <section className={styles.sidebar} aria-labelledby={headingId}>
       <h2 id={headingId} className={styles.heading}>
+        <Icon name="filters" />
         Filters
       </h2>
       {GROUPS.map(({ filter, label }) => (

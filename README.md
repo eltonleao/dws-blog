@@ -6,7 +6,7 @@ The Dentsu World Services (DWS) front-end test. The brief asks for the two views
 
 This implementation builds both views from 320 to 1920 px wide, with the category and author filters, the search and the sort order the design draws, all of them mirrored in the URL. It is tested at four levels, the tests were written before the code, and every line of the test matrix has a mutant its test kills.
 
-Live: https://dws-blog-xi.vercel.app
+Live: https://dentsu.eltonleao.dev
 
 Quick map: [Run it](#run-it) · [Design decisions](#design-decisions) · [Accessibility](#accessibility) · [Tests](#tests)
 

@@ -358,7 +358,9 @@ it('C12 renders a title that looks like HTML as text, and adds no image to the p
     http.get(POSTS_URL, () =>
       HttpResponse.json(
         rawPosts.map((post, index) =>
-          index === 0 ? { ...post, title: markup } : post,
+          // A synthetic id, outside the content map, so the title of the API
+          // is the one on the card (K4).
+          index === 0 ? { ...post, id: 'synthetic-markup-post', title: markup } : post,
         ),
       ),
     ),

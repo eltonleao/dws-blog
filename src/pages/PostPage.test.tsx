@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { expect, it } from 'vitest'
+import { content } from '../content/en'
 import rawPosts from '../test/fixtures/posts.json'
 import { renderApp } from '../test/renderApp'
 import { POSTS_URL, postsHandler, server } from '../test/server'
@@ -39,16 +40,15 @@ async function expectNotFoundScreen() {
   expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument()
 }
 
-it('C14 shows the post with its title as h1, the author, Sep 19, 2026, three paragraphs, and Latest articles with three cards that leave the current post out', async () => {
+it('C14 shows the post with its title as h1, the author, Sep 19, 2026, its paragraphs, and Latest articles with three cards that leave the current post out', async () => {
   // The second post of the API: it is among the first three, so a list of the
   // newest posts that forgot to leave the current one out would show it.
   const post = rawPosts[1]
   const newest = rawPosts.filter((other) => other.id !== post.id).slice(0, 3)
-  const paragraphs = post.content
-    .split(/\r?\n\s*\r?\n/)
-    .map((text) => text.trim())
-    .filter(Boolean)
-  expect(paragraphs, 'the fixture content has three paragraphs').toHaveLength(3)
+  // The text of the post is the English file of the content map, not the lorem
+  // of the API.
+  const paragraphs = content[post.id].content.split('\n\n')
+  expect(paragraphs.length, 'the post file has paragraphs').toBeGreaterThan(0)
 
   renderApp(postPath(post))
 
@@ -66,7 +66,7 @@ it('C14 shows the post with its title as h1, the author, Sep 19, 2026, three par
   expect(mentions(post.author.name), 'the author before Latest articles').not.toHaveLength(0)
   expect(mentions('Sep 19, 2026'), 'the date before Latest articles').not.toHaveLength(0)
 
-  // Three paragraphs, one element each, in the order of the content.
+  // The paragraphs, one element each, in the order of the content.
   const shown = before(Array.from(document.querySelectorAll('p')))
     .map((paragraph) => paragraph.textContent?.trim() ?? '')
     .filter((text) => paragraphs.includes(text))

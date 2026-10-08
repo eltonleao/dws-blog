@@ -9,6 +9,7 @@ import {
   measure,
   measureHandle,
   openList,
+  serveOutsideContentMap,
   SIZES,
   styleOf,
   summaryStart,
@@ -50,8 +51,10 @@ test('E6 the whole card goes to its post, and Tab stops once per card', async ({
 
 test('M3 the card has the design radius, image, padding, gap, tag, type sizes and date size', async ({
   page,
-  posts,
+  posts: snapshot,
 }) => {
+  // Posts outside the content map: the card shows the body of the API (K7 of P4).
+  const posts = await serveOutsideContentMap(page, snapshot)
   const expected = { mobile: { image: 150, date: '14px' }, desktop: { image: 196, date: '12px' } }
 
   for (const size of SIZES) {
@@ -98,8 +101,10 @@ test('M3 the card has the design radius, image, padding, gap, tag, type sizes an
 
 test('M4 the summary is a whole number of lines, 3 under a one-line title and 2 under a longer one, and cards in a row are equally tall', async ({
   page,
-  posts,
+  posts: snapshot,
 }) => {
+  // Posts outside the content map: the card shows the body of the API (K7 of P4).
+  const posts = await serveOutsideContentMap(page, snapshot)
   test.setTimeout(60_000)
 
   for (const size of SIZES) {

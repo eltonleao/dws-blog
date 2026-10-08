@@ -127,6 +127,28 @@ export async function styleOf(
 export const summaryStart = (post: ApiPost) =>
   (post as ApiPost & { content: string }).content.slice(0, 24)
 
+/**
+ * Serves the 26 posts of the snapshot under ids the content map does not have
+ * (K4), so the page shows the text of the API and the geometry specs measure
+ * the same body they were written against. Returns the posts as served.
+ */
+export async function serveOutsideContentMap<T extends ApiPost>(page: Page, posts: T[]): Promise<T[]> {
+  const served = posts.map((post) => ({ ...post, id: `synthetic-${post.id}` }))
+  await page.route(
+    (url) => url.origin === 'https://tech-test-backend.dwsbrazil.io' && url.pathname === '/posts/',
+    (route) =>
+      route.fulfill({
+        json: served,
+        headers: {
+          'access-control-allow-origin': '*',
+          'access-control-allow-headers': '*',
+          'access-control-allow-methods': 'GET, OPTIONS',
+        },
+      }),
+  )
+  return served
+}
+
 /** How many lines of text an element's content takes, from the rects of its text nodes. */
 export async function lineCount(locator: Locator): Promise<number> {
   return locator.evaluate((element) => {

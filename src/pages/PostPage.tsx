@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import { Button } from '../components/Button/Button'
 import { PostCard } from '../components/PostCard/PostCard'
 import { PostLayout } from '../components/PostLayout/PostLayout'
@@ -86,7 +86,9 @@ export function PostPage() {
             )}
             <div className={styles.bylineText}>
               <p>
-                {t('post.writtenBy')} <strong className={styles.author}>{post.author.name}</strong>
+                {t('post.writtenBy')} <Link to={`/authors/${post.author.id}`} className={styles.author}>
+                  {post.author.name}
+                </Link>
               </p>
               <time className={styles.date} dateTime={post.createdAt}>
                 {formatDate(post.createdAt, locale)}

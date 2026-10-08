@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router'
 import { ChunkBoundary } from '../components/ChunkBoundary/ChunkBoundary'
 import { useT } from '../i18n/useT'
 import { StatusMessage } from '../components/StatusMessage/StatusMessage'
+import { AuthorPage } from '../pages/AuthorPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { PostListPage } from '../pages/PostListPage'
 import { PostPage } from '../pages/PostPage'
@@ -27,6 +28,7 @@ export function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route path="/" element={<PostListPage />} />
         <Route path="/posts/:id" element={<PostPage />} />
+        <Route path="/authors/:id" element={<AuthorPage />} />
         <Route
           path="/proof"
           element={

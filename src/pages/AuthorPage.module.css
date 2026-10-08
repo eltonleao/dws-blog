@@ -1,0 +1,56 @@
+/* The author name over the count, and the cards of the author in the grid of
+   the list: one column on mobile, three on desktop. */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px var(--grid-margin) 48px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: var(--font-size-post-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-post-heading);
+  color: var(--color-primary-dark);
+}
+
+/* The title takes the focus when the page opens, but it is not a control. */
+.title:focus-visible {
+  outline: none;
+}
+
+.count {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-body-large);
+  color: var(--color-neutral-extra-dark);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+  }
+
+  .count {
+    font-size: var(--font-size-body-large);
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from 'react'
+import { useT } from '../../i18n/useT'
 import { Button } from '../Button/Button'
 import { StatusMessage } from '../StatusMessage/StatusMessage'
 
@@ -9,6 +10,15 @@ interface ChunkBoundaryProps {
 
 interface ChunkBoundaryState {
   failed: boolean
+}
+
+function ChunkFailed() {
+  const { t } = useT()
+  return (
+    <StatusMessage role="alert" message={t('chunk.failed')}>
+      <Button onClick={() => window.location.reload()}>{t('chunk.reload')}</Button>
+    </StatusMessage>
+  )
 }
 
 /**
@@ -24,11 +34,7 @@ export class ChunkBoundary extends Component<ChunkBoundaryProps, ChunkBoundarySt
 
   render() {
     if (this.state.failed) {
-      return (
-        <StatusMessage role="alert" message="The bug hunt could not load.">
-          <Button onClick={() => window.location.reload()}>Reload</Button>
-        </StatusMessage>
-      )
+      return <ChunkFailed />
     }
     return this.props.children
   }

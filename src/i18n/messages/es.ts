@@ -43,5 +43,9 @@ export const es: Record<MessageKey, string> = {
     'No hay ninguna publicación en esta dirección. Puede que la hayan eliminado o que el enlace sea incorrecto.',
   'notFound.seeAll': 'Ver todas las publicaciones',
 
+  'chunk.loading': 'Cargando la caza de errores…',
+  'chunk.failed': 'No se pudo cargar la caza de errores.',
+  'chunk.reload': 'Recargar',
+
   'footer.back': 'Volver al blog',
 }

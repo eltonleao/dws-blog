@@ -43,6 +43,10 @@ export const en = {
     'There is no post at this address. It may have been removed, or the link may be wrong.',
   'notFound.seeAll': 'See all posts',
 
+  'chunk.loading': 'Loading the bug hunt…',
+  'chunk.failed': 'The bug hunt could not load.',
+  'chunk.reload': 'Reload',
+
   'footer.back': 'Back to the blog',
 } as const
 

@@ -6,6 +6,7 @@ import { PostCard } from '../components/PostCard/PostCard'
 import { PostLayout } from '../components/PostLayout/PostLayout'
 import { StatusMessage } from '../components/StatusMessage/StatusMessage'
 import { latestPosts } from '../features/posts/latestPosts'
+import { useT } from '../i18n/useT'
 import { formatDate } from '../lib/formatDate'
 import { toParagraphs } from '../lib/paragraphs'
 import { NotFoundPage } from './NotFoundPage'
@@ -26,6 +27,7 @@ export function PostPage() {
       isError,
     }),
   })
+  const { t, locale } = useT()
   const heading = useRef<HTMLHeadingElement>(null)
   const found = post !== undefined
   // A picture that fails to load gives its place to a block of the same size.
@@ -49,8 +51,8 @@ export function PostPage() {
   if (posts === undefined && isError) {
     return (
       <PostLayout>
-        <StatusMessage role="alert" message="Something went wrong">
-          <Button onClick={() => refetch()}>Try again</Button>
+        <StatusMessage role="alert" message={t('status.error')}>
+          <Button onClick={() => refetch()}>{t('status.retry')}</Button>
         </StatusMessage>
       </PostLayout>
     )
@@ -58,7 +60,7 @@ export function PostPage() {
   if (posts === undefined) {
     return (
       <PostLayout>
-        <StatusMessage message="Loading post" />
+        <StatusMessage message={t('post.loading')} />
       </PostLayout>
     )
   }
@@ -89,10 +91,10 @@ export function PostPage() {
             )}
             <div className={styles.bylineText}>
               <p>
-                Written by: <strong className={styles.author}>{post.author.name}</strong>
+                {t('post.writtenBy')} <strong className={styles.author}>{post.author.name}</strong>
               </p>
               <time className={styles.date} dateTime={post.createdAt}>
-                {formatDate(post.createdAt)}
+                {formatDate(post.createdAt, locale)}
               </time>
             </div>
           </div>
@@ -116,7 +118,7 @@ export function PostPage() {
       {latest.length > 0 ? (
         <section className={styles.latest} aria-labelledby="latest-articles">
           <h2 id="latest-articles" className={styles.latestTitle}>
-            Latest articles
+            {t('post.latest')}
           </h2>
           <ul className={styles.grid}>
             {latest.map((other) => (

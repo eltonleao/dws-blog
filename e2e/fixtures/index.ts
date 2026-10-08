@@ -7,6 +7,8 @@ import { expect, test as base } from '@playwright/test'
 
 const API_ORIGIN = 'https://tech-test-backend.dwsbrazil.io'
 const IMAGE_HOST = 'dws-tech-test-assets.s3.amazonaws.com'
+// The Supabase project the e2e build points the comments at (playwright.config.ts).
+const SUPABASE_HOST = 'e2e.supabase.test'
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]'])
 
 // The page is served from localhost, so the mocked answers need CORS headers
@@ -55,7 +57,7 @@ export const test = base.extend<Fixtures>({
   mockedNetwork: [
     async ({ page, posts }, use) => {
       // The route registered last wins, so this catch-all goes first: it only
-      // gets what the two routes below do not answer.
+      // gets what the three routes below do not answer.
       await page.route(
         (url) =>
           /^https?:$/.test(url.protocol) && !LOCAL_HOSTS.has(url.hostname),
@@ -76,6 +78,16 @@ export const test = base.extend<Fixtures>({
             contentType: 'image/png',
             headers: CORS_HEADERS,
           }),
+      )
+      // Every post asks for its comments. A spec that is not about them gets a
+      // project without any; the comments specs answer the host themselves
+      // (e2e/comments-support.ts), and their route, registered later, wins.
+      await page.route(
+        (url) => url.hostname === SUPABASE_HOST,
+        (route) =>
+          route.request().method() === 'OPTIONS'
+            ? route.fulfill({ status: 204, headers: CORS_HEADERS })
+            : route.fulfill({ json: [], headers: CORS_HEADERS }),
       )
       await use()
     },

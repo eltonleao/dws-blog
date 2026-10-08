@@ -1,5 +1,8 @@
-/* The comments under the post: a hairline over them, as over Latest
-   articles, then the form, the visitor and the list. */
+/* The comments under the post, between the text and Latest articles, and
+   built like Latest articles: a hairline 32 over them (48 on desktop), the
+   heading in its type, and the blocks 24 apart. The form and each comment sit
+   on the surface of a card, so every text keeps its contrast over the glows
+   of the page: on that fill the greys of the cards' meta stay over 5.6:1. */
 .section {
   display: flex;
   flex-direction: column;
@@ -12,34 +15,78 @@
 .title {
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-post-heading);
+  line-height: 32px;
   color: var(--color-primary-dark);
 }
 
+/* The title takes the focus when a comment is deleted, so a screen reader
+   hears the new count; it is not a control and draws no ring. */
+.title:focus-visible {
+  outline: none;
+}
+
+/* The form: the label with the counter at its end, the field, then who is
+   writing and the button to send. */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background: var(--color-neutral-lightest);
+  box-shadow: var(--shadow-card);
+}
+
+.fieldHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .label {
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body-small);
   color: var(--color-primary-dark);
 }
 
+.counter {
+  flex: none;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-neutral-extra-dark);
+}
+
+/* The last 50 characters: the counter turns to the dark of the alerts. */
+.counter[data-near-limit] {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-secondary-dark);
+}
+
+/* White inside the card, with a border of 3.4:1 on it (Neutral Medium falls
+   to 2.6). The text is 16 also on mobile, where a smaller one makes the phone
+   zoom into the field. */
 .field {
+  display: block;
   width: 100%;
-  min-height: 96px;
-  padding: 12px;
-  border: 1px solid var(--color-neutral-medium);
+  min-height: 112px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-neutral-dark);
   border-radius: var(--radius-item);
   font: inherit;
-  font-size: var(--font-size-body-small);
-  line-height: var(--line-height-body-small);
+  font-size: var(--font-size-body-large);
+  line-height: var(--line-height-body-large);
   color: var(--color-neutral-darkest);
   background: var(--color-page-mobile);
   resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+.field:hover,
+.field:focus {
+  border-color: var(--color-accent-1-medium);
 }
 
 .field:focus-visible {
@@ -47,30 +94,83 @@
   outline-offset: var(--focus-offset);
 }
 
-.formFooter {
+/* The visitor on the left and the button on the right; on a narrow screen
+   the button drops under the visitor and keeps to the right. */
+.actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.counter {
-  font-size: var(--font-size-caption);
-  color: var(--color-neutral-extra-dark);
-}
-
-.problem {
-  font-size: var(--font-size-body-small);
-  color: var(--color-secondary-dark);
+  justify-content: flex-end;
+  gap: 8px 16px;
 }
 
 .visitor {
   display: flex;
+  flex: 1 1 auto;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 0 8px;
+  min-width: 0;
   font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  color: var(--color-neutral-extra-dark);
+}
+
+.visitorName {
+  font-weight: var(--font-weight-semibold);
   color: var(--color-neutral-darkest);
+}
+
+/* Leave reads as a link of the sentence, in a box of at least 44 x 44 for
+   the finger. */
+.leave {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: none;
+  border-radius: var(--radius-chip);
+  background: none;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-secondary-medium);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.leave:hover {
+  color: var(--color-secondary-dark);
+}
+
+.leave:focus-visible,
+.delete:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+.leave:disabled {
+  cursor: progress;
+}
+
+.submit {
+  margin-left: auto;
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* What went wrong with sending or deleting: the dark of the alerts on the
+   tint of the selected dropdown, with a bar of the brand at its start. */
+.problem {
+  padding: 10px 12px;
+  border-left: 3px solid var(--color-secondary-medium);
+  border-radius: 0 var(--radius-chip) var(--radius-chip) 0;
+  background: var(--color-secondary-medium-5);
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  color: var(--color-secondary-dark);
 }
 
 .list {
@@ -82,31 +182,111 @@
   list-style: none;
 }
 
+/* Each comment is a card: the shadow of the cards on mobile, their stroke on
+   desktop. */
 .comment {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 8px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--color-neutral-extra-light);
+  padding: 12px 16px 16px;
+  border-radius: var(--radius-card);
+  background: var(--color-neutral-lightest);
+  box-shadow: var(--shadow-card);
 }
 
+.commentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 20px;
+}
+
+/* The name and the date with the pink dot of the cards between them. */
 .meta {
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+  font-size: var(--font-size-body-small);
+  line-height: 20px;
   color: var(--color-neutral-extra-dark);
 }
 
 .author {
   font-weight: var(--font-weight-semibold);
   color: var(--color-neutral-darkest);
+  overflow-wrap: anywhere;
+}
+
+.dot {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-secondary-medium);
+}
+
+/* The bin of 20 in a round target of 44, which reaches into the padding of
+   the card so the line of the name keeps its height. */
+.delete {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -12px -12px -12px 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-neutral-extra-dark);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.delete:hover {
+  background: var(--color-secondary-medium-5);
+  color: var(--color-secondary-dark);
 }
 
 /* The body is text, never markup, and keeps the line breaks it was written with. */
 .body {
   font-size: var(--font-size-body-small);
-  line-height: var(--line-height-body-small);
+  line-height: var(--line-height-post-body-small);
   color: var(--color-primary-dark);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+
+  .title {
+    font-size: var(--font-size-h2);
+    line-height: 49px;
+  }
+
+  .form {
+    gap: 16px;
+    padding: 24px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-extra-light);
+  }
+
+  .comment {
+    padding: 16px 24px 24px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-extra-light);
+  }
+
+  .body {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body-large);
+  }
 }

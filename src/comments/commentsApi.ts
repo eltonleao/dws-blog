@@ -151,14 +151,17 @@ export const commentsApi = createApi({
           } catch (error) {
             return { error: failure('visitor', error, statusOf(error)) }
           }
+          // The new row comes back in a list of one, read as a list: asking for
+          // a single object depends on a header every server has to honour.
           const { data, error, status } = await supabase
             .from('comments')
             .insert({ post_id: postId, display_name: visitor.displayName, body: text })
             .select(COLUMNS)
-            .single()
-            .overrideTypes<CommentRow, { merge: false }>()
+            .overrideTypes<CommentRow[], { merge: false }>()
           if (error) return { error: failure('request', error, status) }
-          return { data: toComment(data) }
+          const [row] = data
+          if (!row) return { error: failure('request', 'The insert returned no row', status) }
+          return { data: toComment(row) }
         }),
       // The first comment may have created the visitor, even when the insert failed.
       invalidatesTags: ['Visitor'],

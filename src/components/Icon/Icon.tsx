@@ -32,6 +32,10 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M12 12v8M8 11.5 5 10m3 4H4.5M8 17l-3 2m11-7.5 3-1.5m-3 4h3.5M16 17l3 2" />
     </>
   ),
+  // A bin with its lid and handle, two lines down the side: 16 x 16 of ink.
+  trash: (
+    <path d="M4 7h16M9.5 7V4.5h5V7m-8 0 .85 11.6A1.5 1.5 0 0 0 8.85 20h6.3a1.5 1.5 0 0 0 1.5-1.4L17.5 7M10 11v5m4-5v5" />
+  ),
 }
 
 export type IconName =
@@ -43,6 +47,7 @@ export type IconName =
   | 'filters'
   | 'sort'
   | 'bug'
+  | 'trash'
 
 interface IconProps {
   name: IconName

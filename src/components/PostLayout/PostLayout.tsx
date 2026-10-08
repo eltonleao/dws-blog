@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Button } from '../Button/Button'
 import { Icon } from '../Icon/Icon'
+import { useT } from '../../i18n/useT'
 import styles from './PostLayout.module.css'
 
 interface PostLayoutProps {
@@ -17,6 +18,7 @@ interface PostLayoutProps {
 export function PostLayout({ children }: PostLayoutProps) {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useT()
 
   const goBack = () => {
     // A page opened directly has nothing of the app behind it, so Back goes
@@ -33,7 +35,7 @@ export function PostLayout({ children }: PostLayoutProps) {
       <div className={styles.back}>
         <Button variant="secondary" onClick={goBack}>
           <Icon name="back" />
-          Back
+          {t('post.back')}
         </Button>
       </div>
       <div className={styles.content}>{children}</div>

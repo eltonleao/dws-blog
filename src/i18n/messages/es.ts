@@ -37,6 +37,7 @@ export const es: Record<MessageKey, string> = {
   'post.loading': 'Cargando publicación',
   'post.writtenBy': 'Escrito por:',
   'post.latest': 'Últimos artículos',
+  'post.back': 'Volver',
 
   'notFound.title': 'Publicación no encontrada',
   'notFound.text':

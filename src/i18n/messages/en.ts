@@ -37,6 +37,7 @@ export const en = {
   'post.loading': 'Loading post',
   'post.writtenBy': 'Written by:',
   'post.latest': 'Latest articles',
+  'post.back': 'Back',
 
   'notFound.title': 'Post not found',
   'notFound.text':

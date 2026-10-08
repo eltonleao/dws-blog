@@ -1,4 +1,4 @@
-import { act, renderHook, screen, waitFor } from '@testing-library/react'
+import { act, renderHook, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { Provider } from 'react-redux'
@@ -232,8 +232,11 @@ describe('a new post and a failing chunk on the pages', () => {
     loaders.es.mockRejectedValue(new Error('Failed to fetch dynamically imported module'))
     renderLocalized(`/posts/${SECOND.id}`, { locale: 'es' })
 
-    expect(await screen.findByRole('heading', { level: 1, name: SECOND.title })).toBeInTheDocument()
-    expect(screen.getByText(SECOND.content.split(/\n\s*\n/)[0].trim())).toBeInTheDocument()
+    const title = await screen.findByRole('heading', { level: 1, name: SECOND.title })
+    expect(title).toBeInTheDocument()
+    // The 26 posts share their first paragraph, so Latest articles repeats it: read inside the post.
+    const article = title.closest('article') as HTMLElement
+    expect(within(article).getByText(SECOND.content.split(/\n\s*\n/)[0].trim())).toBeInTheDocument()
   })
 
   it('K7 paints a body with a script tag and an image tag as plain text and never as HTML', async () => {

@@ -1,4 +1,4 @@
-import type { Post } from '../features/posts/types'
+import type { Post } from '../features/posts/types.ts'
 
 /** The response is not what the API promises: a list of posts. */
 export class ApiShapeError extends Error {

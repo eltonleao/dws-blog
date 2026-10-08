@@ -1,5 +1,5 @@
-import type { Post } from '../features/posts/types'
-import type { ContentMap } from './parseContent'
+import type { Post } from '../features/posts/types.ts'
+import type { ContentMap } from './parseContent.ts'
 
 /**
  * The post with the title and the content written for it in the language of

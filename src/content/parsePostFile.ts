@@ -1,4 +1,4 @@
-import { toParagraphs } from '../lib/paragraphs'
+import { toParagraphs } from '../lib/paragraphs.ts'
 
 /** One post file: the id of the post in the API, its title and its paragraphs. */
 export interface PostFile {

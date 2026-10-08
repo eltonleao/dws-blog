@@ -1,4 +1,4 @@
-import { parsePostFile } from './parsePostFile'
+import { parsePostFile } from './parsePostFile.ts'
 
 /** The written text of each post, by the id of the post in the API. */
 export type ContentMap = Record<string, { title: string; content: string }>

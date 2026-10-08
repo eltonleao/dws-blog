@@ -63,6 +63,8 @@ test('E9 Tab walks the header, search, filters, sort and cards, with an outline 
     if (/^(Newest|Oldest) first$/.test(stop.label)) return 'sort'
     if (stop.type === 'search' || stop.tag === 'input') return 'search'
     if (stop.tag === 'button' && /^search$/i.test(stop.label)) return 'search'
+    // The language switch is in the banner and its buttons carry aria-pressed too.
+    if (stop.inBanner && stop.pressed !== null) return 'header'
     if (stop.popup === 'listbox' || stop.pressed !== null || /^(Apply|Clear) filters$/.test(stop.label)) {
       return 'filter'
     }

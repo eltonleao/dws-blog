@@ -13,6 +13,7 @@ import { useBrowseUrlSync } from '../features/browse/useBrowseUrlSync'
 import { filterOptions } from '../features/posts/filterOptions'
 import { selectVisiblePosts } from '../features/posts/selectors'
 import type { Post } from '../features/posts/types'
+import { useT } from '../i18n/useT'
 import { DESKTOP_QUERY, useMediaQuery } from '../lib/useMediaQuery'
 import styles from './PostListPage.module.css'
 
@@ -35,6 +36,7 @@ export function PostListPage() {
   const posts = useAppSelector(selectVisiblePosts)
   const listScrollY = useAppSelector((state) => state.browse.listScrollY)
   const dispatch = useAppDispatch()
+  const { t } = useT()
   // From every post, not from the ones the search and the filters leave.
   const options = filterOptions(data ?? NO_POSTS)
   // How many posts the list shows, for screen readers: the region speaks when
@@ -43,7 +45,7 @@ export function PostListPage() {
   const count =
     data === undefined || posts.length === 0
       ? ''
-      : `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`
+      : t('list.count', { count: posts.length })
 
   // The list opens where the reader left it for a post. The cleanup of a
   // layout effect runs before the list leaves the page, while the page still
@@ -62,14 +64,14 @@ export function PostListPage() {
   let content: ReactNode
   if (data === undefined && isError) {
     content = (
-      <StatusMessage role="alert" message="Something went wrong">
-        <Button onClick={() => refetch()}>Try again</Button>
+      <StatusMessage role="alert" message={t('status.error')}>
+        <Button onClick={() => refetch()}>{t('status.retry')}</Button>
       </StatusMessage>
     )
   } else if (data === undefined) {
     content = (
       <>
-        <StatusMessage message="Loading posts" />
+        <StatusMessage message={t('list.loading')} />
         <ul className={styles.grid} aria-hidden="true">
           {Array.from({ length: SKELETON_CARDS }, (_, index) => (
             <li key={index} className={styles.skeleton} />
@@ -79,8 +81,8 @@ export function PostListPage() {
     )
   } else if (posts.length === 0) {
     content = (
-      <StatusMessage message="No posts found">
-        <Button onClick={() => dispatch(filtersCleared())}>Clear filters</Button>
+      <StatusMessage message={t('list.empty')}>
+        <Button onClick={() => dispatch(filtersCleared())}>{t('filters.clear')}</Button>
       </StatusMessage>
     )
   } else {
@@ -103,7 +105,7 @@ export function PostListPage() {
       {/* The design shows the title on desktop only; on mobile it stays as
           the heading of the page for screen readers. */}
       <h1 className={isDesktop ? styles.title : styles.visuallyHidden}>
-        DWS blog
+        {t('list.title')}
       </h1>
       {isDesktop ? (
         <div className={styles.sidebar}>

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import type { Post } from '../../features/posts/types'
+import { categoryLabel } from '../../i18n/categories'
+import { useT } from '../../i18n/useT'
 import { formatDate } from '../../lib/formatDate'
 import { toParagraphs } from '../../lib/paragraphs'
 import styles from './PostCard.module.css'
@@ -15,6 +17,7 @@ interface PostCardProps {
  * one link of the card, and every text from the API is rendered as text.
  */
 export function PostCard({ post }: PostCardProps) {
+  const { locale } = useT()
   // A thumbnail that fails to load gives its place to a block of the same size.
   const [broken, setBroken] = useState(false)
   // The summary is the start of the content; the CSS cuts it to the lines that fit.
@@ -35,7 +38,7 @@ export function PostCard({ post }: PostCardProps) {
       )}
       <div className={styles.body}>
         <p className={styles.meta}>
-          <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+          <time dateTime={post.createdAt}>{formatDate(post.createdAt, locale)}</time>
           <span className={styles.dot} aria-hidden="true" />
           <span>{post.author.name}</span>
         </p>
@@ -55,7 +58,7 @@ export function PostCard({ post }: PostCardProps) {
           <ul className={styles.categories}>
             {post.categories.map((category) => (
               <li key={category.id || category.name} className={styles.tag}>
-                {category.name}
+                {categoryLabel(category.name, locale)}
               </li>
             ))}
           </ul>

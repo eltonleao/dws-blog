@@ -7,15 +7,22 @@ import {
   filtersApplied,
 } from '../../features/browse/browseSlice'
 import type { FilterOption, FilterSelection } from '../../features/posts/types'
+import { categoryLabel } from '../../i18n/categories'
+import { useT } from '../../i18n/useT'
 import { Icon } from '../Icon/Icon'
 import styles from './FilterDropdown.module.css'
 
 type Filter = keyof FilterSelection
 
-const LABELS: Record<Filter, string> = {
-  categories: 'Category',
-  authors: 'Author',
-}
+const LABELS = {
+  categories: 'filters.category',
+  authors: 'filters.author',
+} as const
+
+const CLEAR_LABELS = {
+  categories: 'filters.clearCategory',
+  authors: 'filters.clearAuthor',
+} as const
 
 const TOGGLES = { categories: categoryToggled, authors: authorToggled }
 
@@ -40,6 +47,7 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
   const categories = useAppSelector((state) => state.browse.categories)
   const authors = useAppSelector((state) => state.browse.authors)
   const dispatch = useAppDispatch()
+  const { t, locale } = useT()
   const [open, setOpen] = useState(false)
   // The option the keyboard is on. The focus stays on the list, which points
   // at the option through aria-activedescendant.
@@ -48,12 +56,18 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
   const list = useRef<HTMLUListElement>(null)
   const id = useId()
 
-  const label = LABELS[filter]
+  const label = t(LABELS[filter])
+  // Only the label of a category changes with the language; its value stays the API name.
+  const optionLabel = (option: FilterOption) =>
+    filter === 'categories' ? categoryLabel(option.label, locale) : option.label
   const selected = filter === 'categories' ? categories : authors
   // In the order they were chosen. A value no option knows, such as an author
   // id from an old link, stays out of the label until the X clears it.
   const chosen = selected.flatMap(
-    (value) => options.find((option) => option.value === value)?.label ?? [],
+    (value) => {
+      const found = options.find((option) => option.value === value)
+      return found === undefined ? [] : optionLabel(found)
+    },
   )
   const listId = `${id}-list`
   const optionId = (index: number) => `${id}-option-${index}`
@@ -170,7 +184,7 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
           <button
             type="button"
             className={styles.clear}
-            aria-label={`Clear ${label.toLowerCase()}`}
+            aria-label={t(CLEAR_LABELS[filter])}
             onClick={clear}
           >
             <Icon name="close" className={styles.icon} />
@@ -200,7 +214,7 @@ export function FilterDropdown({ filter, options }: FilterDropdownProps) {
               }
               onClick={() => toggle(index)}
             >
-              {option.label}
+              {optionLabel(option)}
               {selected.includes(option.value) ? (
                 <Icon name="check" size={20} className={styles.check} />
               ) : null}

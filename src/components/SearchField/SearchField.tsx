@@ -1,4 +1,5 @@
 import { useSearch } from '../../features/browse/useSearch'
+import { useT } from '../../i18n/useT'
 import { Icon } from '../Icon/Icon'
 import styles from './SearchField.module.css'
 
@@ -9,6 +10,7 @@ import styles from './SearchField.module.css'
  */
 export function SearchField() {
   const [search, changeSearch] = useSearch()
+  const { t } = useT()
 
   return (
     <form
@@ -19,8 +21,8 @@ export function SearchField() {
       <input
         type="search"
         className={styles.input}
-        aria-label="Search"
-        placeholder="Search"
+        aria-label={t('search.label')}
+        placeholder={t('search.label')}
         value={search}
         onChange={(event) => changeSearch(event.target.value)}
       />

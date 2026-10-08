@@ -60,7 +60,8 @@ test('E8 the layout switches at 1024: dropdowns and search button below, sidebar
   posts,
 }) => {
   const dropdowns = page.locator('button[aria-haspopup="listbox"]')
-  const filterItems = page.locator('button[aria-pressed]')
+  // Inside the filter sidebar only: the language switch in the header also has aria-pressed buttons.
+  const filterItems = page.getByRole('region', { name: 'Filters' }).locator('button[aria-pressed]')
   const searchButton = page.getByRole('button', { name: 'Search', exact: true, expanded: false })
   const searchField = page.getByRole('searchbox', { name: 'Search' })
   const apply = page.getByRole('button', { name: 'Apply filters' })

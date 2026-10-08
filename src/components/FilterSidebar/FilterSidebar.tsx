@@ -2,15 +2,17 @@ import { useId, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { filtersApplied } from '../../features/browse/browseSlice'
 import type { FilterOption, FilterSelection } from '../../features/posts/types'
+import { categoryLabel } from '../../i18n/categories'
+import { useT } from '../../i18n/useT'
 import { Button } from '../Button/Button'
 import { Icon } from '../Icon/Icon'
 import styles from './FilterSidebar.module.css'
 
 type Filter = keyof FilterSelection
 
-const GROUPS: { filter: Filter; label: string }[] = [
-  { filter: 'categories', label: 'Category' },
-  { filter: 'authors', label: 'Author' },
+const GROUPS: { filter: Filter; label: 'filters.category' | 'filters.author' }[] = [
+  { filter: 'categories', label: 'filters.category' },
+  { filter: 'authors', label: 'filters.author' },
 ]
 
 interface FilterSidebarProps {
@@ -33,6 +35,7 @@ export function FilterSidebar({ options }: FilterSidebarProps) {
   const categories = useAppSelector((state) => state.browse.categories)
   const authors = useAppSelector((state) => state.browse.authors)
   const dispatch = useAppDispatch()
+  const { t, locale } = useT()
   const [draft, setDraft] = useState<Draft | null>(null)
   const headingId = useId()
 
@@ -68,11 +71,11 @@ export function FilterSidebar({ options }: FilterSidebarProps) {
     <section className={styles.sidebar} aria-labelledby={headingId}>
       <h2 id={headingId} className={styles.heading}>
         <Icon name="filters" />
-        Filters
+        {t('filters.title')}
       </h2>
       {GROUPS.map(({ filter, label }) => (
         <div key={filter} className={styles.group}>
-          <h3 className={styles.groupHeading}>{label}</h3>
+          <h3 className={styles.groupHeading}>{t(label)}</h3>
           <ul className={styles.items}>
             {options[filter].map((option) => (
               <li key={option.value}>
@@ -82,7 +85,7 @@ export function FilterSidebar({ options }: FilterSidebarProps) {
                   aria-pressed={selection[filter].includes(option.value)}
                   onClick={() => toggle(filter, option.value)}
                 >
-                  {option.label}
+                  {filter === 'categories' ? categoryLabel(option.label, locale) : option.label}
                 </button>
               </li>
             ))}
@@ -90,7 +93,7 @@ export function FilterSidebar({ options }: FilterSidebarProps) {
         </div>
       ))}
       <Button className={styles.apply} onClick={apply}>
-        Apply filters
+        {t('filters.apply')}
       </Button>
     </section>
   )

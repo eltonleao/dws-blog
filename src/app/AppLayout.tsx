@@ -20,7 +20,7 @@ import styles from './AppLayout.module.css'
 export function AppLayout() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const { pathname } = useLocation()
-  const { locale } = useT()
+  const { t, locale } = useT()
   // The mobile search panel is the layout's own state, and nothing the page
   // receives depends on it: opening and closing it renders no card again.
   const [searchOpen, setSearchOpen] = useState(false)
@@ -63,7 +63,7 @@ export function AppLayout() {
               ref={searchButton}
               type="button"
               className={styles.searchButton}
-              aria-label="Search"
+              aria-label={t('search.label')}
               aria-expanded={panelOpen}
               onClick={() => setSearchOpen(true)}
             >

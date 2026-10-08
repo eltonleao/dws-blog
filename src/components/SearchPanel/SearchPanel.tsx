@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { useAppSelector } from '../../app/hooks'
 import { useSearch } from '../../features/browse/useSearch'
 import { selectVisiblePosts } from '../../features/posts/selectors'
+import { useT } from '../../i18n/useT'
 import { Icon } from '../Icon/Icon'
 import styles from './SearchPanel.module.css'
 
@@ -21,6 +22,7 @@ interface SearchPanelProps {
  */
 export function SearchPanel({ onClose }: SearchPanelProps) {
   const [search, changeSearch] = useSearch()
+  const { t } = useT()
   const posts = useAppSelector(selectVisiblePosts)
   const field = useRef<HTMLInputElement>(null)
 
@@ -49,7 +51,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Search"
+      aria-label={t('search.label')}
       className={styles.panel}
       onKeyDown={onKeyDown}
     >
@@ -57,7 +59,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
         <button
           type="button"
           className={`${styles.icon} ${styles.back}`}
-          aria-label="Close search"
+          aria-label={t('search.close')}
           onClick={onClose}
         >
           <Icon name="back" size={16} />
@@ -66,14 +68,14 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
           ref={field}
           type="search"
           className={styles.input}
-          aria-label="Search"
+          aria-label={t('search.label')}
           value={search}
           onChange={(event) => changeSearch(event.target.value)}
         />
         <button
           type="button"
           className={`${styles.icon} ${styles.clear}`}
-          aria-label="Clear search"
+          aria-label={t('search.clear')}
           onClick={clear}
         >
           <Icon name="close" size={16} />
@@ -87,7 +89,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
         ))}
       </ul>
       <p role="status" className={styles.empty}>
-        {typed && results.length === 0 ? 'No posts found' : ''}
+        {typed && results.length === 0 ? t('list.empty') : ''}
       </p>
     </div>
   )

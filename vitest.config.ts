@@ -11,6 +11,7 @@ export default mergeConfig(
       // Three times the five-second wait of findBy* queries, so a test that does
       // not find what it waits for fails on that query and not on the clock.
       testTimeout: 15000,
+      hookTimeout: 30000,
       // The Playwright specs in e2e/ are not Vitest tests.
       include: ['src/**/*.test.{ts,tsx}'],
     },

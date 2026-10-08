@@ -17,6 +17,9 @@ const CORS = {
 // Same as the fixture's guard against page and console errors, except for the
 // "Failed to load resource" lines the browser prints for the answers these
 // scenarios break on purpose (a 500 from the API, an aborted image).
+// `noPageErrors` already exists in the base, so the typings only list `scope`
+// for the override; `auto` is read at run time, as in the base fixture.
+const guardOptions = { scope: 'test', auto: true } as const
 const test = base.extend({
   noPageErrors: [
     async ({ page }, use) => {
@@ -35,7 +38,7 @@ const test = base.extend({
       await use()
       expect(errors, 'page and console errors').toEqual([])
     },
-    { auto: true },
+    guardOptions,
   ],
 })
 

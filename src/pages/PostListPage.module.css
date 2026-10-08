@@ -70,13 +70,6 @@
   list-style: none;
 }
 
-/* Cards off screen are not laid out or painted until they near the view; the
-   intrinsic size is the card's height, so the scroll stays steady. */
-.cell {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 369px;
-}
-
 /* An empty card holds the place of a real one, at the card's height, and
    breathes while the posts load, unless the reader asks for less motion. */
 .skeleton {
@@ -99,10 +92,6 @@
 }
 
 @media (min-width: 1024px) {
-  .cell {
-    contain-intrinsic-size: auto 425px;
-  }
-
   /* The sidebar takes 3 of the 12 columns, the posts the other 9, in 3
      cards of 3 columns each. */
   .main {

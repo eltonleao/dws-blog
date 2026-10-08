@@ -1,5 +1,5 @@
-/* The logo at the left and the search at the right, between the page margins,
-   over a hairline. */
+/* The logo at the left and, at the right, the language switch and the search,
+   between the page margins, over a hairline. */
 .header {
   display: flex;
   align-items: center;
@@ -10,11 +10,42 @@
   border-bottom: 1px solid var(--color-neutral-extra-light);
 }
 
+/* From 375 on the logo keeps the design's 203.69; on a narrower phone it is
+   the one thing that gives way, scaled as a whole, so the switch and the
+   search keep their size and their place at the right. */
 .logo {
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   color: var(--color-neutral-darkest);
 }
 
 .mark {
+  max-width: 100%;
+  height: auto;
   overflow: visible;
+}
+
+/* The switch sits just before the search, closer to it than to the logo, so
+   the two read as one group. The search keeps the right edge. */
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+/* On desktop the logo is whole again. The group takes the rest of the row and
+   packs to the right, so the field keeps its 536 and is what narrows when the
+   window does, as it did before the switch. */
+@media (min-width: 1024px) {
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .actions {
+    flex: 1 1 0;
+    justify-content: flex-end;
+    gap: 16px;
+    min-width: 0;
+  }
 }

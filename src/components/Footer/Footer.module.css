@@ -9,8 +9,7 @@
 
 /* An outlined pill, like Back, in Secondary Dark: Secondary Medium falls under
    4.5:1 on the pink glow, Secondary Dark stays over 6.9:1. The fill is the
-   card's, so the grey of the lead keeps 5.6:1 over the blue glow too. At
-   least 44 high, the touch target. */
+   card's. At least 44 high, the touch target. */
 .action {
   display: inline-flex;
   align-items: center;
@@ -35,26 +34,9 @@
   flex: none;
 }
 
-/* On a phone the text takes two lines, the lead over the call, and the pill
-   wraps them tight; from 1024 they share one line. */
-.label {
-  width: min-content;
-  min-width: 0;
-}
-
-/* Each half holds as one line, or min-content would break the label word by
-   word. */
-.lead,
+/* The call holds as one line, in either language. */
 .call {
-  display: inline-block;
   white-space: nowrap;
-}
-
-.lead {
-  color: var(--color-neutral-extra-dark);
-}
-
-.call {
   font-weight: var(--font-weight-semibold);
 }
 
@@ -63,17 +45,9 @@
   color: var(--color-neutral-lightest);
 }
 
-.action:hover .lead {
-  color: var(--color-neutral-lightest);
-}
-
 @media (min-width: 1024px) {
   .footer {
     padding: 32px var(--grid-margin) 40px;
-  }
-
-  .label {
-    width: auto;
   }
 
   .action {

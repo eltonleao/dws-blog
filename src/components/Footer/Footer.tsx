@@ -1,16 +1,19 @@
-import { Link, useLocation, useNavigate } from 'react-router'
-import proofCount from '../../proof/proof-count.json'
+import { useLocation, useNavigate } from 'react-router'
+import { useT } from '../../i18n/useT'
 import { Icon } from '../Icon/Icon'
 import styles from './Footer.module.css'
 
 /**
- * The foot of every page, the one element the design does not draw: a link to
- * the bug hunt, and on the bug hunt the way back to the blog. The count comes
- * from proof-count.json, so the data of the hunt stays out of the main chunk.
+ * The foot of the bug hunt, the one page that has one: the way back to the
+ * blog, so /proof opened by its address is never a dead end. The blog itself
+ * has no footer; the hunt is reached by its address and from the README.
  */
 export function Footer() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useT()
+
+  if (location.pathname !== '/proof') return null
 
   const goBack = () => {
     // The bug hunt opened directly has nothing of the blog behind it, so the
@@ -24,22 +27,10 @@ export function Footer() {
 
   return (
     <footer className={styles.footer}>
-      {location.pathname === '/proof' ? (
-        <button type="button" className={styles.action} onClick={goBack}>
-          <Icon name="back" size={20} className={styles.icon} />
-          <span className={styles.call}>Back to the blog</span>
-        </button>
-      ) : (
-        <Link to="/proof" className={styles.action}>
-          <Icon name="bug" size={20} className={styles.icon} />
-          <span className={styles.label}>
-            <span className={styles.lead}>How this blog was tested:</span>{' '}
-            <span className={styles.call}>
-              hunt the {proofCount.total} planted bugs
-            </span>
-          </span>
-        </Link>
-      )}
+      <button type="button" className={styles.action} onClick={goBack}>
+        <Icon name="back" size={20} className={styles.icon} />
+        <span className={styles.call}>{t('footer.back')}</span>
+      </button>
     </footer>
   )
 }

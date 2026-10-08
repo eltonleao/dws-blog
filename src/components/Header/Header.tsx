@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
+import { LanguageSwitch } from '../LanguageSwitch/LanguageSwitch'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -31,7 +32,10 @@ export function Header({ children }: HeaderProps) {
           <path fill="currentColor" d={LOGO_PATH} />
         </svg>
       </Link>
-      {children}
+      <div className={styles.actions}>
+        <LanguageSwitch />
+        {children}
+      </div>
     </header>
   )
 }

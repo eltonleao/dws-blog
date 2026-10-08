@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { Outlet, useLocation } from 'react-router'
 import { Backdrop } from '../components/Backdrop/Backdrop'
@@ -7,6 +7,7 @@ import { Header } from '../components/Header/Header'
 import { Icon } from '../components/Icon/Icon'
 import { SearchField } from '../components/SearchField/SearchField'
 import { SearchPanel } from '../components/SearchPanel/SearchPanel'
+import { useT } from '../i18n/useT'
 import { DESKTOP_QUERY, useMediaQuery } from '../lib/useMediaQuery'
 import styles from './AppLayout.module.css'
 
@@ -19,6 +20,7 @@ import styles from './AppLayout.module.css'
 export function AppLayout() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const { pathname } = useLocation()
+  const { locale } = useT()
   // The mobile search panel is the layout's own state, and nothing the page
   // receives depends on it: opening and closing it renders no card again.
   const [searchOpen, setSearchOpen] = useState(false)
@@ -32,6 +34,13 @@ export function AppLayout() {
     setShownPathname(pathname)
     if (pathname !== '/') setSearchOpen(false)
   }
+
+  // The document says the language it is painted in, for the screen reader's
+  // voice and the browser's hyphens. Before the paint, so the first frame in
+  // Spanish is already marked as Spanish.
+  useLayoutEffect(() => {
+    document.documentElement.lang = locale
+  }, [locale])
 
   const closeSearch = () => {
     // The button is inert while the panel is open: the page renders without

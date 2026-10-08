@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 import { PostLayout } from '../components/PostLayout/PostLayout'
+import { useT } from '../i18n/useT'
 import styles from './NotFoundPage.module.css'
 
 /**
@@ -10,6 +11,7 @@ import styles from './NotFoundPage.module.css'
  */
 export function NotFoundPage() {
   const heading = useRef<HTMLHeadingElement>(null)
+  const { t } = useT()
 
   // Like a post, the page takes the focus to its title when it opens.
   useEffect(() => {
@@ -18,13 +20,15 @@ export function NotFoundPage() {
 
   return (
     <PostLayout>
-      <title>Post not found | DWS Blog</title>
+      <title>{`${t('notFound.title')} | DWS Blog`}</title>
       <h1 ref={heading} tabIndex={-1} className={styles.title}>
-        Post not found
+        {t('notFound.title')}
       </h1>
       <p className={styles.text}>
-        There is no post at this address. It may have been removed, or the link
-        may be wrong. <Link to="/" className={styles.link}>See all posts</Link>
+        {t('notFound.text')}{' '}
+        <Link to="/" className={styles.link}>
+          {t('notFound.seeAll')}
+        </Link>
       </p>
     </PostLayout>
   )

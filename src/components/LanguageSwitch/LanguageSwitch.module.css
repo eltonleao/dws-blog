@@ -1,0 +1,68 @@
+/* Two short codes side by side, at the height of the search they sit next
+   to: circles of 32 on mobile, like the round search button, and pills of 40
+   on desktop, like the round icon inside the field. The width is fixed, so a
+   code in semibold, or a language that changes the texts around it, never
+   moves the search. */
+.switch {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+}
+
+/* At rest the code is grey text with no box. The current one takes the
+   selected filter of the design: the border in Accent 1 Dark over its 5%
+   tint, the text in Accent 1 Dark and semibold. The border is always there,
+   transparent at rest, so the box does not grow when it shows. */
+.button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.button:hover {
+  color: var(--color-accent-1-dark);
+}
+
+.button[aria-pressed='true'] {
+  border-color: var(--color-accent-1-dark);
+  background: var(--color-accent-1-light-5);
+  color: var(--color-accent-1-dark);
+  font-weight: var(--font-weight-semibold);
+  cursor: default;
+}
+
+@media (min-width: 1024px) {
+  .switch {
+    gap: 4px;
+  }
+
+  .button {
+    width: 48px;
+    height: 40px;
+    font-size: var(--font-size-body-small);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

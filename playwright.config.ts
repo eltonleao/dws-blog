@@ -26,7 +26,10 @@ export default defineConfig({
     : {
         webServer: {
           // The specs run against the production build, never against a stale one.
-          command: `npm run build && npm run preview -- --port ${PORT} --strictPort`,
+          // The build points the comments at an address the specs answer
+          // themselves (e2e/comments-support.ts); a variable set in the shell
+          // wins over any .env file, so the real project is never reached.
+          command: `VITE_SUPABASE_URL=https://e2e.supabase.test VITE_SUPABASE_ANON_KEY=e2e-anon-key npm run build && npm run preview -- --port ${PORT} --strictPort`,
           url: `http://localhost:${PORT}`,
           reuseExistingServer: false,
           timeout: 180_000,

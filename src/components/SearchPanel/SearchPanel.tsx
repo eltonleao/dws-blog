@@ -4,9 +4,14 @@ import { Link } from 'react-router'
 import { useAppSelector } from '../../app/hooks'
 import { useSearch } from '../../features/browse/useSearch'
 import { selectVisiblePosts } from '../../features/posts/selectors'
+import type { Post } from '../../features/posts/types'
+import { usePosts } from '../../features/posts/usePosts'
 import { useT } from '../../i18n/useT'
 import { Icon } from '../Icon/Icon'
 import styles from './SearchPanel.module.css'
+
+// Nothing to search until the posts come.
+const NO_POSTS: Post[] = []
 
 interface SearchPanelProps {
   /** Closes the panel. The layout gives the focus back to the button that opened it. */
@@ -23,7 +28,9 @@ interface SearchPanelProps {
 export function SearchPanel({ onClose }: SearchPanelProps) {
   const [search, changeSearch] = useSearch()
   const { t } = useT()
-  const posts = useAppSelector(selectVisiblePosts)
+  // The titles the reader sees, in the language of the page.
+  const { posts: all } = usePosts()
+  const posts = useAppSelector((state) => selectVisiblePosts(state, all ?? NO_POSTS))
   const field = useRef<HTMLInputElement>(null)
 
   const typed = search.trim() !== ''

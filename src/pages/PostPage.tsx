@@ -1,11 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
-import { useGetPostsQuery } from '../api/postsApi'
 import { Button } from '../components/Button/Button'
 import { PostCard } from '../components/PostCard/PostCard'
 import { PostLayout } from '../components/PostLayout/PostLayout'
 import { StatusMessage } from '../components/StatusMessage/StatusMessage'
 import { latestPosts } from '../features/posts/latestPosts'
+import { usePosts } from '../features/posts/usePosts'
 import { useT } from '../i18n/useT'
 import { formatDate } from '../lib/formatDate'
 import { toParagraphs } from '../lib/paragraphs'
@@ -13,20 +13,15 @@ import { NotFoundPage } from './NotFoundPage'
 import styles from './PostPage.module.css'
 
 /**
- * One post, read from the same getPosts answer as the list: coming from the
- * list it makes no request, and an id the list does not have is a post not
+ * One post, read from the same localized list as the list page: coming from
+ * the list it makes no request, and an id the list does not have is a post not
  * found, not a server error. The page opens at the top, with the focus on its
  * title, and Latest articles closes it with three other posts.
  */
 export function PostPage() {
   const { id = '' } = useParams()
-  const { posts, post, isError, refetch } = useGetPostsQuery(undefined, {
-    selectFromResult: ({ data, isError }) => ({
-      posts: data,
-      post: data?.find((candidate) => candidate.id === id),
-      isError,
-    }),
-  })
+  const { posts, isError, refetch } = usePosts()
+  const post = posts?.find((candidate) => candidate.id === id)
   const { t, locale } = useT()
   const heading = useRef<HTMLHeadingElement>(null)
   const found = post !== undefined

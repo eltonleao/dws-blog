@@ -1,6 +1,5 @@
 import { useLayoutEffect } from 'react'
 import type { ReactNode } from 'react'
-import { useGetPostsQuery } from '../api/postsApi'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Button } from '../components/Button/Button'
 import { FilterDropdown } from '../components/FilterDropdown/FilterDropdown'
@@ -13,6 +12,7 @@ import { useBrowseUrlSync } from '../features/browse/useBrowseUrlSync'
 import { filterOptions } from '../features/posts/filterOptions'
 import { selectVisiblePosts } from '../features/posts/selectors'
 import type { Post } from '../features/posts/types'
+import { usePosts } from '../features/posts/usePosts'
 import { useT } from '../i18n/useT'
 import { DESKTOP_QUERY, useMediaQuery } from '../lib/useMediaQuery'
 import styles from './PostListPage.module.css'
@@ -32,8 +32,8 @@ const NO_POSTS: Post[] = []
 export function PostListPage() {
   useBrowseUrlSync()
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
-  const { data, isError, refetch } = useGetPostsQuery()
-  const posts = useAppSelector(selectVisiblePosts)
+  const { posts: data, isError, refetch } = usePosts()
+  const posts = useAppSelector((state) => selectVisiblePosts(state, data ?? NO_POSTS))
   const listScrollY = useAppSelector((state) => state.browse.listScrollY)
   const dispatch = useAppDispatch()
   const { t } = useT()

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useMatch } from 'react-router'
-import { useGetPostsQuery } from '../../api/postsApi'
+import { useAppSelector } from '../../app/hooks'
+import { selectHasPost } from '../../features/posts/selectors'
 import { DESKTOP_QUERY, useMediaQuery } from '../../lib/useMediaQuery'
 import styles from './Backdrop.module.css'
 
@@ -27,10 +28,8 @@ const PERIOD = {
 export function Backdrop() {
   const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const postId = useMatch('/posts/:id')?.params.id
-  const { found } = useGetPostsQuery(undefined, {
-    skip: postId === undefined,
-    selectFromResult: ({ data }) => ({ found: data?.some((post) => post.id === postId) ?? false }),
-  })
+  // Read from the cache, which the post page fills: no other page asks the API for it.
+  const found = useAppSelector((state) => postId !== undefined && selectHasPost(state, postId))
   const set = found ? 'post' : 'list'
   const layer = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState(0)

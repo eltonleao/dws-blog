@@ -12,12 +12,13 @@ const NO_POSTS: Post[] = []
 const selectPostsResult = postsApi.endpoints.getPosts.select()
 
 /**
- * The posts of the getPosts cache that the list shows: the search first, then
+ * The posts the list shows, out of `posts` (the localized list of usePosts;
+ * without it, the getPosts cache as the API sent it): the search first, then
  * the filters, then the order. The posts are empty until the API answers.
  */
 export const selectVisiblePosts = createSelector(
   [
-    (state: RootState) => selectPostsResult(state).data ?? NO_POSTS,
+    (state: RootState, posts?: Post[]) => posts ?? selectPostsResult(state).data ?? NO_POSTS,
     (state: RootState) => state.browse.search,
     (state: RootState) => state.browse.categories,
     (state: RootState) => state.browse.authors,
@@ -29,3 +30,10 @@ export const selectVisiblePosts = createSelector(
     return sortPosts(filtered, order)
   },
 )
+
+/**
+ * Whether the getPosts cache has the post `id`, read without asking the API:
+ * the post page is the one that subscribes.
+ */
+export const selectHasPost = (state: RootState, id: string): boolean =>
+  selectPostsResult(state).data?.some((post) => post.id === id) ?? false

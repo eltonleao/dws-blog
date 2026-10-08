@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import type { Page, Response } from '@playwright/test'
 import { expect, test, VIEWPORTS } from './fixtures'
-import { cardLinks, openList, SIZES, type Size } from './support'
+import { cardLinks, openList, SIZES } from './support'
 
 const PROOF_TITLE = 'planted bugs caught'
 const FOOTER_LINK = /^How this blog was tested: hunt the \d+ planted bugs$/
@@ -33,34 +33,11 @@ async function openAllCards(page: Page) {
   ).toHaveCount(total)
 }
 
-// The search, the category and the sort are not the same controls at the two
-// sizes (the same split of the post specs): E14 drives both.
+// Amended for the explorer branch (07/10/2026): the footer no longer leads to
+// /proof, so E13 and E14 enter the page by its address. E13 and E14 became L2;
+// the record is in .verification/dentsu-P1/problems.md.
 
-async function searchFor(page: Page, size: Size, text: string) {
-  if (size === 'desktop') {
-    await page.getByRole('searchbox', { name: 'Search' }).fill(text)
-    return
-  }
-  await page.getByRole('button', { name: 'Search', exact: true }).click()
-  const panel = page.getByRole('dialog', { name: 'Search' })
-  await panel.getByRole('searchbox', { name: 'Search' }).fill(text)
-  await panel.getByRole('button', { name: 'Close search' }).click()
-  await expect(panel, `${size}: the search panel closes`).toBeHidden()
-}
-
-async function pickTechnology(page: Page, size: Size) {
-  if (size === 'desktop') {
-    await page.getByRole('button', { name: 'Technology', exact: true }).click()
-    await page.getByRole('button', { name: 'Apply filters' }).click()
-    return
-  }
-  await page.locator('button[aria-haspopup="listbox"]').first().click()
-  await page.getByRole('option', { name: 'Technology', exact: true }).click()
-  await page.keyboard.press('Escape')
-  await expect(page.getByRole('listbox'), `${size}: the dropdown closes`).toBeHidden()
-}
-
-test('E13 loads the bug hunt in a chunk of its own: / does not ask for it and the footer link does', async ({
+test('L2 (E13, amended) loads the bug hunt in a chunk of its own: / has no way to it and does not ask for it, and /proof by its address does', async ({
   page,
   posts,
 }) => {
@@ -78,14 +55,15 @@ test('E13 loads the bug hunt in a chunk of its own: / does not ask for it and th
       `${response.url()} does not hold the bug hunt`,
     ).not.toContain(PROOF_TITLE)
   }
+  await expect(page.getByRole('link', { name: FOOTER_LINK }), 'no footer link to the bug hunt').toHaveCount(0)
+  await expect(page.locator('a[href="/proof"]'), 'no link to /proof').toHaveCount(0)
+  await expect(page.getByRole('contentinfo'), 'no footer on the list').toHaveCount(0)
 
-  const footerLink = page.getByRole('link', { name: FOOTER_LINK })
-  await expect(footerLink, 'the footer link to the bug hunt').toBeVisible()
-  await footerLink.click()
-  await expect(proofHeading(page), 'the bug hunt h1 after the click').toBeVisible()
+  await page.goto('/proof')
+  await expect(proofHeading(page), 'the bug hunt h1 by its address').toBeVisible()
 
   const fresh = scripts.filter((response) => !seen.has(response.url()))
-  expect(fresh.length, 'the click asks for a new script').toBeGreaterThan(0)
+  expect(fresh.length, 'the address asks for a new script').toBeGreaterThan(0)
   const texts = await Promise.all(fresh.map((response) => response.text()))
   expect(
     texts.some((text) => text.includes(PROOF_TITLE)),
@@ -93,41 +71,28 @@ test('E13 loads the bug hunt in a chunk of its own: / does not ask for it and th
   ).toBe(true)
 })
 
-test('E14 Back to the blog returns to the same list, and reloading /proof shows the page, at 375 and 1440', async ({
+test('L2 (E14, amended) opens /proof by its address, Back to the blog goes to / with no footer, and reloading /proof shows the page, at 375 and 1440', async ({
   page,
   posts,
 }) => {
   test.slow()
 
   for (const size of SIZES) {
-    const links = await openList(page, posts, VIEWPORTS[size])
-    await searchFor(page, size, 'tech')
-    await pickTechnology(page, size)
-    await page.getByRole('button', { name: 'Newest first', exact: true }).click()
-    await expect(
-      page.getByRole('button', { name: 'Oldest first', exact: true }),
-      `${size}: the sort button says Oldest first`,
-    ).toBeVisible()
-    const urlBefore = page.url()
-    expect(urlBefore, `${size}: the search is in the address`).toContain('q=tech')
-    const cardsBefore = await links.allTextContents()
+    await openProof(page, VIEWPORTS[size])
+    const footer = page.getByRole('contentinfo')
+    await expect(footer, `${size}: the footer of /proof`).toBeVisible()
+    await expect(footer.getByRole('link', { name: FOOTER_LINK }), `${size}: no link to /proof`).toHaveCount(0)
 
-    const footerLink = page.getByRole('link', { name: FOOTER_LINK })
-    await expect(footerLink, `${size}: the footer link to the bug hunt`).toBeVisible()
-    await footerLink.click()
-    await expect(proofHeading(page), `${size}: /proof opens`).toBeVisible()
-    expect(new URL(page.url()).pathname).toBe('/proof')
-
-    const backToBlog = page.getByRole('button', { name: 'Back to the blog', exact: true })
+    const backToBlog = footer.getByRole('button', { name: 'Back to the blog', exact: true })
     await expect(backToBlog, `${size}: Back to the blog`).toBeVisible()
     await backToBlog.click()
     await expect
-      .poll(() => page.url(), { message: `${size}: the address after Back to the blog` })
-      .toBe(urlBefore)
-    await expect(cardLinks(page, posts), `${size}: the cards after Back`).toHaveCount(
-      cardsBefore.length,
-    )
-    expect(await links.allTextContents(), `${size}: the same cards`).toEqual(cardsBefore)
+      .poll(() => new URL(page.url()).pathname + new URL(page.url()).search, {
+        message: `${size}: the address after Back to the blog`,
+      })
+      .toBe('/')
+    await expect(cardLinks(page, posts), `${size}: the cards after Back`).toHaveCount(posts.length)
+    await expect(page.getByRole('contentinfo'), `${size}: no footer on the list`).toHaveCount(0)
 
     await openProof(page, VIEWPORTS[size])
     await page.reload()

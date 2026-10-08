@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { postsApi } from '../api/postsApi'
 import type { PostsApiExtra } from '../api/postsApi'
+import { commentsApi } from '../comments/commentsApi'
 import { contentApi } from '../content/contentApi'
 import { browseReducer } from '../features/browse/browseSlice'
 import { browseFromSearch } from '../features/browse/browseUrl'
@@ -10,6 +11,7 @@ import { localeReducer } from '../i18n/localeSlice'
 const rootReducer = combineReducers({
   [postsApi.reducerPath]: postsApi.reducer,
   [contentApi.reducerPath]: contentApi.reducer,
+  [commentsApi.reducerPath]: commentsApi.reducer,
   browse: browseReducer,
   locale: localeReducer,
 })
@@ -33,6 +35,7 @@ export function makeStore({ apiTimeoutMs, search = '', locale = 'en' }: StoreOpt
       getDefaultMiddleware({ thunk: { extraArgument: extra } }).concat(
         postsApi.middleware,
         contentApi.middleware,
+        commentsApi.middleware,
       ),
   })
 }

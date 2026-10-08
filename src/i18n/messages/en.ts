@@ -49,6 +49,21 @@ export const en = {
   'chunk.reload': 'Reload',
 
   'footer.back': 'Back to the blog',
+
+  'comments.heading': 'Comments',
+  'comments.title.one': '{count} comment',
+  'comments.title.other': '{count} comments',
+  'comments.loading': 'Loading comments',
+  'comments.empty': 'No comments yet. Be the first.',
+  'comments.unavailable': 'Comments are unavailable right now',
+  'comments.visitorFailed': 'Could not start your visitor session',
+  'comments.sendFailed': 'Your comment was not sent. Try again in a minute.',
+  'comments.deleteFailed': 'Your comment was not deleted. Try again.',
+  'comments.label': 'Your comment',
+  'comments.submit': 'Post comment',
+  'comments.visitor': 'Commenting as {name}',
+  'comments.leave': 'Leave',
+  'comments.delete': 'Delete comment',
 } as const
 
 export type MessageKey = keyof typeof en

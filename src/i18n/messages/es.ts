@@ -49,4 +49,19 @@ export const es: Record<MessageKey, string> = {
   'chunk.reload': 'Recargar',
 
   'footer.back': 'Volver al blog',
+
+  'comments.heading': 'Comentarios',
+  'comments.title.one': '{count} comentario',
+  'comments.title.other': '{count} comentarios',
+  'comments.loading': 'Cargando comentarios',
+  'comments.empty': 'Todavía no hay comentarios. Sé el primero.',
+  'comments.unavailable': 'Los comentarios no están disponibles en este momento',
+  'comments.visitorFailed': 'No se pudo iniciar tu sesión de visitante',
+  'comments.sendFailed': 'Tu comentario no se envió. Inténtalo de nuevo en un minuto.',
+  'comments.deleteFailed': 'Tu comentario no se eliminó. Inténtalo de nuevo.',
+  'comments.label': 'Tu comentario',
+  'comments.submit': 'Publicar comentario',
+  'comments.visitor': 'Comentas como {name}',
+  'comments.leave': 'Salir',
+  'comments.delete': 'Eliminar comentario',
 }

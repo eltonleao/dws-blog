@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { Button } from '../components/Button/Button'
 import { PostCard } from '../components/PostCard/PostCard'
@@ -11,6 +11,20 @@ import { formatDate } from '../lib/formatDate'
 import { toParagraphs } from '../lib/paragraphs'
 import { NotFoundPage } from './NotFoundPage'
 import styles from './PostPage.module.css'
+
+// The comments and the Supabase client load in chunks of their own, only on a
+// post. A chunk that does not load leaves the post readable and says so.
+const CommentsSection = lazy(() =>
+  import('../comments/CommentsSection.tsx').then(
+    (module) => ({ default: module.CommentsSection }),
+    () => ({ default: CommentsUnavailable }),
+  ),
+)
+
+function CommentsUnavailable() {
+  const { t } = useT()
+  return <StatusMessage role="alert" message={t('comments.unavailable')} />
+}
 
 /**
  * One post, read from the same localized list as the list page: coming from
@@ -112,6 +126,9 @@ export function PostPage() {
           ))}
         </div>
       </article>
+      <Suspense fallback={null}>
+        <CommentsSection key={post.id} postId={post.id} />
+      </Suspense>
       {latest.length > 0 ? (
         <section className={styles.latest} aria-labelledby="latest-articles">
           <h2 id="latest-articles" className={styles.latestTitle}>

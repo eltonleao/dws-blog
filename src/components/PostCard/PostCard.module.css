@@ -44,15 +44,24 @@
 /* The date and the author, with a dot between them, on a step of 19. */
 .meta {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+  /* A long author name is cut with an ellipsis; the meta stays on one line. */
+  min-width: 0;
+  white-space: nowrap;
   font-size: var(--font-size-body-small);
   line-height: 19px;
   color: var(--color-neutral-extra-dark);
 }
 
+.author {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dot {
+  flex: none;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -127,6 +136,9 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: auto;
+  /* Only one line of tags shows; the rest is cut instead of growing the card. */
+  max-height: 32px;
+  overflow: hidden;
   padding: 0;
   list-style: none;
 }

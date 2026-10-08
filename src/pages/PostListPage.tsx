@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useGetPostsQuery } from '../api/postsApi'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
@@ -18,6 +18,12 @@ import styles from './PostListPage.module.css'
 
 // While the posts load, the grid holds empty cards: two rows on desktop.
 const SKELETON_CARDS = 6
+
+// A long list draws this many cards first and then this many more at a time,
+// so the first card does not wait for every card to render and the page stays
+// responsive while the rest comes.
+const FIRST_CARDS = 48
+const NEXT_CARDS = 96
 
 // The filters have no options until the posts come.
 const NO_POSTS: Post[] = []
@@ -44,6 +50,15 @@ export function PostListPage() {
     data === undefined || posts.length === 0
       ? ''
       : `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`
+
+  // A reader coming back to a scrolled list gets every card at once, so the
+  // saved position still has the height it needs.
+  const [limit, setLimit] = useState(listScrollY > 0 ? Infinity : FIRST_CARDS)
+  useEffect(() => {
+    if (limit >= posts.length) return
+    const handle = window.setTimeout(() => setLimit((current) => current + NEXT_CARDS), 16)
+    return () => window.clearTimeout(handle)
+  }, [limit, posts.length])
 
   // The list opens where the reader left it for a post. The cleanup of a
   // layout effect runs before the list leaves the page, while the page still
@@ -86,8 +101,8 @@ export function PostListPage() {
   } else {
     content = (
       <ul className={styles.grid}>
-        {posts.map((post) => (
-          <li key={post.id}>
+        {posts.slice(0, limit).map((post) => (
+          <li key={post.id} className={styles.cell}>
             <PostCard post={post} />
           </li>
         ))}

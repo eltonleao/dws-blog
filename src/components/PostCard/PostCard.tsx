@@ -37,7 +37,7 @@ export function PostCard({ post }: PostCardProps) {
         <p className={styles.meta}>
           <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
           <span className={styles.dot} aria-hidden="true" />
-          <span>{post.author.name}</span>
+          <span className={styles.author}>{post.author.name}</span>
         </p>
         {/* Title and summary share four lines, cut as one block: three of
             summary under a title of one line, two under a title of two. */}

@@ -77,16 +77,16 @@ export function PostPage() {
             {post.title}
           </h1>
           <div className={styles.byline}>
-            {avatar === '' || avatar === brokenAvatar ? (
-              <div className={styles.avatar} />
-            ) : (
-              <img
-                className={styles.avatar}
-                src={avatar}
-                alt=""
-                onError={() => setBrokenAvatar(avatar)}
-              />
-            )}
+            <div className={styles.avatar}>
+              {avatar !== '' && avatar !== brokenAvatar && (
+                <img
+                  className={styles.photo}
+                  src={avatar}
+                  alt=""
+                  onError={() => setBrokenAvatar(avatar)}
+                />
+              )}
+            </div>
             <div className={styles.bylineText}>
               <p>
                 Written by: <strong className={styles.author}>{post.author.name}</strong>

@@ -38,22 +38,27 @@
   gap: 12px;
 }
 
-/* The vector does not crop the photo to the circle: it draws it whole, 36.72
-   wide, 1.59 from the left and 4.2 from the top of the circle (2.54 and 6.72
-   on desktop), and the circle cuts what falls under it. The padding places
-   it, cover from the top fills the width, and the clip margin lets the
-   circle, not the content box, cut it. */
+/* The circle of the author, and the photo in it as the vector draws it:
+   whole, not cropped to the circle, in a box of 91.8% x 109.75% of the
+   circle (the vector stretches the photo 0.8% in height), 3.97% from its left
+   and 10.5% from its top, cut by the circle. The photo fills the circle's
+   own square and the transform takes it there: a box at those fractions
+   would snap to whole pixels and resample the photo apart from the vector. */
 .avatar {
   flex: none;
   width: 40px;
   height: 40px;
-  padding: 4.2px 1.69px 0 1.589px;
+  overflow: hidden;
   border-radius: 50%;
   background: var(--color-accent-1-light);
-  object-fit: cover;
-  object-position: top;
-  overflow: clip;
-  overflow-clip-margin: padding-box;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+  transform: translate(3.97%, 10.5%) scale(0.918, 1.0975);
 }
 
 .bylineText {
@@ -65,7 +70,15 @@
   color: var(--color-black);
 }
 
+/* At 375 the vector sets "Written by:" 1 lower than the box gives, and the
+   name 2 further from it than the space; the date keeps its place. */
+.bylineText > p {
+  padding-top: 1px;
+  margin-bottom: -1px;
+}
+
 .author {
+  margin-left: 2px;
   color: var(--color-neutral-darkest);
   font-weight: var(--font-weight-semibold);
 }
@@ -146,12 +159,20 @@
   .avatar {
     width: 64px;
     height: 64px;
-    padding: 6.72px 2.71px 0 2.54px;
   }
 
   .bylineText {
     gap: 6px;
     font-size: var(--font-size-body-large);
+  }
+
+  .bylineText > p {
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+
+  .author {
+    margin-left: 0;
   }
 
   .image {

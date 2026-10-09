@@ -8,6 +8,7 @@ import { Icon } from '../components/Icon/Icon'
 import { SearchField } from '../components/SearchField/SearchField'
 import { SearchPanel } from '../components/SearchPanel/SearchPanel'
 import { DESKTOP_QUERY, useMediaQuery } from '../lib/useMediaQuery'
+import { TutorialSlot } from '../tutorial/TutorialSlot'
 import styles from './AppLayout.module.css'
 
 /**
@@ -66,6 +67,8 @@ export function AppLayout() {
         <Footer />
       </div>
       {panelOpen ? <SearchPanel onClose={closeSearch} /> : null}
+      {/* Outside the page, so the open search panel never makes the tour inert. */}
+      <TutorialSlot />
     </>
   )
 }

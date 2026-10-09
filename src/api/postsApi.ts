@@ -3,7 +3,7 @@ import type { Post } from '../features/posts/types'
 import { parsePosts } from './parsePosts'
 import { withWrittenText } from '../content/writtenText'
 
-const API_URL = 'https://tech-test-backend.dwsbrazil.io'
+export const API_URL = 'https://tech-test-backend.dwsbrazil.io'
 const API_TIMEOUT_MS = 10_000
 
 /**

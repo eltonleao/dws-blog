@@ -1,0 +1,248 @@
+/* The card: a sheet at the bottom on mobile, with no scrim, so the page stays
+   in reach; from 1024, a card in the bottom right corner. */
+.card {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding: 12px 16px 16px;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: var(--color-page-mobile);
+  box-shadow: var(--shadow-popover), 0 -1px 0 var(--color-neutral-extra-light);
+  color: var(--color-neutral-darkest);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+}
+
+@media (min-width: 1024px) {
+  .card {
+    right: 24px;
+    bottom: 24px;
+    left: auto;
+    width: 360px;
+    max-height: calc(100vh - 48px);
+    padding: 16px 20px 20px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-popover), 0 0 0 1px var(--color-neutral-extra-light);
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.count {
+  flex: 1;
+  margin: 0;
+  color: var(--color-accent-1-dark);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-item);
+  background: none;
+  color: var(--color-neutral-extra-dark);
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  background: var(--color-neutral-lightest);
+}
+
+.chevron {
+  transition: transform 200ms ease;
+}
+
+.card[data-collapsed] .chevron {
+  transform: rotate(180deg);
+}
+
+.question {
+  margin: 4px 0 0;
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+}
+
+.action {
+  margin: 8px 0 0;
+  color: var(--color-secondary-medium);
+  font-weight: var(--font-weight-semibold);
+}
+
+.measures {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 0;
+  padding: 8px 12px;
+  border-radius: var(--radius-item);
+  background: var(--color-neutral-lightest);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+.measure {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.measure dt {
+  color: var(--color-neutral-extra-dark);
+}
+
+.measure dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: var(--font-weight-semibold);
+  text-align: right;
+}
+
+.explanation:empty {
+  display: none;
+}
+
+.text {
+  margin: 12px 0 0;
+}
+
+.file {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--color-accent-1-dark);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+}
+
+.links {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  color: var(--color-accent-1-dark);
+  font-weight: var(--font-weight-semibold);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.skip,
+.next {
+  min-width: 88px;
+  padding: 7px 20px;
+  border: 1px solid var(--color-secondary-medium);
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.skip {
+  background: none;
+  color: var(--color-secondary-medium);
+}
+
+.next {
+  background: var(--color-secondary-medium);
+  color: var(--color-neutral-lightest);
+}
+
+.next:hover {
+  background: var(--color-secondary-dark);
+}
+
+/* The ghost: its origin is the tip of the pointer. It travels once, then
+   sticks to the element. */
+.ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+  transition:
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 200ms ease;
+}
+
+.ghost[data-arrived] {
+  transition: opacity 200ms ease;
+}
+
+.ghost[data-lost] {
+  opacity: 0;
+}
+
+/* The ghost has no box of its own, so the global max-width: 100% would
+   squeeze the pointer to nothing. */
+.pointer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  fill: var(--color-neutral-darkest);
+  stroke: var(--color-page-mobile);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--color-primary-light) 30%, transparent));
+}
+
+.pulse {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-secondary-medium);
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 1.4s ease-out 700ms infinite;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.4);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+/* The information stays, the movement goes: the pointer appears on the
+   element, still, with a ring that does not pulse. */
+@media (prefers-reduced-motion: reduce) {
+  .ghost,
+  .ghost[data-arrived],
+  .chevron {
+    transition: none;
+  }
+
+  .pulse {
+    opacity: 0.9;
+    animation: none;
+  }
+}

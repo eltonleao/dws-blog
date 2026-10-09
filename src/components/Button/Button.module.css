@@ -44,12 +44,15 @@
   color: var(--color-secondary-dark);
 }
 
-/* The arrow keeps the box of 16 of the design, centered in it. */
+/* The arrow's own box is 12 of whole pixels, 2 into the 16 of the design,
+   and the vector draws it 0.774 right and 0.879 down inside it (Icon). */
 .secondary > svg {
+  --icon-x: 0.774px;
+  --icon-y: 0.879px;
   flex: none;
-  margin: 0 2.77px;
-  /* The box is snapped to a whole pixel; the vector draws it a bit up and left. */
-  transform: translate(-0.26px, -0.12px);
+  width: 12px;
+  height: 12px;
+  margin: 0 2px;
 }
 
 @media (min-width: 1024px) {
@@ -61,11 +64,14 @@
     line-height: var(--line-height-body-large);
   }
 
-  /* 1.5 times the arrow, in a box of 24. */
+  /* 1.5 times the arrow, in a box of 16 of whole pixels, 5 into the 24 of
+     the design; the vector draws it 0.109 right and 0.309 down inside it. */
   .secondary > svg {
-    width: 15.68px;
-    height: 15.36px;
-    margin: 0 3.12px 0 5.2px;
-    transform: none;
+    --icon-x: 0.109px;
+    --icon-y: 0.309px;
+    --icon-scale: 1.5;
+    width: 16px;
+    height: 16px;
+    margin: 0 3px 0 5px;
   }
 }

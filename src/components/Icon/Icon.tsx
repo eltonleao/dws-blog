@@ -74,6 +74,10 @@ const LEGACY: Record<'check' | 'bug', ReactNode> = {
   ),
 }
 
+// Moved on the path, not on the svg: a transform on the svg is drawn apart
+// from the same outline at the same place, and on the path it is not.
+const CSS_PLACE = 'translate(var(--icon-x, 0px), var(--icon-y, 0px)) scale(var(--icon-scale, 1))'
+
 export type IconName = keyof typeof VECTOR | keyof typeof LEGACY
 
 interface IconProps {
@@ -83,6 +87,13 @@ interface IconProps {
    * size takes the box of the vector, a drawn one the 24 of its grid.
    */
   size?: number
+  /**
+   * The CSS sets the box and the place of the outline in it, for an icon that
+   * sits in a different box at each breakpoint: the svg has no viewBox, so
+   * its unit is the CSS pixel, and the outline moves by --icon-x and --icon-y
+   * and scales by --icon-scale. The CSS gives the svg its width and height.
+   */
+  cssBox?: boolean
   className?: string
 }
 
@@ -90,10 +101,17 @@ interface IconProps {
  * An icon of the design, as inline SVG in the color of the text around it.
  * It is decoration: the control that holds it carries the name.
  */
-export function Icon({ name, size, className }: IconProps) {
+export function Icon({ name, size, cssBox = false, className }: IconProps) {
   if (name in VECTOR) {
     const icon: VectorIcon = VECTOR[name as keyof typeof VECTOR]
     const { width, height, x = 0, y = 0, d } = icon
+    if (cssBox) {
+      return (
+        <svg className={className} fill="currentColor" aria-hidden="true" focusable="false">
+          <path d={d} style={{ transform: CSS_PLACE }} />
+        </svg>
+      )
+    }
     const boxWidth = x || y ? Math.ceil(x + width) : width
     const boxHeight = x || y ? Math.ceil(y + height) : height
     const scale = size === undefined ? 1 : size / width

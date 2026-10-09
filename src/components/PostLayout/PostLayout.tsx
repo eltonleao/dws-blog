@@ -32,7 +32,7 @@ export function PostLayout({ children }: PostLayoutProps) {
     <main className={styles.main}>
       <div className={styles.back}>
         <Button variant="secondary" onClick={goBack}>
-          <Icon name="back" />
+          <Icon name="back" cssBox />
           Back
         </Button>
       </div>

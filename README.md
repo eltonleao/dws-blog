@@ -135,7 +135,8 @@ The design is a vector PDF, with no Figma link. Its screens are drawn at 1 pt pe
 | What the mobile search lists | The titles that match. Tapping one opens the post. |
 | Search on the post | The design draws the post's header with the search, like the list's. The header lives in a layout route mounted once for every page: typing on a post opens the list with the term, the field keeps its focus, and Back returns to the post. |
 | Card size | Fluid in the grid: one column, 343 x 369 px at 375, and three columns, 314 x 425 at 1440. The image is 150 px high on mobile and 196 px on desktop. |
-| Summary length | Three lines under a one-line title, two under a two-line title, never half a line. |
+| Summary length | Three lines under a one-line title, two under a two-line title, never half a line. The cut is the browser's line clamp, which ends on a whole word: "Etiam…". The PDF cuts mid-word, "Etiam d…"; matching it would take script that trims the text, so the summary stays cut by CSS. |
+| Line breaks | Where the browser puts them, from the font's metrics: the text has no manual breaks. At 375 px the post's first paragraph fits "sed" at the end of its fourth line, where the PDF starts the fifth with it. |
 | Post column on desktop | 875 px from x 281, for the image, the text, the divider and the "Latest articles" row, as the vector draws the image. Eight columns of the 1440 grid would give 877.3, and the vector's divider and card row measure 874; the code keeps one column. M5, written before the vector was read, expects 877 ± 2, so 875 sits on its lower edge. |
 | Dropdown trigger | Click, never hover. |
 | Breakpoint | 1024 px. From 320 to 1023, the mobile layout, fluid. The hook and the CSS use the same media query. |

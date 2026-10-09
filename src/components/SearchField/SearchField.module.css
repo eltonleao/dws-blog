@@ -24,6 +24,10 @@
   color: var(--color-neutral-extra-dark);
 }
 
+.input:focus::placeholder {
+  opacity: 0;
+}
+
 .input:hover,
 .input:focus {
   border-color: var(--color-accent-1-medium);

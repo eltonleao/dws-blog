@@ -63,7 +63,7 @@
 }
 
 .clear {
-  color: var(--color-neutral-extra-dark);
+  color: var(--color-neutral-clear);
 }
 
 /* The text starts 40 into the field, where the design puts the cursor. */

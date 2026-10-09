@@ -15,6 +15,7 @@
 
 /* Filled: the main action of a screen. */
 .primary {
+  padding: 10px 24px;
   border: 1px solid transparent;
   background: var(--color-secondary-medium);
   color: var(--color-neutral-lightest);

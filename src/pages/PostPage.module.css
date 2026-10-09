@@ -16,7 +16,12 @@
 .title {
   font-size: var(--font-size-post-heading);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-post-heading);
+  /* The vector steps the two lines of the title 35.2 apart, which
+     --line-height-post-heading (also read by other pages) gives as 35.1. */
+  line-height: 35.2px;
+  /* The ink of the lines sits 1 below the box in the vector; the box keeps its place. */
+  padding-top: 1px;
+  margin-bottom: -1px;
   color: var(--color-primary-dark);
 }
 
@@ -87,7 +92,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  margin-top: 32px;
+  margin-top: 31px;
   padding-top: 24px;
   border-top: 1px solid var(--color-neutral-light);
 }
@@ -118,7 +123,10 @@
 
   .title {
     font-size: var(--font-size-h1);
-    line-height: var(--line-height-h1);
+    /* The vector steps the title lines 73 apart, the h1 step gives 72.8. */
+    line-height: 73px;
+    padding-top: 0;
+    margin-bottom: 0;
   }
 
   .byline {
@@ -145,7 +153,7 @@
   }
 
   .latest {
-    margin-top: 48px;
+    margin-top: 47px;
     padding-top: 48px;
   }
 
@@ -156,5 +164,7 @@
 
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* The vector lays the cards over 874, one less than the text column. */
+    max-width: 874px;
   }
 }

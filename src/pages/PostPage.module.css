@@ -38,13 +38,22 @@
   gap: 12px;
 }
 
+/* The vector does not crop the photo to the circle: it draws it whole, 36.72
+   wide, 1.59 from the left and 4.2 from the top of the circle (2.54 and 6.72
+   on desktop), and the circle cuts what falls under it. The padding places
+   it, cover from the top fills the width, and the clip margin lets the
+   circle, not the content box, cut it. */
 .avatar {
   flex: none;
   width: 40px;
   height: 40px;
+  padding: 4.2px 1.69px 0 1.589px;
   border-radius: 50%;
   background: var(--color-accent-1-light);
   object-fit: cover;
+  object-position: top;
+  overflow: clip;
+  overflow-clip-margin: padding-box;
 }
 
 .bylineText {
@@ -137,6 +146,7 @@
   .avatar {
     width: 64px;
     height: 64px;
+    padding: 6.72px 2.71px 0 2.54px;
   }
 
   .bylineText {

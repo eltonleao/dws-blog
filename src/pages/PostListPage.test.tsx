@@ -358,7 +358,7 @@ it('C12 renders a title that looks like HTML as text, and adds no image to the p
     http.get(POSTS_URL, () =>
       HttpResponse.json(
         rawPosts.map((post, index) =>
-          index === 0 ? { ...post, title: markup } : post,
+          index === 0 ? { ...post, id: 'no-written-text', title: markup } : post,
         ),
       ),
     ),

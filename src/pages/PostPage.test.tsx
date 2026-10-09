@@ -2,6 +2,8 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { expect, it } from 'vitest'
+import { content as written } from '../content/en'
+import { toParagraphs } from '../lib/paragraphs'
 import rawPosts from '../test/fixtures/posts.json'
 import { renderApp } from '../test/renderApp'
 import { POSTS_URL, postsHandler, server } from '../test/server'
@@ -44,11 +46,9 @@ it('C14 shows the post with its title as h1, the author, Sep 19, 2026, three par
   // newest posts that forgot to leave the current one out would show it.
   const post = rawPosts[1]
   const newest = rawPosts.filter((other) => other.id !== post.id).slice(0, 3)
-  const paragraphs = post.content
-    .split(/\r?\n\s*\r?\n/)
-    .map((text) => text.trim())
-    .filter(Boolean)
-  expect(paragraphs, 'the fixture content has three paragraphs').toHaveLength(3)
+  // The page shows the written text of the post, not the lorem ipsum of the fixture.
+  const paragraphs = toParagraphs(written[post.id].content)
+  expect(paragraphs.length, 'the written text has its paragraphs').toBeGreaterThanOrEqual(4)
 
   renderApp(postPath(post))
 

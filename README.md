@@ -112,6 +112,8 @@ plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 
 Measured on Oct 6, 2026. `src/test/fixtures/posts.json` is the API as it answered that day.
 
+The body of the posts comes from `src/content/posts/`, written by post id and loaded as its own chunk; the API remains the source of the list, the authors, the dates, the categories and the images.
+
 | What the API does | What the code does |
 |---|---|
 | Every post has the same `createdAt`, so sorting by date alone changes nothing | `sortPosts` breaks ties by the position in the response (`apiIndex`): Newest is the API order, Oldest its reverse. An invalid date goes last in both orders. |

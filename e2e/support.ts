@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import type { ElementHandle, Locator, Page } from '@playwright/test'
 import { expect, VIEWPORTS, type ApiPost } from './fixtures'
 
@@ -119,13 +121,23 @@ export async function styleOf(
     : target.evaluate(read, properties)
 }
 
+const POSTS_DIR = resolve(process.cwd(), 'src/content/posts')
+
+/** The written text of a post, found by the id in the front matter of src/content/posts/. */
+function writtenBody(id: string): string {
+  for (const name of readdirSync(POSTS_DIR)) {
+    const raw = readFileSync(resolve(POSTS_DIR, name), 'utf8')
+    const match = /^---\r?\nid: (.+?)\r?\n---\r?\n# .+?\r?\n([\s\S]*)$/.exec(raw)
+    if (match && match[1].trim() === id) return match[2].trim()
+  }
+  throw new Error(`no written text for the post ${id}`)
+}
+
 /**
  * The first words of a post's content: the card summary starts with them.
- * The fixture types only the part of the post the other specs read, so the
- * content field is added here.
+ * The page shows the written text of the post, not the content of the fixture.
  */
-export const summaryStart = (post: ApiPost) =>
-  (post as ApiPost & { content: string }).content.slice(0, 24)
+export const summaryStart = (post: ApiPost) => writtenBody(post.id).slice(0, 24)
 
 /** How many lines of text an element's content takes, from the rects of its text nodes. */
 export async function lineCount(locator: Locator): Promise<number> {

@@ -110,7 +110,7 @@ test('M4 the summary is a whole number of lines, 3 under a one-line title and 2 
       const at = (what: string) => `${size}: "${post.title}" ${what}`
       const link = page.getByRole('link', { name: post.title, exact: true })
       const card = cardOf(link)
-      const summary = card.getByText(summaryStart(post))
+      const summary = card.locator('p').getByText(summaryStart(post))
 
       const summaryBox = await measure(summary, at('summary'))
       const lineHeight = parseFloat((await styleOf(summary, ['line-height']))['line-height'])

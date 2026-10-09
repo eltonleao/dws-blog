@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Post } from '../features/posts/types'
 import { parsePosts } from './parsePosts'
+import { withWrittenText } from '../content/writtenText'
 
 const API_URL = 'https://tech-test-backend.dwsbrazil.io'
 const API_TIMEOUT_MS = 10_000
@@ -15,7 +16,7 @@ export interface PostsApiExtra {
 
 export const postsApi = createApi({
   reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL, timeout: API_TIMEOUT_MS }),
+  baseQuery: withWrittenText(fetchBaseQuery({ baseUrl: API_URL, timeout: API_TIMEOUT_MS })),
   endpoints: (build) => ({
     // One request for the 26 posts. The authors and categories endpoints go
     // unused: the filter options come from the posts.

@@ -66,6 +66,8 @@ function withFirst(posts: ApiPost[], change: Loose): unknown[] {
 }
 
 const LOREM = 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor '
+// An id with no file in src/content/posts/, so the written text does not cover the injected post.
+const UNWRITTEN_ID = 'no-written-text'
 const LONG_TITLE = LOREM.repeat(5).slice(0, 300).trim()
 const LONG_WORD = 'Supercalifragilistic'.repeat(6).slice(0, 120)
 
@@ -123,7 +125,7 @@ test('S1 a title of 300 characters keeps the card at 369 and 425 high, clamped, 
   page,
   posts,
 }) => {
-  await servePosts(page, withFirst(posts, { title: LONG_TITLE }))
+  await servePosts(page, withFirst(posts, { id: UNWRITTEN_ID, title: LONG_TITLE }))
   for (const [viewport, height] of [
     [VIEWPORTS.mobile, 369],
     [VIEWPORTS.desktop, 425],
@@ -166,6 +168,7 @@ test('S2 a word of 120 characters in the title, the summary and the body makes n
 }) => {
   const first = posts[0] as unknown as Loose
   const changed = withFirst(posts, {
+    id: UNWRITTEN_ID,
     title: `${LONG_WORD} title`,
     content: `${LONG_WORD} summary\n\n${LONG_WORD}\n\nbody ${LONG_WORD}`,
     author: { ...(first.author as Loose), name: `${LONG_WORD.slice(0, 40)} Author` },
@@ -176,7 +179,7 @@ test('S2 a word of 120 characters in the title, the summary and the body makes n
     await page.goto('/')
     await expect(page.locator('article').first(), `the list at ${width}`).toBeVisible()
     await expectNoScroll(page, `the list at ${width}`)
-    await page.goto(`/posts/${posts[0].id}`)
+    await page.goto(`/posts/${UNWRITTEN_ID}`)
     await expect(page.getByRole('heading', { level: 1 }), `the post at ${width}`).toContainText(LONG_WORD)
     await expectNoScroll(page, `the post at ${width}`)
   }

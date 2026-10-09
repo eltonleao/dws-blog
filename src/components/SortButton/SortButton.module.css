@@ -35,6 +35,8 @@
 .icon {
   flex: none;
   margin: 2.02px 3.69px;
+  /* The box is snapped to a whole pixel; the vector draws it 0.31 to the left. */
+  transform: translate(-0.31px, 0.02px);
   color: var(--color-accent-1-medium);
 }
 

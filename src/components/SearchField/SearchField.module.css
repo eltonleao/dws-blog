@@ -43,3 +43,9 @@
   color: var(--color-neutral-lightest);
   pointer-events: none;
 }
+
+/* The lupa is 17.49 x 17.5 in the box of 40, which snaps it to a whole pixel;
+   the vector draws it 0.26 right and 0.25 down of that. */
+.icon > svg {
+  transform: translate(0.26px, 0.25px);
+}

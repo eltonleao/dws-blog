@@ -159,6 +159,13 @@ Three deliberate deviations, for contrast (WCAG 1.4.3):
 
 Each one is one declaration in the component's CSS module, so going back to the design's color is a one-line change. The sidebar item is not a deviation: the pixel measurement first found it at 4.33:1 because the panel lacked the vector's `#EFEFF2` fill and a glow showed through it. With the fill, the design's colors give 5.23:1.
 
+Two parts of the component panel have no room on the screens, and the code does not draw them:
+
+| Where | Panel | Code |
+|---|---|---|
+| Author dropdown at 375 px, open or with a choice | The list opens at x 134, 314 px wide, and the chosen pill, 272 px, sits beside Category: both run past a 375 px screen | The list opens at the screen's 16 px margin, and the chosen pill wraps to the next row |
+| Second look of the search button | A 48 px square at 15% Primary Dark, under a state name the PDF leaves unreadable | No separate button: the icon sits inside the field, which filters as you type, so nothing apart from the field takes hover or press |
+
 ## Accessibility
 
 Each control follows a pattern of the WAI-ARIA Authoring Practices Guide (APG).

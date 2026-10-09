@@ -53,6 +53,10 @@
 
 .button {
   min-width: 0;
+  /* The label of the app is narrower than the vector's, by 0.3 in Category and
+     0.9 in Author; 0.6 more before the chevron brings both pills to within
+     half a pixel of the 110 and the 99 of the design. */
+  gap: 4.6px;
 }
 
 /* With a choice, the X follows the text at the gap of 4. */

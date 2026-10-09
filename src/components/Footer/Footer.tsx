@@ -26,7 +26,7 @@ export function Footer() {
     <footer className={styles.footer}>
       {location.pathname === '/proof' ? (
         <button type="button" className={styles.action} onClick={goBack}>
-          <Icon name="back" size={20} className={styles.icon} />
+          <Icon name="back" size={12} className={styles.icon} />
           <span className={styles.call}>Back to the blog</span>
         </button>
       ) : (

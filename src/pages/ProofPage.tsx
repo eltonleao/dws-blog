@@ -170,7 +170,7 @@ function ProofCard({ line, open, onToggle }: ProofCardProps) {
             )}
           </span>
           <span className={styles.chevron}>
-            <Icon name="chevron" size={20} />
+            <Icon name="chevron" size={8.3} />
           </span>
         </button>
       </div>

@@ -71,8 +71,16 @@
   text-overflow: ellipsis;
 }
 
+/* The icons of the design sit in a box of 24: the chevron and the X are
+   centered across it, so the pill keeps its 110. The chevron of the vector
+   rests 0.65 under the middle of its box. */
 .icon {
   flex: none;
+  margin: 1.3px 6.656px 0;
+}
+
+.clear .icon {
+  margin: 0 7.617px;
 }
 
 /* The open list: 314 wide, padding 16, items of 28 at a gap of 8, radius 16.

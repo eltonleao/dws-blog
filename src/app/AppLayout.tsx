@@ -58,7 +58,7 @@ export function AppLayout() {
               aria-expanded={panelOpen}
               onClick={() => setSearchOpen(true)}
             >
-              <Icon name="search" size={18} />
+              <Icon name="searchSmall" />
             </button>
           )}
         </Header>

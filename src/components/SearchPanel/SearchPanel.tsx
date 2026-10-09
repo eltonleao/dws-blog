@@ -60,7 +60,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
           aria-label="Close search"
           onClick={onClose}
         >
-          <Icon name="back" size={16} />
+          <Icon name="back" />
         </button>
         <input
           ref={field}
@@ -76,7 +76,7 @@ export function SearchPanel({ onClose }: SearchPanelProps) {
           aria-label="Clear search"
           onClick={clear}
         >
-          <Icon name="close" size={16} />
+          <Icon name="close" />
         </button>
       </div>
       <ul className={styles.results}>

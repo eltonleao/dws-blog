@@ -31,10 +31,10 @@
   cursor: pointer;
 }
 
-/* The arrows are drawn in a box of 24 and take 20 of room. */
+/* The arrows of the vector take 20 of room, centered in it. */
 .icon {
   flex: none;
-  margin: -2px;
+  margin: 2.02px 3.69px;
   color: var(--color-accent-1-medium);
 }
 

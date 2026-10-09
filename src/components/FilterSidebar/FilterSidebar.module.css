@@ -29,6 +29,12 @@
   color: var(--color-primary-dark);
 }
 
+/* The icon of the vector is 17.5, centered in the box of 24 it had. */
+.heading > svg {
+  flex: none;
+  margin: 0 3.25px;
+}
+
 /* The name of the group sits on its items, which are on a step of 48. */
 .group {
   display: flex;

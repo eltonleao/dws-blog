@@ -43,10 +43,10 @@
   color: var(--color-secondary-dark);
 }
 
+/* The arrow keeps the box of 16 of the design, centered in it. */
 .secondary > svg {
   flex: none;
-  width: 16px;
-  height: 16px;
+  margin: 0 2.77px;
 }
 
 @media (min-width: 1024px) {
@@ -58,8 +58,10 @@
     line-height: var(--line-height-body-large);
   }
 
+  /* 1.5 times the arrow, in a box of 24. */
   .secondary > svg {
-    width: 24px;
-    height: 24px;
+    width: 15.68px;
+    height: 15.36px;
+    margin: 0 3.12px 0 5.2px;
   }
 }

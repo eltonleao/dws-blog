@@ -152,7 +152,7 @@
   /* The open dropdown floats higher than a card, in a wider and softer shadow. */
   --shadow-popover: 0 8px 24px color-mix(in srgb, var(--color-primary-light) 12%, transparent);
   /* What the open search panel lays over the header it leaves in view. */
-  --color-scrim: color-mix(in srgb, var(--color-primary-light) 40%, transparent);
+  --color-scrim: color-mix(in srgb, var(--color-black) 75%, transparent);
 
   /* Type: Open Sans, with the scale of §1.2 (size and line height). */
   --font-family: 'Open Sans', system-ui, sans-serif;

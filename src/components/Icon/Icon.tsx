@@ -3,6 +3,21 @@ import type { ReactNode } from 'react'
 // The control icons are the paths of the vector, taken from the PDF the way
 // the logo is: filled outlines, each moved to the origin and kept in the box
 // the vector draws it in. The icon is drawn in currentColor.
+//
+// The browser snaps an svg box to whole pixels and stretches the drawing to
+// the snapped box, so a box of 10.688 grows to 11 or shrinks to 10 with the
+// fraction of its place. An icon with x and y keeps a box of whole pixels and
+// draws the outline x and y into it, where the vector puts it off the pixel
+// grid: the CSS sets the box on a whole pixel, and the outline lands where the
+// PDF draws it.
+interface VectorIcon {
+  width: number
+  height: number
+  x?: number
+  y?: number
+  d: string
+}
+
 const VECTOR = {
   search: {
     width: 17.488,
@@ -27,6 +42,8 @@ const VECTOR = {
   chevron: {
     width: 10.688,
     height: 6.02,
+    x: 0.656,
+    y: 0.641,
     d: 'M5.344 6.02 C5.223 6.02 5.109 6 5.008 5.961 C4.902 5.918 4.805 5.859 4.711 5.77 L0.215 1.27 C0.078 1.129 0.008 0.961 0.004 0.75 C0 0.539 0.07 0.359 0.215 0.219 C0.363 0.07 0.535 0 0.742 0 C0.949 0 1.125 0.07 1.27 0.219 L5.344 4.289 L9.418 0.219 C9.555 0.078 9.73 0.008 9.938 0 C10.148 0 10.324 0.07 10.473 0.219 C10.613 0.359 10.688 0.539 10.688 0.738 C10.688 0.949 10.613 1.129 10.473 1.27 L5.977 5.77 C5.883 5.859 5.785 5.918 5.68 5.961 C5.574 6 5.465 6.02 5.344 6.02Z',
   },
   filters: {
@@ -39,7 +56,7 @@ const VECTOR = {
     height: 15.961,
     d: 'M3.813 8.809 C3.578 8.809 3.379 8.73 3.219 8.57 C3.059 8.41 2.98 8.219 2.98 7.98 L2.98 2.832 L1.418 4.402 C1.262 4.551 1.074 4.629 0.844 4.629 C0.613 4.629 0.418 4.551 0.25 4.402 C0.082 4.23 0 4.031 0 3.801 C0 3.57 0.082 3.379 0.25 3.211 L3.23 0.23 C3.313 0.152 3.402 0.09 3.5 0.051 C3.598 0.02 3.703 0 3.813 0 C3.922 0 4.027 0.02 4.125 0.051 C4.223 0.09 4.313 0.152 4.395 0.23 L7.395 3.23 C7.563 3.402 7.641 3.59 7.637 3.809 C7.629 4.039 7.543 4.23 7.375 4.402 C7.207 4.551 7.012 4.629 6.793 4.641 C6.57 4.641 6.375 4.559 6.207 4.402 L4.645 2.832 L4.645 7.98 C4.645 8.219 4.566 8.41 4.406 8.57 C4.246 8.73 4.047 8.809 3.813 8.809Z M8.813 15.961 C8.703 15.961 8.598 15.941 8.5 15.91 C8.402 15.871 8.313 15.809 8.23 15.73 L5.23 12.73 C5.063 12.559 4.984 12.371 4.988 12.152 C4.996 11.922 5.082 11.73 5.25 11.559 C5.418 11.41 5.613 11.332 5.832 11.32 C6.055 11.32 6.25 11.402 6.418 11.559 L7.98 13.129 L7.98 7.98 C7.98 7.742 8.059 7.551 8.219 7.391 C8.379 7.23 8.578 7.152 8.813 7.152 C9.047 7.152 9.246 7.23 9.406 7.391 C9.566 7.551 9.645 7.742 9.645 7.98 L9.645 13.129 L11.207 11.559 C11.363 11.41 11.551 11.332 11.781 11.332 C12.012 11.332 12.207 11.41 12.375 11.559 C12.543 11.73 12.625 11.93 12.625 12.16 C12.625 12.391 12.543 12.582 12.375 12.75 L9.395 15.73 C9.313 15.809 9.223 15.871 9.125 15.91 C9.027 15.941 8.922 15.961 8.813 15.961Z',
   },
-} as const
+} satisfies Record<string, VectorIcon>
 
 // Not in the vector: drawn for this blog on a 24 grid, in a 2 px line.
 const LEGACY: Record<'check' | 'bug', ReactNode> = {
@@ -73,14 +90,17 @@ interface IconProps {
  */
 export function Icon({ name, size, className }: IconProps) {
   if (name in VECTOR) {
-    const { width, height, d } = VECTOR[name as keyof typeof VECTOR]
+    const icon: VectorIcon = VECTOR[name as keyof typeof VECTOR]
+    const { width, height, x = 0, y = 0, d } = icon
+    const boxWidth = x || y ? Math.ceil(x + width) : width
+    const boxHeight = x || y ? Math.ceil(y + height) : height
     const scale = size === undefined ? 1 : size / width
     return (
       <svg
         className={className}
-        width={+(width * scale).toFixed(3)}
-        height={+(height * scale).toFixed(3)}
-        viewBox={`0 0 ${width} ${height}`}
+        width={+(boxWidth * scale).toFixed(3)}
+        height={+(boxHeight * scale).toFixed(3)}
+        viewBox={`${-x} ${-y} ${boxWidth} ${boxHeight}`}
         fill="currentColor"
         aria-hidden="true"
         focusable="false"

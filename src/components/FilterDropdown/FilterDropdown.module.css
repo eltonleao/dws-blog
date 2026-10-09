@@ -75,12 +75,14 @@
   text-overflow: ellipsis;
 }
 
-/* The icons of the design sit in a box of 24: the chevron and the X are
-   centered across it, so the pill keeps its 110. The chevron of the vector
-   rests 0.65 under the middle of its box. */
+/* The icons of the design sit in a box of 24, so the pill keeps its 110. The
+   chevron's own box is 12 x 7 of whole pixels (Icon), 6 into the 24 and 1
+   under its middle, and the vector draws it 0.656 right and 0.641 down inside
+   it. The 5.9 after it keeps the two pills on one line at 375, where the row
+   has no tenth of a pixel to spare. The X is centered across the 24. */
 .icon {
   flex: none;
-  margin: 1.3px 6.656px 0;
+  margin: 1px 5.9px 0 6px;
 }
 
 .clear .icon {

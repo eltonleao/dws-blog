@@ -167,6 +167,8 @@ Two parts of the component panel have no room on the screens, and the code does 
 | Author dropdown at 375 px, open or with a choice | The list opens at x 134, 314 px wide, and the chosen pill, 272 px, sits beside Category: both run past a 375 px screen | The list opens at the screen's 16 px margin, and the chosen pill wraps to the next row |
 | Second look of the search button | A 48 px square at 15% Primary Dark, under a state name the PDF leaves unreadable | No separate button: the icon sits inside the field, which filters as you type, so nothing apart from the field takes hover or press |
 
+The author's photo on the post follows the vector's box, not the photo's: the vector draws it whole, 91.8% of the circle's width and 109.75% of its height, 3.97% from its left and 10.5% from its top, and lets the circle cut it. That box falls on fractions of a pixel, where a browser lays an image out on whole ones, so the photo fills the circle's square and a CSS transform takes it to the vector's box. What is left is resampling: measured pixel by pixel against the PDF, outside the text, the byline differs in 0.526% of its pixels at 375 px, all of them inside the photo, and in 0.097% at 1440 px.
+
 ## Accessibility
 
 Each control follows a pattern of the WAI-ARIA Authoring Practices Guide (APG).

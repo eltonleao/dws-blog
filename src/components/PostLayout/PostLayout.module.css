@@ -31,8 +31,11 @@
     grid-column: 1 / span 2;
   }
 
+  /* Column 3 of the 1440 grid starts at 281.33 and the vector's column at
+     281: the content keeps to the grid, a third of a pixel before it. */
   .content {
     grid-column: 3 / span 8;
     max-width: 875px;
+    margin-left: calc(-1px / 3);
   }
 }

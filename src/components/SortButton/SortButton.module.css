@@ -61,9 +61,12 @@
     line-height: var(--line-height-body-large);
   }
 
-  /* The text and the arrows are 8 apart. */
+  /* The text and the arrows are 8 apart, in a button of 134 for Newest and
+     Oldest alike, so the pill ends where the design's does. */
   .button {
     gap: 8px;
+    justify-content: space-between;
+    width: 134px;
   }
 
   .label {

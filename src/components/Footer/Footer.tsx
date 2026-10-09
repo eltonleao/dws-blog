@@ -1,12 +1,14 @@
 import { Link, useLocation, useNavigate } from 'react-router'
 import proofCount from '../../proof/proof-count.json'
 import { Icon } from '../Icon/Icon'
+import { Signature } from '../Signature/Signature'
 import styles from './Footer.module.css'
 
 /**
  * The foot of every page, the one element the design does not draw: a link to
- * the bug hunt, and on the bug hunt the way back to the blog. The count comes
- * from proof-count.json, so the data of the hunt stays out of the main chunk.
+ * the bug hunt, and on the bug hunt the way back to the blog, over the
+ * author's signature. The count comes from proof-count.json, so the data of
+ * the hunt stays out of the main chunk.
  */
 export function Footer() {
   const location = useLocation()
@@ -40,6 +42,7 @@ export function Footer() {
           </span>
         </Link>
       )}
+      <Signature />
     </footer>
   )
 }

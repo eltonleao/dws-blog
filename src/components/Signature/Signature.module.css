@@ -1,0 +1,393 @@
+/* The charge of the signature: 0 at rest, 1 under the pointer or the focus.
+   One number drives the edges, the nodes, the halo and the pillars, instead
+   of ten transitions out of step. A custom property only interpolates once
+   registered, and registered it still answers the hover inside a keyframe. */
+@property --signature-charge {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Every color is a token, and what dims is the opacity, never a mixed color:
+   the attestation reads each computed color of the footer against
+   tokens.css. */
+.signature {
+  --signature-charge: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  /* the lockup below asks the space the signature has, not the viewport;
+     with its inline size contained, the width has to be given */
+  container-type: inline-size;
+  width: 100%;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 10px;
+  color: var(--color-neutral-darkest);
+  text-decoration: none;
+  transform: translateY(calc(-1px * var(--signature-charge)));
+  transition:
+    --signature-charge 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link:hover,
+.link:focus-visible {
+  --signature-charge: 1;
+}
+
+/* No box of its own on a wide line: the mark, the words and the name are
+   items of the link's row, as in the original. */
+.lockup {
+  display: contents;
+}
+
+/* ---- the mark ---- */
+
+.mark {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 30px;
+  height: 30px;
+}
+
+.halo {
+  position: absolute;
+  inset: -55%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-secondary-light), transparent 70%);
+  opacity: calc(0.08 + 0.22 * var(--signature-charge));
+  filter: blur(9px);
+  pointer-events: none;
+}
+
+.graph {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 110 covers the longest edge (98.5): the short ones finish drawing first,
+   and the stagger comes for free. */
+.edge,
+.backEdge {
+  fill: none;
+  stroke: var(--color-secondary-light);
+  stroke-linecap: round;
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+}
+
+.edge {
+  stroke-width: 3.2;
+  opacity: calc(0.5 + 0.4 * var(--signature-charge));
+}
+
+/* The edges to the back vertex: the depth of the projection. */
+.backEdge {
+  stroke-width: 2.4;
+  opacity: calc(0.22 + 0.3 * var(--signature-charge));
+}
+
+/* Two animations on two properties: the draw owns the dash offset and ends,
+   the flow owns the opacity and does not. */
+.lit .edge {
+  animation:
+    draw 0.85s cubic-bezier(0.16, 1, 0.3, 1) both,
+    flow 4.4s ease-in-out infinite;
+}
+
+.lit .backEdge {
+  animation:
+    draw 0.85s cubic-bezier(0.16, 1, 0.3, 1) both,
+    flow-back 4.4s ease-in-out infinite;
+}
+
+.node {
+  fill: var(--color-secondary-medium);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.lit .node {
+  animation:
+    node-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both,
+    pulse 4.4s ease-in-out infinite;
+}
+
+/* ---- the words ---- */
+
+.lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-caption);
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.heart {
+  width: 0.9em;
+  height: 0.9em;
+  flex: none;
+  color: var(--color-secondary-medium);
+  fill: currentColor;
+}
+
+/* The wordmark as eltonleao.dev draws it: Syne 800, tight, at the sizes of
+   the original. */
+.word {
+  position: relative;
+  font-family: 'Syne', var(--font-family);
+  font-size: clamp(0.98rem, 3.2vw, 1.12rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  /* each letter is a span: without this the word breaks when it tightens */
+  white-space: nowrap;
+}
+
+/* The underline of the original. A line of its own, because the letters are
+   inline-blocks and a text-decoration does not reach them. It draws after
+   the letters rise. */
+.word::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--color-secondary-dark);
+  opacity: calc(0.7 + 0.3 * var(--signature-charge));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.lit .word::after {
+  animation: underline-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
+}
+
+/* "eltonleao.dev" has no descender: any more mask shows a letter rising. */
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.05em;
+  margin-bottom: -0.05em;
+}
+
+.letter {
+  display: inline-block;
+  transform: translateY(115%);
+}
+
+.lit .letter {
+  animation: letter-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.tld {
+  color: var(--color-secondary-dark);
+}
+
+.link:hover .lead,
+.link:focus-visible .lead {
+  color: var(--color-secondary-dark);
+}
+
+/* The pillars out of the flow: they show on hover, and no hover may push the
+   footer down. Wrapped to the viewport, so at 320 px they take two lines
+   instead of widening the page. */
+.pillars {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--grid-margin));
+  margin-top: 8px;
+  color: var(--color-neutral-extra-dark);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: var(--signature-charge);
+  transform: translateX(-50%) translateY(calc(5px * (1 - var(--signature-charge))));
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* With no hover there is nothing to reveal them, so they stay in sight, in
+   the flow, on a line of their own. Back to the width of the line: at 320 px
+   max-content would cut both ends. */
+@media (hover: none) {
+  .pillars {
+    position: static;
+    flex-basis: 100%;
+    width: auto;
+    max-width: none;
+    text-wrap: balance;
+    /* clear of the underline, 6.5 px under the name */
+    margin-top: 8px;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The one line of the original takes 346 px, and a phone of 375 has 343: the
+   name would drop alone under the words. Below 350 the signature becomes a
+   lockup, the mark beside two lines, "made with by" over the name, 206 px
+   wide. The pillars stay outside the grid, so they never set its columns. */
+@container (width < 350px) {
+  .lockup {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      'mark lead'
+      'mark word';
+    gap: 7px 12px;
+    align-items: center;
+    justify-items: start;
+  }
+
+  .mark {
+    grid-area: mark;
+  }
+
+  .lead {
+    grid-area: lead;
+  }
+
+  .word {
+    grid-area: word;
+  }
+}
+
+/* At 0.16em the pillars take 326 px, and below 360 px the line has 288: a
+   break leaves a dot at the end or the start of a line. Tighter, they keep to
+   one line down to 320. */
+@media (max-width: 359px) {
+  .pillars {
+    letter-spacing: 0.06em;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 110;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: calc(0.78 + 0.22 * var(--signature-charge));
+    transform: scale(1);
+  }
+}
+
+/* Each node lights in its turn, and the system is never all lit at once. */
+@keyframes pulse {
+  0%,
+  62%,
+  100% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.5);
+  }
+  30% {
+    transform: scale(1);
+  }
+}
+
+@keyframes flow {
+  0%,
+  58%,
+  100% {
+    opacity: calc(0.5 + 0.4 * var(--signature-charge));
+  }
+  16% {
+    opacity: calc(0.85 + 0.15 * var(--signature-charge));
+  }
+}
+
+@keyframes flow-back {
+  0%,
+  58%,
+  100% {
+    opacity: calc(0.22 + 0.3 * var(--signature-charge));
+  }
+  16% {
+    opacity: calc(0.5 + 0.3 * var(--signature-charge));
+  }
+}
+
+@keyframes letter-in {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes underline-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Without motion the signature is whole and still: what goes is the
+   repetition, never the drawing. */
+@media (prefers-reduced-motion: reduce) {
+  .edge,
+  .backEdge {
+    stroke-dashoffset: 0;
+  }
+
+  .node {
+    opacity: 0.78;
+  }
+
+  .letter,
+  .word::after {
+    transform: none;
+  }
+
+  .lit .edge,
+  .lit .backEdge,
+  .lit .node,
+  .lit .letter,
+  .lit .word::after {
+    animation: none;
+  }
+
+  .link,
+  .pillars {
+    transition: none;
+  }
+}

@@ -1,8 +1,12 @@
 /* Under the page, over a hairline: the header's line, mirrored. The bar has
-   no fill, so the glows of the background run on under it. */
+   no fill, so the glows of the background run on under it. The bug hunt
+   stays the link right under the footer, the one the attestation checks;
+   the signature goes below it. */
 .footer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
   padding: 24px var(--grid-margin) 32px;
   border-top: 1px solid var(--color-neutral-extra-light);
 }

@@ -43,7 +43,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--color-neutral-extra-light);
+  background: var(--color-accent-1-light);
   object-fit: cover;
 }
 
@@ -53,10 +53,11 @@
   min-width: 0;
   font-size: var(--font-size-caption);
   line-height: var(--line-height-body-large);
-  color: var(--color-neutral-darkest);
+  color: var(--color-black);
 }
 
 .author {
+  color: var(--color-neutral-darkest);
   font-weight: var(--font-weight-semibold);
 }
 

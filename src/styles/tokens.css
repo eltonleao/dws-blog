@@ -9,6 +9,10 @@
   --color-neutral-dark: #7f8185;
   --color-neutral-extra-dark: #5e5f63;
   --color-neutral-darkest: #202122;
+  /* Black and a gray from the frames of the PDF, not from the palette:
+     the "Written by:" of the byline and the clear (X) of the search field. */
+  --color-black: #000000;
+  --color-neutral-clear: #84868c;
 
   /* Primary */
   --color-primary-light: #0b0e3a;
